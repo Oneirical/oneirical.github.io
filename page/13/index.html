@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/17-11-23-genetic-trials/">Genetic Trials</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-11-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Evolution is war. The prey wishes to escape, the predator wishes to catch - one will inevitably suffer, from hunger or fang.&quot;</em></p>
+<p><em>&quot;When you step in a flowery meadow and frolick in joy through the bushes and butterflies... You are blind to the agonizing battlefield raging all around you. Each blade of grass strives to choke its neighbour, each insect would love to devour you whole had you been a hundredth of your size.&quot;</em></p>
+<p><em>&quot;Fu! And you say nature and its diversity is beautiful. With affection, you lick the hand which chokes you by the throat. We would laugh, had we not been feeling infinite pity for you in this moment.&quot;</em></p>
+<h1 id="the-games-foxes-play">The Games Foxes Play</h1>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://github.com/Oneirical/rust_tgfp">rust source code</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>The advancements of this week are highly experimental and possibly insane. Given repeated troubles related to the player constantly breaking the smooth flow and design of the game, I am attempting the obvious: removing the player.</p>
+<p>A grid of tiles contains a certain number of creatures. Each one operates as follows:</p>
+<ul>
+<li>It receives some Senses, defined by the player, like the distance between itself and the yellow X Beacon, or the angle between itself and the Beacon.</li>
+<li>The Senses pass through a simple neural network (only 1 hidden layer as to not turn my computer into a miniaturized sun)</li>
+<li>The neural network chooses one among a list of Axioms, also defined by the player, and casts it. This could be moving one tile, or doing some cool ability.</li>
+</ul>
+<p>These creatures are then tortured over and over again in my test chamber. Every 100 turns, each one is judged according to an efficiency score. The player defines the criteria, like &quot;get as close to the Beacon as possible&quot;.</p>
+<p>Through some genetic algorithm technomagic, all the creatures are returned to their start position, and their neural networks are tweaked to look more like those of the best performers, with some random mutations thrown in there for science.</p>
+<p>Eventually, the creatures &quot;learn&quot; how to complete the objective defined by the player! I believe the buzzword for this technique is &quot;neuroevolution&quot;.</p>
+<p>In order for things to remain smooth, the game window actually makes you watch a re-enactment of a simulation that already happened while the game is simulating hundreds of 100-turn sequences in the background. This means that even if the CPU is choking through the neural networks, there is no visible FPS drop, only a mild slowdown of the training speed. Thank you, Rust, for this so-called &quot;fearless concurrency&quot;.</p>
+<p>While I find this educational and entertaining, the complexity of this design is ramping up very fast. I am currently trying to set up a paintball minigame of sorts where two factions of creatures compete to paint the map in their colour. I may fail and give up, or I may succeed and be inspired. We will see.</p>
+<p>Videos:</p>
+<p><a href="https://yewtu.be/embed/0k9tPXNCEv4?">An oddly satisfying anthill.</a></p>
+<p><a href="https://yewtu.be/embed/hB14TX1fW4w">A tango line caused by a poorly thought out efficiency score formula.</a> (walls disabled)</p>
+<p><a href="https://yewtu.be/embed/DCK_dFT3g3Q">A well-trained population.</a> (walls disabled)</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-10-27-interplanar-travel-for-all/">Interplanar Travel For All</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-10-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>An endlessly giggling mess of ribbons under which some creature probably exists. Any hope of unveiling their identity is lost in their constant lunges and twirls across the pollen-tainted air.</em></p>
+<p><em>&quot;Ignorance and submission seem so comfortable... If I did not have the far-away beacon of enlightenment to guide me, I would have been lost long ago.&quot;</em></p>
+<ul>
+<li>Ecstatic Ribbondancer flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>It has been a little harder cranking out code this week, but the forges of creation still blaze with maintained interest.</p>
+<h1 id="dastardly-traps">Dastardly Traps</h1>
+<p>Some new devious creatures have been added to the world generation pool:</p>
+<ul>
+<li>
+<p>the Arctic Phobist sits alone at the centre of empty rooms. Their constant dread of hypothermia permeates through surrounding minds, inspiring all to huddle and cuddle around it in search of warmth... Which tends to create dangerous piles of stacked foes, unleashed as soon as the Phobist is deactivated by a misfired ability. Its ability also extends to the player, making escape difficult when one is constantly being reeled in...</p>
+</li>
+<li>
+<p>groups of Ecstatic Ribbondancers gather in small and cramped areas, and chaotically bounce all over the place like they are super rubber balls. Getting through these gauntlets without getting trapped requires careful steps... which one may not always afford to take when one is being chased by a horde.</p>
+</li>
+</ul>
+<p><a href="https://yewtu.be/embed/w_4A0JDUIbM?">Demonstration of the latter</a>.</p>
+<h1 id="interplanar-travel-for-all">Interplanar Travel for All</h1>
+<ul>
+<li>
+<p>A non-negligible quantity of techno-wizardry has now allowed me to keep loading and simulating creatures even when they are not located on the same Plane (floor) as the player. The technique used, which I like to call the &quot;yellow pages&quot;, keeps an index of all specific creatures which are allowed to take input even if the player is not on the same Plane as them, and simulates their actions in a way that is accurate, but does not nuke the game's performance.</p>
+<ul>
+<li>This is huge. I can't wait for the applications this new development will have, from banishing foes into pocket dimensions to programming bots to clear far-away Planes for you.</li>
+</ul>
+</li>
+<li>
+<p>A new special teleportation Axiom allows one to &quot;astral project&quot; into a pocket dimension from your current position, which may be extremely dire. It reminds me a little bit of DCSS's Okawaru Arena, but with a little more interdimensional flair. I've been thoroughly enjoying the related animation...</p>
+</li>
+</ul>
+<p><a href="https://yewtu.be/embed/atJRdu511U4">Once again, demonstration. Ignore the minor graphical bug</a>.</p>
+<p>I am currently in the process of rekindling Epsilon, the multi-tile snake boss, with some extra new zaniness. A fearsome foe awaits...</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/12/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/14/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2024
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

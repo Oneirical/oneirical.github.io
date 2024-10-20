@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-07-07-fields-of-steel-stretch-forever/">Fields of Steel Stretch Forever</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-07-07
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;And yet. I know so much, and care so little. Defeaned by chatter, weighed down by revelations - I am all, but wish to be none.&quot;</em></p>
+<ul>
+<li>Terminal getting pensive about their quest</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>Hiding behind a crevice to escape a passing-by patrol of robots in Cogmind, taking two steps forward and one step backwards to clear the Elven Halls in DCSS... There's a lot to like about sprawling roguelike maps, with their many twists and turns presenting opportunity for crafty adventurers.</p>
+<p>So, when I looked at my own game, and considered the loop of &quot;clear square room of all enemies&quot; -&gt; &quot;move to next room&quot; -&gt; &quot;repeat&quot;, I couldn't help but feel something was wasted. Due to the structure of <a href="https://nluqo.github.io/broughlike-tutorial/">the tutorial</a> I initially built my game from, when a room was left, it ceased to exist and entered a state of stasis until the player visited it again. </p>
+<p>I couldn't tolerate this any longer.</p>
+<h1 id="fields-of-steel-stretch-forever">Fields of Steel Stretch Forever</h1>
+<p>This has been quite the neuron-frying rework, but TGFP now has <a href="https://vid.puffyan.us/embed/X0H_527_edQ">full-floor, interconnected maps</a>! The layout is still based off square rooms linked with each other, but the most important feature is that <strong>entities other than the player can now move wherever they please</strong>.</p>
+<p>The implementation proved quite challenging. First, to properly generate a unified map, I randomly generate a 9x9 grid of &quot;walls&quot; and &quot;floors&quot; with no isolated floors, then pave each &quot;floor&quot; with a prefabricated vault, chosen at random among multiple possibilities. Finally, I scrape the data from each &quot;vault&quot; and build a single giga-room (&gt;6000 tiles!) from the extracted data. I was expecting this process to turn my 128 MB VRAM, 8 GB RAM laptop into a miniaturized sun, but everything somehow remained perfectly fluid!</p>
+<p>Then, to actually display the giga-map, I thought &quot;let us just render every single tile and move the whole map around when the player moves&quot;. Bad idea. There was the miniaturized sun I was after.</p>
+<p>Finally, I settled for a 30x30 grid of &quot;projectors&quot; which dynamically update every turn to reflect all tiles in range 15 of the player. It's just like DCSS - the player always remains at the centre, fully enabling any narcissistic tendencies the user may have!</p>
+<p>Following this implementation, I struggled very hard to bring back the zooming animation from last week. Initially, it was skewed and caused an annoying lag spike at the end. I worked 5 hours to fix it, butchered my game completely beyond repair and had to undo all changes. Fun. </p>
+<p>In the end, some performance testing revealed that the big memory-hog was the function assigning sprites to every single tile, <em>including the black space between the rooms</em>. All it took to fix the lag was a single line of code in the graphics engine: &quot;if tile is not in play area, return&quot;.</p>
+<h1 id="cyan-suns-burn-the-horizon">Cyan Suns Burn the Horizon</h1>
+<p>The scope for the coming months is... a little imposing. I have a significant addition I wish to add to the core gameplay loop, and I also want to overhaul the pathfinding algorithms from basic-baby Greedy Manhattan Distance to something a little more appropriate for a 81x81 map. So far, the <em>only</em> things tanking my performance have been graphical issues - the back end has never caused any problems. From what I've read about the nightmare A* &amp; friends can be, I expect this may change soon.</p>
+<p>I sometimes regret a little choosing JavaScript to get started (but I think harder languages would have demotivated April 2022 me, even though I would be able to handle them now). I am getting frequently trolled by &quot;undefined&quot; types parasiting my data and coming out 5 minutes later to break everything. But, on the other hand, I am massively benefiting from the lack of compile times (offset a little UI element by 3 pixels and instantly see the difference!).</p>
+<p>These next weeks will either be glorious or a train wreck. No in between.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-06-30-controlled-opposition/">Controlled Opposition</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-06-30
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;What divides Unhinged from Artistic is not so different from what separates carbon from diamond. In each strike, the artisans of motion inject a part of their selves, expressing passion through pain as their canvas.&quot;</em></p>
+<ul>
+<li>flavour text of &quot;Polish Rage To Sheen&quot;, an Artistic Function that delays the execution of a spell until the next basic attack</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>Well, I'll be honest. I had this whole giga-rework planned of my enemy placement system, with some wild ideas thrown into the mix - such as every single denizen of certain rooms spontaneously transforming into other types at certain intervals. I tried to get started on implementation last Saturday and Sunday, but all I did was stare blankly into my monitor as if the protagonist of my game had stolen my soul. Something was wrong.</p>
+<p>My previous design idea was probably doomed from the start. Multiple annhiliated features already rot in the virtual graveyard that is my Git history, and I did not want another to join them:</p>
+<ul>
+<li>
+<p>It would have been tedious to learn all these enemy types, a major flaw of DCSS &amp; co. with the &quot;oh, you died to eels? just use a wand of flame! oh, you died to Nessos? just use a wand of polymorph!&quot;</p>
+</li>
+<li>
+<p>It would have taken dozens of hours to make, when it isn't even linked to the two core mechanics of my game.</p>
+</li>
+</ul>
+<p>I have to retain some humility and remember what my game is really about: the Axioms crafting system and the Harmony system. Everything else should derive from one of these!</p>
+<p>It is after a deep introspection session while I was turned into a floor puddle and listening to new age music that a revelation came to me: <em>Why do work when you can have the player do it for you?</em> Tongue in cheek, I attest, but this design philosophy has served me well so far - I wasn't sure how to make interesting dungeons, so I allowed the player to design their own layouts, and I wasn't sure how to mass produce interesting spells, so I devised this entire magic-crafting system (&quot;Axioms&quot;) that has now wormed its way into &quot;Core Mechanic&quot; status.</p>
+<h1 id="controlled-opposition">Controlled Opposition</h1>
+<p>First, I've cut down the amount of different enemies down to a measly 6. It was a tough choice choosing which would be the chosen ones, but I ultimately settled on a mix of some of my favourites, alongside some simple ones which I judged would make a good introduction to the game's mechanics. Each of these 6 representatives have been polished to fully utilize the game's Axiom system.</p>
+<p>For example, Greedswept Felidols now contain the Axiom &quot;ONDEATH&quot;,&quot;EGO&quot;,&quot;DEATHCLICK&quot;,&quot;CLICK&quot;,&quot;EGO&quot;,&quot;SUMMFELIDOL&quot;. This means:</p>
+<ul>
+<li>ONDEATH: When this creature dies...</li>
+<li>EGO: On the tile it stands on...</li>
+<li>DEATHCLICK: And considering that all future CLICK blocks will be triggered by entities dying on top...</li>
+<li>CLICK: Set down a trap on that tile, triggered only by death due to DEATHCLICK. The trap contains EGO, SUMMFELIDOL.</li>
+</ul>
+<p>The Axiom ends there as CLICK is an endpoint. So, the Felidol has been reduced to glistening purple shards on the floor, grasping at the false life they once had... Until the player slays a different enemy while it is standing on the trap!</p>
+<ul>
+<li>EGO: On the tile it stands on...</li>
+<li>SUMMFELIDOL: Summon a new Felidol!</li>
+</ul>
+<p>Thematically, the Felidol is grasping the soul of the defeated to reassemble itself. Technically, this Axiom is completely mutable, and nothing really stops the system from replacing &quot;EGO&quot; with, say, &quot;BEAM&quot; and removing DEATHCLICK AND CLICK, thus shooting forth laser beams of Felidol summoning. As the protagonist of my game would say, desire separates what is from what is not!</p>
+<p>I concocted a <em>lot</em> of plans on where to bring this next, but as there is approximately a 10% chance that I will drop this entire idea and go back to the drawing board, it will be the topic of a future post. They say game ideas are a dime a dozen, but honestly, <em>good</em> ideas are surely worth more than that.</p>
+<p>Until then...</p>
+<h1 id="daydream-vertigo">Daydream Vertigo</h1>
+<p>Not only are Dreamscapes now directly accessible from the Soul Cage (the room they used to be in, the World Seed, will probably be removed), there is now a <a href="https://vid.puffyan.us/embed/vzHl4Thi7lQ">dizzying</a> zoom animation for entering and exiting them! Initially, <a href="https://vid.puffyan.us/embed/R7sikUKbx6k">only the hologram would enlarge</a>, which looked quite poor. Thank you #roguelikedev on the Discord for the much superior suggestion!</p>
+<p>Screenshake effects have also returned, to my great amusement. Time to make some explosions!</p>
+<p>I was really expecting this to be difficult - and was pleasantly surprised at how simple it turned out to be. It is giving me hope for some other eye candy here and there, such as less jarring transitions when passing through airlocks, or perhaps the ability to zoom in and out of the game view!</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/19/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/21/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2024
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
