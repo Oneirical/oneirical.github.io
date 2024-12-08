@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-02-11-rekindled-hope/">Rekindled Hope</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-02-11
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;After their fangs were done toying with your flesh, they had taken away much more than sinew and bone. Your soul turned Feral, and the last lights of duty and purpose were soon snuffed out like a candle flame, leaving nothing but a ravenous husk.&quot;</em></p>
+<ul>
+<li>Permadeath message upon dying to a random basic enemy</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.3 online in browser on itch.io!</a>)</em></p>
+<p>I'm late, so I'll keep this short.</p>
+<p>So, apparently, it turns out that throwing random stuff into a pile, giving it a good shake and then tasting it is not conducive to good design. Since the start of 2023, I have pretty much butchered an initially fun but simple concept by adding tons upon tons of features that served no further purpose beyond reducing the Fun™ factor:</p>
+<ul>
+<li>A knockback-based combat system that turned out to be a pain to work with in the game's cramped spaces</li>
+<li>Full-blown map generation that accomplished little beyond adding arbitrary down-time and backtracking that serves no purpose</li>
+<li>Putting those maps inside a giga-maze-map which has, again, done nothing except purposelessly make any kind of save &amp; load function a living hell to implement</li>
+<li>A lore rewrite that caused a lot of previous content to stop making sense, and which made it so adding future content that made sense would be horrendously difficult</li>
+</ul>
+<p>I have to return to my roots. I spent literal hours trying to get a JSON save &amp; load system to work, but it's simply hopeless. There is simply no way I can fit literal hundreds of thousands of tiles inside a JSON document, where each one also has a cyclic reference to a creature which also has a tile object... Abhorrent. Maybe some code archmage could make this work, but it doesn't matter if the game isn't even fun.</p>
+<p>I won't give up, though. I already gave up on projects like this way too many times. I don't want to go back to idle daydreaming.</p>
+<p>I have a new plan. A new structure with a narrowed-down scope that should hopefully let a save &amp; load feature happen. Something that just takes what worked in the beginning and allows the player to gain more control over it. I know myself and can expect that I can put this idea into much saner words once I've properly translated it from Onei-Delusions into implementable code, so I will talk about it more next week. I actually thought this through over multiple days, so this hopefully won't be another case of designer-delirium.</p>
+<p>I won't throw that trio of unfortunate features in the trash, though. I'll recycle the knockback-combat in some gimmick enemy, I'll keep the map system as a core part of my new strategy, and as for the maze... Well, it can procedurally generate mazes. Surely that can fit somewhere in a roguelike game!</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-02-03-blank-canvas/">Blank Canvas</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-02-03
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Dozens of rivers have been used up in paint, and yet, this mad artist has never completed a single work. Every time a near-perfect masterpiece was about to be completed, it met its fate drowned in an ocean of white colour, soon to be covered by yet another ephemeral creation.&quot;</em></p>
+<ul>
+<li>Flavour text of <strong>Purpizug, Painter of Blank Canvasses</strong>, a Legendary Artistic Soul</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.3 online in browser on itch.io!</a>)</em></p>
+<p>I am hitting a bit of a roadblock, and I only have Onei's Random Idea Generator™ to blame.</p>
+<p>The version 0.2 of my game that I had previously uploaded on itch.io was a short and fun experience - according to my esteemed playtester and composer friend, that is. He mentioned his appreciation of the slider-puzzle-like design, and how he really enjoyed using his brain and thinking through each step of my deterministic combat system. A simple but interesting gameplay loop.</p>
+<p>Now, because I can't ever stand still or conform to a plan when it comes to personal projects, I then proceeded to pull out of my metaphorical hat an entire map generation system, and then also the new knockback-based combat that I showed off last week. I find these very interesting on their own, but they have both mangled the basic game system that I had in place.</p>
+<p>This week, I started work on a tutorial (in my own style, with zero text!). The structure is simple: start with the absolute basics. Immobile target, essential controls displayed on the screen, elementary objective: slurp up his soul. Should that be done, the challenge intensifies: the target is now (slowly) moving and trying to attack you back. And so on, progressively introducing mechanics with increasingly difficult puzzles. While I find much promise in it, I couldn't help but notice a mildly significant problem: </p>
+<p><em>I don't know how to play my own game</em>.</p>
+<p>By this, I mean, there are so many design parts crunching upon each other that I struggle to find the &quot;core loop&quot; once again. What should the penalty be if the player gets hit? Should encounters be composed of multiple weak and simple enemies, or few strong and complex ones? The knockback combat pretty much makes any room with more than 4 enemies extremely difficult to defeat, so I am inclined towards the latter, but then, with so few entities on the screen, that &quot;slider-puzzle&quot; experience that made the original game fun is lost.</p>
+<p>I was tempted a few times to scrap my latest additions and restart from 0.2, but this isn't the Onei way. I have faith in myself, I trust that I <em>will</em> find some adjustment that will make my new features <em>click</em> together. There were many times this week where I just stared into the window, thinking up of all the game mechanics I have ever observed, and letting my mind dance to the song of a thousand &quot;What if?&quot;s.</p>
+<p>Maybe I will have to backtrack my steps a little bit. However, I have one very central idea first and foremost - I want this game to be about mind over matter, and thus, the classic concept of HP points, wounds and physical death simply doesn't cut it.</p>
+<p>They say that ideas are a dime a dozen in game development, but I'd gladly buy a batch or two right now...</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/27/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/29/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2024
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

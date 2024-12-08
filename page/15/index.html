@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-10-06-all-is-soul/">ALL IS SOUL</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-10-06
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;A glass canister filled with wispy, pink vapour. The label reads, &quot;Once the fluorescent tubes' buzzing becomes unbearable, break immediately and inhale contents. May induce ego death.&quot;</em></p>
+<ul>
+<li>Saints' Breath flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io! (very old)</a>)</em></p>
+<p>The fascination is getting to me. My ideas are getting weirder by the day. This might be the week in which I put the most hours into my game since its very inception. I don't even want to play video games anymore, I just want to make <em>make</em> <strong>make</strong>.</p>
+<h1 id="return-of-the-diamond-fist">Return of the Diamond Fist</h1>
+<p>My beloved hyper-punch knockback spell is back after an all-too-long retirement, fully reprogrammed to use the new Soul system in a way that makes me feel like an absolute genius. In simple terms, taking a step will passively punch the creature on the next tile in front of the player, knockback that creature (if possible), and create a shockwave at its impact location.</p>
+<p>In order to increase reliability, the companion active ability (which I somehow managed to fit in the same Soul) warps every creature in a short circle AOE as far from the caster as possible, in order to forcefully reposition creatures backing into corners or cuddling in packs to avoid getting punched.</p>
+<p><a href="https://yewtu.be/embed/IN_nTlzdkSw">Video demonstration.</a></p>
+<p>The <a href="https://cdn.discordapp.com/attachments/504088568084561930/1159963375812497418/Capture_decran_le_2023-10-06_a_17.20.03.png?ex=6532ef13&amp;is=65207a13&amp;hm=2921a63c7c0d1255c0e9b4328eb4031e3b0e2980ad2aeb558690cf9b6b43d9c5&amp;">wheel UI</a> in the top right has been reworked to automatically scan the player's Souls, detect all hotkey bindings and add them as clickable buttons. Currently, you see it scanning the Saintly Soul, containing the WASD movement commands, and then the Ordered Soul, with that active I just mentioned assigned to 1. Yes, if you mess up your starting Saintly Soul, you may literally lose the ability to move. I am going to need a surrender button.</p>
+<p>I am not too sure what to limit these actives with, or when they recharge... Mana, creatures defeated, turns passed? I can't quite find a satistfying mechanic that would tie in with my game. Maybe I should just let these abilities get spammed as much as the player wants and balance them around that.</p>
+<h1 id="all-is-soul">ALL IS SOUL</h1>
+<p>I am currently in the process of <strong>removing tiles from my game</strong>. That's right, every wall, feature and doorway is being turned into a creature that <em>believes</em> it is an inanimate object. Their Souls, devoid of any reaction to the passage of time, only have simple Axioms such as &quot;You are untargetable.&quot;.</p>
+<p>(Floor tiles will remain as the only tile type).</p>
+<p>I expect lots of horrible bugs to surface from this rework, but for now, it has allowed me to create this hilarious <a href="https://yewtu.be/embed/uy2bE4gJC_M">&quot;reverse black hole&quot; giga-spell</a>, which instantly makes any pain endured in development worth it. The matching Soul goes roughly like this: <em>&quot;When the spell hotkey is pressed, target all adjacent tiles to the caster, expand, expand, expand, [...], exclude the caster's tile, warp every targeted creature as far away from the caster as possible.&quot;</em></p>
+<p>There has been previous times where I journeyed into fundamental reworks like this only to get disappointed and undo everything. This time, I think this is genuinely a great idea:</p>
+<ul>
+<li>If I am not wrong, not having to draw tiles and just plopping creatures on a black background will improve performance considerably on my potato laptop.</li>
+<li>If I am not wrong, only having to save the position, health and Souls of creatures and not tiles will do wonders for my soon-to-be save &amp; load system.</li>
+<li>Lore-wise and flavour-wise, it's just perfect.</li>
+</ul>
+<p>I'll be building a starter dungeon of sorts soon where every single interaction revolves around my Soul system. If everything goes according to plan, it will have cool powers like enemy ability copying and body swapping (both of which are trivial due to the Soul system - the creature which currently is the &quot;player&quot; is only determined by which entity is holding the legendary Reality Anchor...) </p>
+<p>Perhaps... a new demo before the end of the year is possible? That will depend on what Real Life™ has in store for me...</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-09-29-many-worlds-interpretation/">Many-Worlds Interpretation</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-09-29
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;There were a few who craved peace, who undid art in search of a moment without meaning. When they realized their zeal for annihilation was Artistic in itself, their cries could be heard even through the walls of Faith's End.&quot;</em></p>
+<ul>
+<li>Stillness of Granite, Returned flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io! (very old)</a>)</em></p>
+<p>The Great Purge continues, with easily 25% of my old code having now been subjugated to utter annihilation. In doing so, I have finally achieved what I wanted: a world map that actually works!</p>
+<h1 id="many-worlds-interpretation">Many-Worlds Interpretation</h1>
+<p>I can now put all kinds of floor themes in <a href="https://cdn.discordapp.com/attachments/504088568084561930/1157380710827573298/Capture_decran_le_2023-09-29_a_14.17.28.png?ex=65186648&amp;is=651714c8&amp;hm=ccd427521bd2fac7fd5410efcb48c981c135be4f4115c666c21aef91019e5c76&amp;">these</a> little mosaics to connect them. Automatically, Hypnotic Wells are generated on each floor to allow passage between each layer. The transition is <em>seamless</em>, and I've put in so much work in making sure the illusion looked perfect. Some may have seen <a href="https://www.reddit.com/r/roguelikes/comments/16t8tih/an_alternative_to_stairs_in_my_workinprogress/">my post</a> on r/roguelikes, which was, as much as I hate to admit it, quite motivating. Wretched crow-brained fool that I am, who judges worth according to internet clout!</p>
+<p>Additionally, I've been working on a rework of the <a href="https://cdn.discordapp.com/attachments/504088568084561930/1157432738878603284/Capture_decran_le_2023-09-29_a_17.44.02.png?ex=651896bd&amp;is=6517453d&amp;hm=bb8783f3644675ccc16a5eda1712fe2a5bf6f6e798e6d910635431489286c24e&amp;">UI sidebar</a> to inspect creatures on click. I'm not too sure about those lore descriptions spoken in the protagonist's voice, it's a little cringe, uninformative and I'll probably be remaking those. However, it is much more minimalist than the last iteration! To match my recent Great Purge of many game mechanics, it only has a name, lore description, Soul menu and health bar. The latter capping at 4!</p>
+<p>Indeed, every entity in the game can only have between 1 to 4 health points. Naturally, there is a catch - the system already allows for creating Souls like &quot;up to 3 times, on death, respawn at full health&quot;. Every creature might be as squishy as a wet tissue, but with the power of soul-forging, nothing is impossible.</p>
+<p>I am currently working on a saving-and-loading system (completely different from my failed first attempt) For this purpose, I am simplifying the data structures all over the game, making sure everything can be stored in a compact JSON file that isn't as long as the distance between the Sun and Proxima Centauri. It's actually quite the interesting puzzle! I've already made it so all RNG in the game is derived from a one word seed, which should save me the horrendous burden that would be storing the position of every single tile in the save file.</p>
+<p>In the last hour, I just tinkered up a possibly cursed but infinitely amusing system where I log every single player action and replay it on loading. Thank you Chaigidel for <a href="https://www.reddit.com/r/roguelikedev/comments/10zt7w5/learning_how_to_rewind_time_save_load/j87okyw/">the suggestion</a>. It is surprisingly fast, but I do not know how it will scale up as I expand my game.</p>
+<h1 id="annoying-technowizardry">Annoying Technowizardry</h1>
+<p>My crusty 8 years old laptop is now only capable of running my game at 30 FPS, which I judge to be a disgrace for a traditional roguelike. Yes, the GPU in it is ranked as &quot;terrible&quot; on <a href="https://gpu.userbenchmark.com/SpeedTest/38173/IntelR-HD-Graphics-515">UserBenchmark</a>, but that seems like a poor excuse for what is basically a 2D game with almost no animation. The game used to run a lot better on it, but I did something in the last month that wrecked it (while I was developing on another computer) and I have no idea what it was.</p>
+<p>Meanwhile, the M1 Mac Mini I also tested my game on has perfect performance. I'm actually not sure what the community's expectations are - I know roguelikes are supposed to be able to run on glorified calculators, but how far do people stretch this? Are you exiled and unpersoned from the community should you dare release something that can't run on a Commodore 64?</p>
+<p>I have a few ideas for optimization. But I don't expect it to be easy.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/14/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/16/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2024
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
