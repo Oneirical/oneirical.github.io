@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-04-21-the-shapeless-path/">The Shapeless Path</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-04-21
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Where the Ordered forces do not have soldiers, they have traps. A careless step, and would-be looters become the looted, their every memory sold to the highest bidder on the hivemind's network.&quot;</em></p>
+<ul>
+<li>Flavour text of A Click, Then a Flash, mutator component</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4 online in browser on itch.io!</a>)</em></p>
+<p><em>So</em> many changes. It is utterly insane how I either can't think about anything else but my game or can't bring myself to write a single line of code on any given day, no in between. I'm glad I can keep up the pace now, because The Plane Where Grass Is Touched has some exciting but time-consuming advancements in store for me in the coming weeks.</p>
+<p>My itch.io page has been updated with a new demo that includes <em>all</em> of the changes in the last 3 months! Still a bit rough here and there, and potentially confusing, but I certainly had fun playing it from beginning to end.</p>
+<h1 id="steps-shift-the-mind">Steps Shift The Mind</h1>
+<p>There are two new types of spell-crafting blocks: Mutators and Contingencies. This means that the structure of a spell is now as follows:</p>
+<ul>
+<li><strong>Contingency</strong>: When [SOMETHING] happens...</li>
+<li><strong>Form</strong>: ...target all [THESE] tiles...</li>
+<li><strong>Mutator</strong>: ...make some [CHANGES] to the spell...</li>
+<li><strong>Function</strong>: ...and unleash all kinds of [EFFECTS].</li>
+</ul>
+<p>As an example, the following spell:</p>
+<ul>
+<li><strong>Contingency</strong>: On taking a step...</li>
+<li><strong>Form</strong>: ...target tiles in front of you in a beam...</li>
+<li><strong>Mutator</strong>: ...set down a trap on the targets with the following effect...</li>
+<li><strong>Function</strong>: ...launch the target forwards and damage it when it hits a wall.</li>
+</ul>
+<p>does <a href="https://youtu.be/bCe16H-43K4">exactly what it says on the tin.</a></p>
+<p>Mutators and Contingencies are optional. Contingencies in particular tend to induce sacrifices and costs, as you are basically turning an active ability into a passive one - a very powerful thing.</p>
+<p>Additionally, all spells now have a Potency rating dependent on which components constitute it. Power up GYVJI (a Function) with 4 Potency, and unleash shockwaves on impact! Increase the duration of applied status effects from SENET or KASHIA! There is also a potential Cost, currently only found on Contingency blocks. Each time the Contingency triggers, you will lose an X amount of Shattered Souls until you can no longer power the Contingency. How to get these Shattered Souls? By failing challenges and losing encounters, of course. In my game, failure is simply a different kind of step forward.</p>
+<p>Maybe this is a bit complicated, but only a fool would settle out into a traditional roguelike journey with the goal of mass market appeal.</p>
+<h1 id="laws-of-soul-and-spirit">Laws of Soul and Spirit</h1>
+<p>As the old burns to feed the new, many UI elements have been added and removed:</p>
+<ul>
+<li>
+<p>There is a new <a href="https://www.youtube.com/watch?v=aBX7jaU3jt0">minimap</a> viewable in the lower right corner, which dynamically updates every turn. The way it is rendered in the backend is... a bit gory (it is actually rendering outside of its frame, so I draw black rectangles to cover the overextending bits), but it <em>works</em> and I have noticed no performance issues.</p>
+</li>
+<li>
+<p>In the Legendary Soul menu, the minimap is replaced by a new display which contains all relevant information about your crafted spells: its Potency (blue number), its Cost (purple number), its Caste (colored symbol), its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096079183659018/Capture_decran_le_2023-04-21_a_18.14.37.png">Contingencies</a> (yellow row), its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096078885867561/Capture_decran_le_2023-04-21_a_18.14.51.png">Forms</a> (green row), its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096078592262215/Capture_decran_le_2023-04-21_a_18.15.02.png">Mutators</a> (pink row) and its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096139782955008/Capture_decran_le_2023-04-21_a_18.15.12.png">Functions</a> (orange row).</p>
+</li>
+<li>
+<p>There is now support for paragraphs and colored text in all text functions. This sounds so simple, but it was easily the most nightmarish thing on this list. Yet the result is <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096619154157718/Capture_decran_le_2023-04-21_a_18.17.21.png">so glorious</a>! Yes, Ulfsire, I have stolen the way you describe your powers in your game (Path of Achra) because I find the systematic layout to be very apt for a synergy-based game.</p>
+</li>
+<li>
+<p>The &quot;Resolve&quot;, &quot;Ipseity&quot; and &quot;Harmonic Relays&quot; mechanics (and associated UI elements) have been all shown the door. A tragic thing, considering how I was really imagining the final product to include all of these as major mechanics, but as Souls shift and change, so does my game.</p>
+</li>
+</ul>
+<h1 id="unlocking-memories-of-the-old-world">Unlocking Memories of the Old World</h1>
+<p>There is now a &quot;drawback&quot; to crafting spells - each pattern used will now <em>permanently</em> <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099097330571034674/Capture_decran_le_2023-04-21_a_18.20.11.png">add a new feature</a> used in the map generation of future Visions (dungeons). Most of the time, this is a creature. Can that charming spell component deal with the swathes of Felidols it just added to the monster pool? I say &quot;drawback&quot; in quotation marks, because it is basically the whole point of the game - you are adding more diversified creatures in your ultimate quest to recreate the Old World as it once was, with all its weird denizens.</p>
+<p>The Faith's End facility (where the player begins the game) has also received a slight <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099097518039642162/Capture_decran_le_2023-04-21_a_18.20.49.png">touch-up</a> for thematic purposes. Your existence is confined to only 5 vertical rooms, with the Saints' Voice hologram as your sole company. Reinforced windows scattered across the corridor allowed the (now-long vanished) wardens to document your every motion. At the end of your containment chamber, an access gate with a few drawbridges allow access in and out of your cell - a privilege which is naturally not yours to choose.</p>
+<p>Spoiler alert: those drawbridges won't stay locked for long. The cataclysm still rages outside the facility, and its perpetrators know you're trapped in there - your mind teeming with memories and an identity ripe for claiming. That will be something for a future week.</p>
+<h1 id="bonus-tighten-your-seat-belts">Bonus: Tighten Your Seat-Belts</h1>
+<p>Oh, as I was tinkering around with some potentially fun spell combinations, here is a particularly hilarious one I stumbled upon:</p>
+<ul>
+<li>The EGO Form targets yourself (+4 Potency).</li>
+<li>The GYVJI Function causes all targets to be brutally punched backwards, until they collide with an object, at which point they take massive damage and emit a damaging shockwave (at 4 Potency or more).</li>
+<li>The PARACEON Function causes all targets to gain temporary invincibility for Potency x 1 turns.</li>
+</ul>
+<p>This means:</p>
+<ul>
+<li>EGO-PARACEON: You become temporarily invincible. Neat but boring.</li>
+<li>EGO-GYVJI: You launch yourself into a wall and perish pathetically.</li>
+<li>EGO-PARACEON-GYVJI: You BLAST OUT like a ROCKET LAUNCHER and EXTERMINATE every bystander with the shockwave, and leave COMPLETELY UNHARMED.</li>
+</ul>
+<p>For bonus fun, add a good Contingency, like the &quot;on Step&quot; one I mentioned above.</p>
+<p><a href="https://youtu.be/OnkBRvsLQ90">Demonstration.</a></p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-04-14-diy-divinity/">DIY Divinity</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-04-14
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Disassemble a legend, and realize what it is made of - bits and pieces of thoughts from those who shared it. Sew the storytellers back together, and gain power only spoken of in myths.&quot;</em></p>
+<ul>
+<li>flavour text of the &quot;Reforging Legends Past&quot; tutorial node</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.2 online in browser on itch.io!</a>)</em></p>
+<p>First, I had a problem with the map generation system generally making unfun structures. Therefore, I made it so the player can build their own dungeon networks, since they probably know better than I do what is fun for them. When in doubt, outsource the labour.</p>
+<p>Now, I am doing the same for spells.</p>
+<h1 id="diy-divinity">DIY Divinity</h1>
+<p>I am retiring the concept of multiple pre-defined spells from my game - the à la DCSS kind with a massive list to choose from. I have all this lore about souls being malleable and adaptative, and then I forcefeed the player with hardcoded, immutable effects. No can do.</p>
+<p>Instead, I have enabled the player to craft their own tools of destruction (and occasionally, creation)! Right now, there are two possible classes of components:</p>
+<ul>
+<li>
+<p><strong>Form</strong> components target specific tiles. The Ego Form targets the tile you are standing on, the Beam Form targets all tiles in a straight line in front of you, and so on. They also assign their Caste to the Spell - Ego is Saintly, so all Ego- spells are Saintly as well.</p>
+</li>
+<li>
+<p><strong>Function</strong> components trigger an effect at each of the targeted tiles. The Senet Function induces Charm Touch status effects on all targets, the Gyvji Function punches all targets back, and so on.</p>
+</li>
+</ul>
+<p>Each component has a pattern. For example, <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507831370391693/Capture_decran_le_2023-04-14_a_14.35.23.png">this</a> is Senet and <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507831575904339/Capture_decran_le_2023-04-14_a_14.35.38.png">this</a> is Ego. If you imprison souls in the Soul Cage to draw those patterns <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507831915659404/Capture_decran_le_2023-04-14_a_14.38.56.png">like so</a>, the Vision they create becomes special - upon clearing it, you will be awarded with an Ego-Senet spell. It is Saintly, because of the Ego- part. That means that from now on (after equipping the new spell), every single time you'll use a Saintly soul, instead of being healed, you'll enchant yourself with a Charm Touch.</p>
+<p>Lore-wise, you are stitching together bits and pieces of the identities of your hapless prisoners. It's like the psychic equivalent of that &quot;flesh golem&quot; trope assembled from the body parts of many different species, but with minds instead of muscles. </p>
+<p>With every update, this magic is getting darker and darker... Oh well, there are too many heroes in roguelikes anyhow.</p>
+<p>Here is what <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507480349102221/gyvjitest.gif">Beam-Gyvji</a> looks like - reliant on the Unhinged caste (because of Beam-), it fires out a hyper-knockback laser upon the first encountered unsuspecting fool. Sorry about the low framerate, I have yet to find a good GIF recorder that works on OSX (this is LICECap, suggested in the subreddit sidebar).</p>
+<p>Fun? So far, very much so. Broken? I expect it to be. With free reign over what can be combined together, the player will probably be able to assemble some pretty deranged contraptions. Frankly, that's part of the fun, but I'll have to keep this system in check to ensure things remain interesting.</p>
+<h1 id="the-bottomless-dream-pit">The Bottomless Dream-Pit</h1>
+<p>I made a <a href="https://www.reddit.com/r/roguelikedev/comments/129a6k8/between_mystery_and_strategy_how_many_secrets_is/">thread</a> a little while back wondering how I'd actually present those possible patterns to the player. I think I've made my decision - they are all somewhere in the <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096513051081056387/Capture_decran_le_2023-04-14_a_15.11.05.png">research tree</a>, but their placements are semi-randomized (semi-, because I want simple stuff like Ego- to come up early), and must be unlocked progressively. Each time the player crafts a new spell, all patterns used in the process are &quot;researched&quot; and the next nodes linked to it are unlocked, granting access to more complicated patterns.</p>
+<p>There are also some &quot;tutorial&quot; nodes here and there which teach game mechanics, and are &quot;researched&quot; when the player does an action that shows mastery of the mechanic. For example, the node about <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096513940894265414/Capture_decran_le_2023-04-14_a_15.14.26.png">Turbulent Souls</a> is &quot;researched&quot; (green border) when the player successfully contains one inside the Soul Cage.</p>
+<p>It seems to me like a rather interesting gameplay loop - draw patterns in the Cage, go challenge the Vision, return to claim your new spell, look at unlocked nodes... And craft a new spell, more powerful but requiring the defeat of a more difficult Vision, which your new spell should help you with. Great replayability - you might get the same Form two runs in a row, but that's just an invitation to try combining it with different Functions. I might try to go for a &quot;skill tree&quot; of sorts and make it so researching a certain pattern prevents you from researching another, forcing you to make choices.</p>
+<p>The only small problem is that unlike the old versions of my game, there is kind of... uh, no way to lose. If you fail a Vision, sure, the souls get scrapped into Shattered Souls, but the only way you'd actually be done for would be somehow breaking every single one of your Souls. It can pathetically happen at the very beginning of the game when you only have one, but after that, it gets quite improbable.</p>
+<p>I have ideas for a system that will add a proper loss condition, but that will be the topic of a future post...</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/25/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/27/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2024
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
