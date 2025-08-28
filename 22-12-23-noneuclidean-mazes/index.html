@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/22-12-23-noneuclidean-mazes/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/22-12-23-noneuclidean-mazes/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-12-23-noneuclidean-mazes/">Noneuclidean Mazes</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-12-23
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;The gate has opened, revealing the arrays of pistons and tubes within. One seal broken, one more nail in the coffin of the Old World.&quot;</em></p>
+<ul>
+<li>Unraveled Seal description</li>
+</ul>
+<p><strong>The Games Foxes Play</strong> (<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play online in browser on itch.io!</a>) </p>
+<p>My motivation had been wavering in November, causing a long month of very little updates. How strange, considering how rent free my game's lore and mechanics had lived in my head during that time. This week, I asked myself, &quot;Why didn't I feel like actually putting in the work?&quot;</p>
+<p>I figured it out. My game was <em>too disconnected</em>. It had these cool robot snakes, these laser beams, these epic towers with creatures punching the daylights out of each other, but it didn't feel like a place that actually had a <em>physical presence</em>. You weren't exploring some techno-spiritual dungeon, you were solving puzzles clearly labeled as &quot;level 1&quot; or &quot;level 6&quot; like it's some bus commute mobile game.</p>
+<p>This week, I devoted myself to fixing this. No, it's not what I had planned in my last post. My lifeblood is chaos and my style is spontaneity. Design documents? Never heard of them.</p>
+<h2 id="hyperrogue-s-got-a-contender">HyperRogue's Got a Contender</h2>
+<p>The most important feature was a <strong>complete overhaul</strong> of the way the game generates rooms. Now, leaving a room does <em>not</em> cause its existence to vaporize out of the program's memory, and every single cube your @ explores is neatly stored inside a World object. This means it is now possible to retrace your steps back to any previously explored location! Consider it the equivalent to this mystical &quot;up-staircase&quot; that befuddles so many roguelike developers.</p>
+<p>Additionally, my game is no longer a linear corridor of utter boredom, but rather a twisted, sprawling maze. Each time a door is passed, a new room is generated and added to the world, while the previous ones remain in memory. This means two things: first, the dungeon is <em>infinite</em>, and second, it laughs in the face of the feeble laws of three dimensional space. Going in a loop pattern (→↓←↑) will result in reaching a <em>completely different location</em> than the original room. This latter mechanic is the result of <del>me being too lazy to program an actual room matrix that makes sense</del> reinforcing the atmosphere that the corridors of Faith's End truly embody the meaning of &quot;mind over matter&quot;, fitting for its nature as a divinity's dream. I want the player to feel lost, and to occasionally ask themselves &quot;wait, that didn't make sense...&quot; while trying to parse the structure of the dungeon in their minds. For the game's setting to succeed, its world must feel &quot;convincingly fake&quot;.</p>
+<p>Okay. Maybe I'm just hyping myself up over some &quot;it's not a bug, it's a feature&quot; kind of deal. As I continue development, I will decide whether I want sensible room geometry or not. It would certainly make a minimap much easier to implement.</p>
+<p>Dying (my game is still a roguelike, you have very limited extra lives, it's a whole mechanic) will also whisk you off to a <em>completely</em> new location, and <em>delete</em> the World object's maze you met your demise in, replacing it with a fresh one. You will <em>not</em> be returning to that previous location without external help. Right when you start to feel a sense of familiarity and knowing your way around a few rooms, all it takes is a careless battle to go back to prodding in the darkness. I imagine Faith's End as this planetary-sized brutalist complex of dull stone and metal, so incredibly massive each reincarnation draws you thousands of kilometers away from your death point.</p>
+<p>As always, <a href="https://youtu.be/p6wzGk3m7tg">demonstration</a>.</p>
+<p>This implementation challenged my neurons quite significantly, and it caused a few weird quirks. I am grateful for the commenters from <a href="https://www.reddit.com/r/roguelikedev/comments/zsn3fw/what_are_some_of_your_most_cursed_examples_of/">yesterday's thread</a> - thanks to the advice I received, I figured out that the invisible player clones were in fact the player entity getting &quot;saved&quot; alongside everything else in the room just before the room transition actually happens. Now, I made it so the Player entity isn't saved upon leaving a room, which seems to have fixed the issue in a much cleaner way! As for the &quot;player phased out until they move&quot; bug, I realized that this was because the player entity was actually getting placed in the <em>previous</em> room they just came from, and that the real position was only updated after calling the move function. I changed the player spawning function to be based off the level itself instead of arbitrary coordinates, and now it works like a charm!</p>
+<h2 id="the-illusion-of-choice">The Illusion of Choice</h2>
+<p>Now, of course, there is the issue that in an infinite space, there is no difference between going left, right or forwards. A player who has understood the true nature of Faith's End could simply go in random directions and constantly uncover uncharted lands, never bothering to retrace their steps. While that illusion of choice does fit well with the game's lore, I have a plan to make one's path through the dungeon more meaningful... stay tuned.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/22-12-16-edgeguard-upair/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Edgeguard Upair</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/22-12-23-a-spark-then-oblivion/">
+                            <span class="button__text">A Spark, then Oblivion</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

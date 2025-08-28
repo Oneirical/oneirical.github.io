@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/nsec/">Ketamine In The DNA, Average Day</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-19
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/ctf/">#ctf</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/writeups/">#writeups</a></span>
+    
+
+
+                    <div class="post-content">
+            <p>I am freshly returning from Northsec, a large size cybersecurity Capture The Flag competition in my province - Québec, Canada - and while I spent an unreasonable amount of time on a cryptography challenge way above my skill level (&quot;Olfactive Memory System&quot;) just because I saw it was written in Rust and I got excited, I still snuck in a solve of this fun challenge among my efforts.</p>
+<h1 id="3-points-genetic-system">(3 Points) Genetic System</h1>
+<blockquote>
+<p>Mr Wellington wants to ensure that he can easily repair his inner organs by generating stem cells at will. We’ve been severly warned to not do anything bad with this code, but we have to give it a try. To help generate genetic construction, we’ve been granted a copy of the advanced “game” needed to generate a 4-letters sequence and provide the expected value. It’s named the Stem Cell Generator advanced game, Boy/Girl edition. So for this, find a way to understand how to run that weird game, and then you’ll have to reverse engineer it. Let us know when you found the right answer.</p>
+</blockquote>
+<p>Upon opening the <code>.gba</code> (Game Boy Advance - yes, Evie, I wrote it &quot;Game Boy&quot; and not &quot;Gameboy&quot;, I remember!) file, we are met with this ultra-sophisticated UI, which demands an input of 4 letters:</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/nsec/page1.png" alt="The challenge window, showing the sequence AAAA" class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<blockquote>
+<p>&quot;The challenge is called Genetic System. Of course the code will be composed of AGCT. 4x4x4x4 combinations, for a total of 256, this will be easy to run trial and error on!&quot; - blissfully unaware me</p>
+</blockquote>
+<p>I flick the first letter.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/nsec/page2.png" alt="The challenge window, showing the sequence BAAA" class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>Well. 26x26x26x26 = 456 976 combinations. This will be fun.</p>
+<p>Cracking open this program with a reverse engineering utility (in my case, <a href="https://binary.ninja/">Binary Ninja</a>) reveals its inner workings... starting with this function, directing the user's ability to change the 4 letter sequence:</p>
+<pre data-lang="c" style="background-color:#151515;color:#e8e8d3;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#8fbfdc;">if </span><span>(</span><span style="color:#ffb964;">key_hit</span><span>(</span><span style="color:#cf6a4c;">0x20</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>{
+</span><span>    cursor = (cursor - </span><span style="color:#cf6a4c;">1</span><span>);
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>(cursor &lt; </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        cursor = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>}
+</span><span style="color:#8fbfdc;">if </span><span>(</span><span style="color:#ffb964;">key_hit</span><span>(</span><span style="color:#cf6a4c;">0x10</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>{
+</span><span>    cursor = (cursor + </span><span style="color:#cf6a4c;">1</span><span>);
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>(cursor &gt; </span><span style="color:#cf6a4c;">3</span><span>)
+</span><span>    {
+</span><span>        cursor = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The left and right keys let us move the cursor across all four letters...</p>
+<pre data-lang="c" style="background-color:#151515;color:#e8e8d3;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#8fbfdc;">if </span><span>(</span><span style="color:#ffb964;">key_hit</span><span>(</span><span style="color:#cf6a4c;">0x40</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>{
+</span><span>    *(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>) = ((int8_t)(((((uint32_t)*(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>)) + </span><span style="color:#cf6a4c;">1</span><span>) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>));
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>(((uint32_t)*(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>)) &gt; </span><span style="color:#cf6a4c;">0x5a</span><span>)
+</span><span>    {
+</span><span>        *(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>) = </span><span style="color:#cf6a4c;">0x41</span><span>;
+</span><span>    }
+</span><span>}
+</span><span style="color:#8fbfdc;">if </span><span>(</span><span style="color:#ffb964;">key_hit</span><span>(</span><span style="color:#cf6a4c;">0x80</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>{
+</span><span>    *(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>) = ((int8_t)(((((uint32_t)*(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>)) - </span><span style="color:#cf6a4c;">1</span><span>) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>));
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>(((uint32_t)*(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>)) &lt;= </span><span style="color:#cf6a4c;">0x40</span><span>)
+</span><span>    {
+</span><span>        *(uint8_t*)((cursor * </span><span style="color:#cf6a4c;">0xc</span><span>) + </span><span style="color:#cf6a4c;">0x3000244</span><span>) = </span><span style="color:#cf6a4c;">0x5a</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>As for the up and down keys, they are editing variables located at the memory address 50332228 (0x3000244), plus 12 (0xc) for each cursor shift. As for the nested <code>if</code> statements with <code>0x41</code> and <code>0x5a</code>, they reset the counter back to A or Z if trying to find some mysterious 27th or 0th letter of the alphabet, respectively.</p>
+<p>What are <code>0x41</code> and <code>0x5a</code>? <a href="https://ss64.com/ascii.html">The codes for A and Z in hexadecimal, respectively.</a></p>
+<p>Let us see what lives at those addresses:</p>
+<pre data-lang="c" style="background-color:#151515;color:#e8e8d3;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#cf6a4c;">03000244  </span><span style="color:#8fbfdc;">char</span><span> key_chars = </span><span style="color:#cf6a4c;">0x0
+</span><span style="color:#cf6a4c;">03000250  </span><span style="color:#8fbfdc;">char</span><span> data_3000250 = </span><span style="color:#cf6a4c;">0x0
+</span><span style="color:#cf6a4c;">0300025c  </span><span style="color:#8fbfdc;">char</span><span> data_300025c = </span><span style="color:#cf6a4c;">0x0
+</span><span style="color:#cf6a4c;">03000268  </span><span style="color:#8fbfdc;">char</span><span> data_3000268 = </span><span style="color:#cf6a4c;">0x0
+</span></code></pre>
+<p>Hmm, yes, <code>data_300250</code>, what a poetic way to say &quot;second letter in the secret combination&quot;. Now, let us see what we need to print out the flag...</p>
+<pre data-lang="c" style="background-color:#151515;color:#e8e8d3;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#8fbfdc;">if </span><span>(</span><span style="color:#ffb964;">evaluation_routine</span><span>() == </span><span style="color:#cf6a4c;">1</span><span>) {
+</span><span>  sprintf(&amp;var_38, </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">FLAG-</span><span style="color:#7697d6;">%s%s%s%s</span><span style="color:#556633;">&quot;</span><span>, &amp;var_15c);
+</span><span>}
+</span><span style="color:#8fbfdc;">while </span><span>(true)
+</span><span>{
+</span><span>    </span><span style="color:#ffb964;">tte_write</span><span>(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">FAILURE</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>}
+</span></code></pre>
+<p>We require a function named <code>evaluation_routine</code> to equal 1, or else, we enter an infinite loop where all our efforts to escape are rendered futile (until the big RESET button in my emulator is pressed, naturally).</p>
+<p>That function is where the secret code is revealed to us... in a slightly indirect fashion.</p>
+<pre data-lang="c" style="background-color:#151515;color:#e8e8d3;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#8fbfdc;">if </span><span>(((uint32_t)(key_chars &amp; </span><span style="color:#cf6a4c;">0xf0</span><span>)) != </span><span style="color:#cf6a4c;">0x40</span><span>)
+</span><span>{
+</span><span>    r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>}
+</span><span style="color:#8fbfdc;">else if </span><span>(((uint32_t)(key_chars &amp; </span><span style="color:#cf6a4c;">0xf</span><span>)) != </span><span style="color:#cf6a4c;">5</span><span>)
+</span><span>{
+</span><span>    r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>}
+</span><span style="color:#8fbfdc;">else
+</span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">char</span><span> r2_6 = data_3000250;
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>(((((uint32_t)r2_6) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>) &lt; </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">0x40</span><span>) == </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">0x20</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">0x10</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">8</span><span>) != </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">4</span><span>) == </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">2</span><span>) == </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((uint32_t)r2_6) &amp; </span><span style="color:#cf6a4c;">1</span><span>) == </span><span style="color:#cf6a4c;">0</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else if </span><span>((((((uint32_t)r2_6) ^ ((uint32_t)data_300025c)) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>) != </span><span style="color:#cf6a4c;">0x16</span><span>)
+</span><span>    {
+</span><span>        r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">else
+</span><span>    {
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>((((((uint32_t)(data_3000268 &amp; </span><span style="color:#cf6a4c;">0xf0</span><span>)) &amp; </span><span style="color:#cf6a4c;">0x40</span><span>) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>) != </span><span style="color:#cf6a4c;">0x40</span><span>)
+</span><span>        {
+</span><span>            r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#8fbfdc;">else
+</span><span>        {
+</span><span>            </span><span style="color:#8fbfdc;">if </span><span>(((uint32_t)(data_3000268 &amp; </span><span style="color:#cf6a4c;">0xf</span><span>)) == </span><span style="color:#cf6a4c;">0xb</span><span>)
+</span><span>            {
+</span><span>                r3 = </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>            }
+</span><span>            </span><span style="color:#8fbfdc;">else
+</span><span>            {
+</span><span>                r3 = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span><span style="color:#8fbfdc;">return</span><span> r3;
+</span></code></pre>
+<p>Wew. Good thing this is just a 4-letter code, or else, the Tentacular Mass of Writhing If Statements would grow as large as a star and would devour the universe as we know it.</p>
+<p>We already know which variable corresponds to each letter in the combination (here is a reminder):</p>
+<pre data-lang="c" style="background-color:#151515;color:#e8e8d3;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#8fbfdc;">char</span><span> key_chars </span><span style="color:#888888;">// Letter 1
+</span><span style="color:#8fbfdc;">char</span><span> data_3000250 </span><span style="color:#888888;">// Letter 2
+</span><span style="color:#8fbfdc;">char</span><span> data_300025c </span><span style="color:#888888;">// Letter 3
+</span><span style="color:#8fbfdc;">char</span><span> data_3000268 </span><span style="color:#888888;">// Letter 4
+</span></code></pre>
+<p>We need to find the letters that will pass through all of those bitwise checks without ever tripping one, and landing on the dreaded <code>r3 = 0</code> pitfalls, which will place us in the <code>FAILURE</code> eternal loop.</p>
+<p>Understanding what the bitwise checks actually do is not required to solve the challenge - the 4 letter sequence can now be brute-forced by testing every single letter of the alphabet against each check.</p>
+<p>Here is my quick Rust script to get the job done:</p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> letter in </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">A</span><span style="color:#556633;">&#39;</span><span>..=</span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">Z</span><span style="color:#556633;">&#39; </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> letter_32 = letter as </span><span style="color:#8fbfdc;">u32</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>(letter_32 &amp; </span><span style="color:#cf6a4c;">0xf0</span><span>) == </span><span style="color:#cf6a4c;">0x40 </span><span>&amp;&amp; (letter_32 &amp; </span><span style="color:#cf6a4c;">0xf</span><span>) == </span><span style="color:#cf6a4c;">5 </span><span>{
+</span><span>            println!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Character &#39;</span><span style="color:#7697d6;">{}</span><span style="color:#99ad6a;">&#39; meets conditions.</span><span style="color:#556633;">&quot;</span><span>, </span><span style="color:#8fbfdc;">char</span><span>::from_u32(letter_32).unwrap());
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> letter in </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">A</span><span style="color:#556633;">&#39;</span><span>..=</span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">Z</span><span style="color:#556633;">&#39; </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> letter_32 = letter as </span><span style="color:#8fbfdc;">u32</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>((letter_32 &lt;&lt; </span><span style="color:#cf6a4c;">24</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">24</span><span>) &gt;= </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">0x40</span><span>)!= </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">0x20</span><span>) == </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">0x10</span><span>) == </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">8</span><span>) == </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">4</span><span>)!= </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">2</span><span>)!= </span><span style="color:#cf6a4c;">0 </span><span>&amp;&amp;
+</span><span>           (letter_32 &amp; </span><span style="color:#cf6a4c;">1</span><span>)!= </span><span style="color:#cf6a4c;">0 </span><span>{
+</span><span>            println!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Character &#39;</span><span style="color:#7697d6;">{}</span><span style="color:#99ad6a;">&#39; meets conditions.</span><span style="color:#556633;">&quot;</span><span>, </span><span style="color:#8fbfdc;">char</span><span>::from_u32(letter_32).unwrap());
+</span><span>        }        
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> letter in </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">A</span><span style="color:#556633;">&#39;</span><span>..=</span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">Z</span><span style="color:#556633;">&#39; </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> letter_32 = letter as </span><span style="color:#8fbfdc;">u32</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>(((</span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">G</span><span style="color:#556633;">&#39; </span><span>as </span><span style="color:#8fbfdc;">u32 </span><span>^ letter_32) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>) == </span><span style="color:#cf6a4c;">0x16</span><span>{
+</span><span>            println!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Character &#39;</span><span style="color:#7697d6;">{}</span><span style="color:#99ad6a;">&#39; meets conditions.</span><span style="color:#556633;">&quot;</span><span>, </span><span style="color:#8fbfdc;">char</span><span>::from_u32(letter_32).unwrap());
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> letter in </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">A</span><span style="color:#556633;">&#39;</span><span>..=</span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">Z</span><span style="color:#556633;">&#39; </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> letter_32 = letter as </span><span style="color:#8fbfdc;">u32</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>((((letter_32 &amp; </span><span style="color:#cf6a4c;">0xf0</span><span>) &amp; </span><span style="color:#cf6a4c;">0x40</span><span>) &lt;&lt; </span><span style="color:#cf6a4c;">0x18</span><span>) &gt;&gt; </span><span style="color:#cf6a4c;">0x18</span><span>) == </span><span style="color:#cf6a4c;">0x40 </span><span>&amp;&amp; letter_32 &amp; </span><span style="color:#cf6a4c;">0xf </span><span>== </span><span style="color:#cf6a4c;">0xb</span><span>{
+</span><span>            println!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Character &#39;</span><span style="color:#7697d6;">{}</span><span style="color:#99ad6a;">&#39; meets conditions.</span><span style="color:#556633;">&quot;</span><span>, </span><span style="color:#8fbfdc;">char</span><span>::from_u32(letter_32).unwrap());
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Note the <code>b'A'</code>, converting from uppercase letters to their binary equivalents (an array of 8 unsigned 8-bit integers). Another amusing detail is the bitwise operation on 'G' in the third letter loop - indeed, the original code uses the variable tied to the second character (data_3000250) to check for the validity of the third character. As I was writing my code letter-by-letter, I was able to find out that the second loop always returns G as the only viable character.</p>
+<p>For the curious, here is what is happening in the first loop:</p>
+<ol>
+<li><code>E</code>, rendered in binary, is <code>01000101</code>.</li>
+<li><code>01000101 &amp; 0xf</code> fetches the last 4 bits, which becomes <code>00000101</code>, which is equal to 5, or <code>00000101</code> in binary.</li>
+<li><code>01000101 &amp; 0xf0</code> only fetches the first 4 bits, which becomes <code>01000000</code>, and this is indeed equal to <code>0x40</code>, or <code>01000000</code> in binary.</li>
+<li>No other letter allows both of these checks to be true at once.</li>
+<li>All other loops do the same thing, with simply more numerous or varied checks.</li>
+</ol>
+<p>And so, running this script returns the sequence: <code>EGQK</code>. Not much of a genetic code, now is it? There's guanine in there, sure, but what else? Ethanol? Quinine?? KETAMINE??? This Mr. Wellington's sure is a peculiar gentleman.</p>
+<p>Regardless of any esoteric DNA composition, the code is indeed correct, and fetches us the flag!</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/nsec/page3.png" alt="The challenge window, showing the sequence EGQK and the revealed flag!" class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<h1 id="technology-sprints-and-marathons">Technology Sprints and Marathons</h1>
+<p>I enjoyed my time at Northsec, but I have to say, the conditions are... dangerous. Over 16 hours of continued CTF solving on Saturday? Pizza served at 23:00? An waterfall of coffee perpetually flowing?</p>
+<p>I think the CSGames were a little more reasonable in that aspect by granting 3 hour time limits after the initial revelation of each challenge. I don't know how much sleep the leading teams sacrificed, but closing challenges at 3:00 in the morning feels a bit like an encouragement of crunch culture.</p>
+<p>Technology is a long and iterative process. Keeping a service secure is a matter of months of maintenance and investment in stable, robust protocols. Solutions cooked up in single day will crash and burn - even the so-called perfect ones, once you leave and the caretaking of your precious baby is entrusted to a successor with... less attachment to the guarantees of quality you pushed forwards.</p>
+<p>Of course, it's a CTF. It's all in good fun. Work remains work, play remains play. Just don't make overwork a habit under the pressure of time...</p>
+<p>Or else, once one can't take it anymore and is forced to quit, one will soon have time. Lots, lots of time.</p>
+<p><em>If you enjoyed this writeup, feel free to contact me!</em></p>
+<ul>
+<li>Discord: oneirical</li>
+<li>Reddit: https://old.reddit.com/user/oneirical/</li>
+<li>Zulip: https://rust-lang.zulipchat.com/#user/693959</li>
+<li>Email: julien-robert@videotron.ca</li>
+</ul>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc3/">Rusty Cogs, One Big Machine</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-18
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <h1 id="it-s-me-the-google-sucker-of-code">It's Me, The Google Sucker Of Code</h1>
+<p>While browsing through the Web, I found the <a href="https://discord.gg/rust-lang-community">Rust Discord Server Where The Cool Kids Hang Out</a> and found some pearls in the chat history:</p>
+<blockquote>
+<p>lol which fortunate T-compiler person is willing to mentor the run-make test RiiR GSoC project - Jieyou Xu</p>
+</blockquote>
+<p>You, apparently!</p>
+<blockquote>
+<p>the poor GSoC candidate does not know what evil lies ahead of them - Jieyou Xu</p>
+</blockquote>
+<p>I am only beginning to realize.</p>
+<blockquote>
+<p>Hello, it's me, the sucker who was roped into this - Oneirical (me)</p>
+</blockquote>
+<blockquote>
+<p>Welcome <del>sucker</del> esteemed person! - Jubilee</p>
+</blockquote>
+<blockquote>
+<p>i like how we keep discovering new cursedness and WTF moments in test suites - Jieyou Xu</p>
+</blockquote>
+<p>Hm, the production of WTFs per minute has just started becoming noticeable. In fact, to find this exact quote, I searched &quot;WTF by:(Jieyou's username)&quot; and found exactly 72 matches, with almost every single one tied to some horribly cursed Bash command hack. The point where I truly scored my foothold in the WTF manufactory economy was likely in this specific moment:</p>
+<pre data-lang="sh" style="background-color:#151515;color:#e8e8d3;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb964;">ifneq</span><span> (,$(</span><span style="color:#ffb964;">findstring</span><span> x86,$(</span><span style="color:#ffb964;">TARGET</span><span>)))
+</span></code></pre>
+<blockquote>
+<p>findstring returns $(TARGET) (non-empty) if it contains the substring x86 or an empty string otherwise, so checking that findstring does not return an empty string checks that target contains the substring... - Jieyou Xu</p>
+</blockquote>
+<p>I beg your pardon? This is actually a great explanation... once you read it 5 times or so.</p>
+<p>This is really making me want to compile some of the biggest WTF moments throughout this project and build a little &quot;run-make House of Horror&quot; to spook and scare Rust enjoyers. I already have an excellent introductory addition, with no doubt more to come. I'm pretty sure I noticed a <code>sleep 1</code> getting changed into a <code>sleep 2</code> somewhere for the sole purpose of securing compatibility with the FreeBSD operating system...</p>
+<p>Anyhow, this week was marked with the first line of code committed to the Rust repository during the summer, with more to accompany it:</p>
+<h3 id="merged">Merged</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125024">3 Very Similar Alloc Tests</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125026">c-link-to-rust-va-list-fn</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125047">reachable-extern-fn-available-lto</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125031">same-lib-two-locations-no-panic</a>, where I learned all the fun of OS-specific file extensions.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125027">c-link-to-rust-staticlib</a>, where I clicked on a button on GitHub and was just one command away from pinging the entire Rust maintainer team again. Disaster averted. I have learned.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125104">no-cdylib-as-rdylib</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125146">panic-impl-transitive</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125213">static-unwinding</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125215">share-generics-export-again</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125221">box-struct-no-segfault</a></li>
+</ul>
+<h3 id="open">Open</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a>, a much scarier test, which contained the cursed <code>ifneq</code> shown above and which will require some further review until it looks mergeable.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125218">no-intermediate-extras</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125227">reset-codegen-1</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125222">no-mark-noalias</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125224">external-crate-panic-handle-no-lint</a></li>
+</ul>
+<p>That's a bucketload of pull requests... <a href="https://github.com/rust-lang/rust/pull/125224#issuecomment-2118340932">which did not go unnoticed</a>. Dialing it down and bundling some tests together should be warranted from now on.</p>
+<p>Most of these were quite easy and required adding few helper functions... so I wouldn't get too excited just yet. This project is likely getting extended to some amount of weeks that is bigger than 16.</p>
+<h1 id="reading-much-harder-than-writing">Reading, Much Harder Than Writing?</h1>
+<p>I used to get a little intimidated when I finished a 10 lines of code pull request, and see that in the meantime, another GSoC contributor (if you're reading this, hello FractalFir :3) was building their own personal virtual cathedral, stained glass masterpieces included.</p>
+<p>I am obviously not as experienced as them, but there's something else at play... the <a href="https://github.com/FractalFir/rustc_codegen_clr">Rust-.NET code generator</a> is practically a solo project, without a code review process, while directly making pull requests to a gigantic established codebase requires not only understanding what has been written by people-who-are-not-you, but also integrating your own work within... ensuring that the aforementioned people-who-are-not-you will be able to make heads and tails of it.</p>
+<p>It's the first time I am part of something so massive in the technology field. I've always done solo projects like this where I would dump huge bucketloads of code in my personal repository daily. Going from this to the snail's pace of open source is a true change of paradigm... but one I find so very educational. I already knew &quot;lines of code are not a good metric&quot;, but experiencing directly such a striking example really hardens this truth.</p>
+<p>It is amusing to think that the Rust-.NET code generator may eventually become one such open source project, with a code review process and integration in software like Unity... Maybe it's going to be a GSoC organization one day.</p>
+<p>Hehe, that's a far-fetched thought. Keep building your cathedral, Fractal, you have something very awesome on your hands.</p>
+<p>The <code>run-make</code> test rewrites may not be as glamorous as a Whole New Thing, but we all have our part to play in the ecosystem. Each brick we put down is one step closer to higher quality engineering. I am glad to be part of this community :3</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/8/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/10/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

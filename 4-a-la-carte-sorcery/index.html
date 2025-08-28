@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/4-a-la-carte-sorcery/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/4-a-la-carte-sorcery/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/4-a-la-carte-sorcery/">Bevy Traditional Roguelike Quick-Start - 4. À la Carte Sorcery</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-10-05
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/bevy/">#bevy</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tutorial/">#tutorial</a></span>
+    
+
+        <div class="post-content">
+            <p>With our only unique skill of note being moving around, it's hard to feel emotionally invested in these poor critters running in circles forever in an unbreakable cage. An inevitable component of fantasy gaming is required: magic.</p>
+<p>Now, with the way the system is currently set up, &quot;pressing this button to dash forwards 4 spaces&quot; would be extremely easy. We can do better - a system which would normally be painful to implement, but which takes advantage of Rust's pattern matching and enums, as well as Bevy's system ordering... Enter - <strong>Spell Crafting</strong>.</p>
+<blockquote>
+<p><strong>Design Capsule</strong>
+<br />
+Spells will be composed of a series of <strong>Forms</strong> and <strong>Functions</strong>. Forms choose tiles on the screen, and Functions execute an effect on those tiles. In the case of a lasso, for example, the Form is a projectile and the Function is getting constricted.</p>
+</blockquote>
+<p>Create a new file, <code>spells.rs</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span>use bevy::prelude::*;
+</span><span>
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">SpellPlugin</span><span>;
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">SpellPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {}
+</span><span>}
+</span></code></pre>
+<p>Don't forget to link it into <code>main.rs</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// main.rs
+</span><span>
+</span><span style="color:#888888;">// SNIP
+</span><span style="color:#8fbfdc;">mod </span><span style="color:#ffb964;">spells</span><span>;
+</span><span>
+</span><span style="color:#888888;">// SNIP
+</span><span>use spells::SpellPlugin;
+</span><span>
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        .add_plugins((
+</span><span>            SpellPlugin, </span><span style="color:#888888;">// NEW!
+</span><span>            EventPlugin,
+</span><span>            GraphicsPlugin,
+</span><span>            MapPlugin,
+</span><span>            InputPlugin,
+</span><span>        ))
+</span><span>        .run();
+</span><span>}
+</span></code></pre>
+<h1 id="d-i-y-wizard">D.I.Y. Wizard</h1>
+<p>Now, we may start to populate this new plugin with some starting structs and enums. I named the individual components that form a <code>Spell</code> &quot;<code>Axiom</code>&quot; because:</p>
+<ol>
+<li>Calling them &quot;Components&quot; would get confusing fast with Bevy components.</li>
+<li>They are things that happen, an enforceable truth.</li>
+<li>The word &quot;Axiom&quot; is just dripping with flair and style.</li>
+</ol>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#888888;">/// Triggered when a creature (the `caster`) casts a `spell`.
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">CastSpell </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">caster</span><span>: Entity,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">spell</span><span>: Spell,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component, Clone)]
+</span><span style="color:#888888;">/// A spell is composed of a list of &quot;Axioms&quot;, which will select tiles or execute an effect onto
+</span><span style="color:#888888;">/// those tiles, in the order they are listed.
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Spell </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">axioms</span><span>: Vec&lt;Axiom&gt;,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Debug, Clone)]
+</span><span style="color:#888888;">/// There are Form axioms, which target certain tiles, and Function axioms, which execute an effect
+</span><span style="color:#888888;">/// onto those tiles.
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">Axiom </span><span>{
+</span><span>    </span><span style="color:#888888;">// FORMS
+</span><span>    </span><span style="color:#888888;">/// Target the caster&#39;s tile.
+</span><span>    Ego,
+</span><span>
+</span><span>    </span><span style="color:#888888;">// FUNCTIONS
+</span><span>    </span><span style="color:#888888;">/// The targeted creatures dash in the direction of the caster&#39;s last move.
+</span><span>    Dash { max_distance: </span><span style="color:#8fbfdc;">i32 </span><span>},
+</span><span>}
+</span></code></pre>
+<p>We will begin with the very simple spell <strong>&quot;Ego, Dash&quot;</strong>. When cast, the caster dashes in the direction of their last move. Note that I didn't use &quot;Self&quot; for the self-target, because it's already taken by Rust as a keyword, and &quot;Ego&quot; sounds very cool.</p>
+<p>The implementation will rely on a struct with yet another cute name: Synapses. Named after the transmission of signals between neurons, they are like a snowball rolling down a hill and accumulating debris.</p>
+<p>When a new <code>SynapseData</code> is created, it is blank except for the fact that it knows its <code>caster</code>. It still has no tiles to target (<code>targets</code> is an empty vector), and is on the first step of its execution (<code>step</code> is <code>0</code>). As it &quot;rolls&quot; down the list of <code>Axiom</code>s, it will accumulate <code>targets</code> - tiles where the spell effect happen.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// The tracker of everything which determines how a certain spell will act.
+</span><span style="color:#8fbfdc;">struct </span><span style="color:#ffb964;">SynapseData </span><span>{
+</span><span>    </span><span style="color:#888888;">/// Where a spell will act.
+</span><span>    </span><span style="color:#ffb964;">targets</span><span>: Vec&lt;Position&gt;,
+</span><span>    </span><span style="color:#888888;">/// How a spell will act.
+</span><span>    </span><span style="color:#ffb964;">axioms</span><span>: Vec&lt;Axiom&gt;,
+</span><span>    </span><span style="color:#888888;">/// The nth axiom currently being executed.
+</span><span>    </span><span style="color:#ffb964;">step</span><span>: </span><span style="color:#8fbfdc;">usize</span><span>,
+</span><span>    </span><span style="color:#888888;">/// Who cast the spell.
+</span><span>    </span><span style="color:#ffb964;">caster</span><span>: Entity,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span style="color:#ffb964;">SynapseData </span><span>{
+</span><span>    </span><span style="color:#888888;">/// Create a blank SynapseData.
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">new</span><span>(</span><span style="color:#ffb964;">caster</span><span>: Entity, </span><span style="color:#ffb964;">axioms</span><span>: Vec&lt;Axiom&gt;) -&gt; </span><span style="color:#8fbfdc;">Self </span><span>{
+</span><span>        SynapseData {
+</span><span>            targets: Vec::new(),
+</span><span>            axioms,
+</span><span>            step: </span><span style="color:#cf6a4c;">0</span><span>,
+</span><span>            caster,
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">/// Get the Entity of each creature standing on a tile inside `targets` and its position.
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">get_all_targeted_entity_pos_pairs</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">map</span><span>: &amp;Map) -&gt; Vec&lt;(Entity, Position)&gt; {
+</span><span>        </span><span style="color:#8fbfdc;">let mut</span><span> targeted_pairs = Vec::new();
+</span><span>        </span><span style="color:#8fbfdc;">for</span><span> target in &amp;</span><span style="color:#ffb964;">self</span><span>.targets {
+</span><span>            </span><span style="color:#8fbfdc;">if let </span><span>Some(creature) = map.get_entity_at(target.x, target.y) {
+</span><span>                targeted_pairs.push((*creature, *target));
+</span><span>            }
+</span><span>        }
+</span><span>        targeted_pairs
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Each ̀synapse is like a customer at a restaurant - when a spell is cast, it is added to a <code>SpellStack</code>. The most recently added spells are handled first, which is not the hallmark of great customer service. This is because spells will later be capable of having chain reactions...</p>
+<p>For example, dashing onto a trap which triggers when it is stepped on should resolve the trap effects before continuing with the dash spell.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">cast_new_spell</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">cast_spells</span><span>: EventReader&lt;CastSpell&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> cast_spell in cast_spells.read() {
+</span><span>        </span><span style="color:#888888;">// First, get the list of Axioms.
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> axioms = cast_spell.spell.axioms.clone();
+</span><span>        </span><span style="color:#888888;">// Create a new synapse to start &quot;rolling down the hill&quot; accumulating targets and
+</span><span>        </span><span style="color:#888888;">// dispatching events.
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> synapse_data = SynapseData::new(cast_spell.caster, axioms);
+</span><span>        </span><span style="color:#888888;">// Send it off for processing - right away, for the spell stack is &quot;last in, first out.&quot;
+</span><span>        spell_stack.spells.push(synapse_data);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Each tick, we'll get the most recently added spell, and where it currently is in its execution (its <code>step</code>). We'll get the corresponding ̀<code>Axiom</code> - for example, being at step 0 in <code>[Axiom::Ego, Axiom::Dash]</code> will result in running <code>Axiom::Ego</code>. Then, we'll run a matching <strong>one-shot system</strong> - a Bevy feature I will soon demonstrate.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// Get the most recently added spell (re-adding it at the end if it&#39;s not complete yet).
+</span><span style="color:#888888;">/// Get the next axiom, and runs its effects.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">process_axiom</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">axioms</span><span>: Res&lt;AxiomLibrary&gt;,
+</span><span>    </span><span style="color:#ffb964;">spell_stack</span><span>: Res&lt;SpellStack&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// Get the most recently added spell, if it exists.
+</span><span>    </span><span style="color:#8fbfdc;">if let </span><span>Some(synapse_data) = spell_stack.spells.last() {
+</span><span>        </span><span style="color:#888888;">// Get its first axiom.
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> axiom = synapse_data.axioms.get(synapse_data.step).unwrap();
+</span><span>        </span><span style="color:#888888;">// Launch the axiom, which will send out some Events (if it&#39;s a Function,
+</span><span>        </span><span style="color:#888888;">// which affect the game world) or add some target tiles (if it&#39;s a Form, which
+</span><span>        </span><span style="color:#888888;">// decides where the Functions will take place.)
+</span><span>        commands.run_system(*axioms.library.get(&amp;discriminant(axiom)).unwrap());
+</span><span>        </span><span style="color:#888888;">// Clean up afterwards, continuing the spell execution.
+</span><span>        commands.run_system(spell_stack.cleanup_id);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>But first, how <em>do</em> we match the <code>Axiom</code> with the corresponding one-shot system? It uses <code>mem::discriminant</code> - which should be imported right away, and an <code>AxiomLibrary</code> resource.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Resource)]
+</span><span style="color:#888888;">/// All available Axioms and their corresponding systems.
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">AxiomLibrary </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">library</span><span>: HashMap&lt;Discriminant&lt;Axiom&gt;, SystemId&gt;,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span>FromWorld for </span><span style="color:#ffb964;">AxiomLibrary </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">from_world</span><span>(</span><span style="color:#ffb964;">world</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> World) -&gt; </span><span style="color:#8fbfdc;">Self </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let mut</span><span> axioms = AxiomLibrary {
+</span><span>            library: HashMap::new(),
+</span><span>        };
+</span><span>        axioms.library.insert(
+</span><span>            discriminant(&amp;Axiom::Ego),
+</span><span>            world.register_system(axiom_form_ego),
+</span><span>        );
+</span><span>        axioms.library.insert(
+</span><span>            discriminant(&amp;Axiom::Dash { max_distance: </span><span style="color:#cf6a4c;">1 </span><span>}),
+</span><span>            world.register_system(axiom_function_dash),
+</span><span>        );
+</span><span>        axioms
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>We use discriminants, because each <code>Axiom</code> can possibly have extra fields like <code>max_distance</code>, and we wish to differentiate them by variant regardless of their inner contents. We link each one with its own one-shot system, currently <code>axiom_form_ego</code> and <code>axiom_function_dash</code>. These systems - which are not yet implemented - are registered into the <code>World</code>, Bevy's term for the struct which contains... well, everything. Each time a ̀<code>Query</code> is ran, behind the scenes, it reaches into the <code>World</code> to look up entities similarly to SQL queries!</p>
+<p>Now, for the <code>SpellStack</code>:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Resource)]
+</span><span style="color:#888888;">/// The current spells being executed.
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">SpellStack </span><span>{
+</span><span>    </span><span style="color:#888888;">/// The stack of spells, last in, first out.
+</span><span>    </span><span style="color:#ffb964;">spells</span><span>: Vec&lt;SynapseData&gt;,
+</span><span>    </span><span style="color:#888888;">/// A system used to clean up the last spells after each Axiom is processed.
+</span><span>    </span><span style="color:#ffb964;">cleanup_id</span><span>: SystemId,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span>FromWorld for </span><span style="color:#ffb964;">SpellStack </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">from_world</span><span>(</span><span style="color:#ffb964;">world</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> World) -&gt; </span><span style="color:#8fbfdc;">Self </span><span>{
+</span><span>        SpellStack {
+</span><span>            spells: Vec::new(),
+</span><span>            cleanup_id: world.register_system(cleanup_last_axiom),
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>One more one-shot system to be implemented later, <code>cleanup_last_axiom</code>. Let's get started with ̀<code>Ego</code> and <code>Dash</code>'s one-shot systems. Called with <code>commands.run_system</code>, these are detached from the scheduled <code>Startup</code> and <code>Update</code>, being ran only when demanded. They will never be ran in parallel with another system, which can, in some cases, be a performance bottleneck - but it's exactly what we need for this use-case.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// Target the caster&#39;s tile.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_form_ego</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">position</span><span>: Query&lt;&amp;Position&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// Get the currently executed spell.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> synapse_data = spell_stack.spells.last_mut().unwrap();
+</span><span>    </span><span style="color:#888888;">// Get the caster&#39;s position.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> caster_position = *position.get(synapse_data.caster).unwrap();
+</span><span>    </span><span style="color:#888888;">// Add that caster&#39;s position to the targets.
+</span><span>    synapse_data.targets.push(caster_position);
+</span><span>}
+</span></code></pre>
+<p>Dashing is a significantly more involved process. For each creature standing on a tile targeted by a Form (in this case, the Player only - Ego is cast by the Player, and selects itself), they are commanded to dash in the direction of the Player's last step. This is done by effectively shooting a &quot;beam&quot; forwards, propagating through empty tiles until it hits an impassable one.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// The targeted creatures dash in the direction of the caster&#39;s last move.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_function_dash</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">teleport</span><span>: EventWriter&lt;TeleportEntity&gt;,
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: Res&lt;Map&gt;,
+</span><span>    </span><span style="color:#ffb964;">spell_stack</span><span>: Res&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">momentum</span><span>: Query&lt;&amp;OrdDir&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> synapse_data = spell_stack.spells.last().unwrap();
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> caster_momentum = momentum.get(synapse_data.caster).unwrap();
+</span><span>    </span><span style="color:#8fbfdc;">if let </span><span>Axiom::Dash { max_distance } = synapse_data.axioms[synapse_data.step] {
+</span><span>        </span><span style="color:#888888;">// For each (Entity, Position) on a targeted tile with a creature on it...
+</span><span>        </span><span style="color:#8fbfdc;">for </span><span>(dasher, dasher_pos) in synapse_data.get_all_targeted_entity_pos_pairs(&amp;map) {
+</span><span>            </span><span style="color:#888888;">// The dashing creature starts where it currently is standing.
+</span><span>            </span><span style="color:#8fbfdc;">let mut</span><span> final_dash_destination = dasher_pos;
+</span><span>            </span><span style="color:#888888;">// It will travel in the direction of the caster&#39;s last move.
+</span><span>            </span><span style="color:#8fbfdc;">let </span><span>(off_x, off_y) = caster_momentum.as_offset();
+</span><span>            </span><span style="color:#888888;">// The dash has a maximum travel distance of `max_distance`.
+</span><span>            </span><span style="color:#8fbfdc;">let mut</span><span> distance_travelled = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>            </span><span style="color:#8fbfdc;">while</span><span> distance_travelled &lt; max_distance {
+</span><span>                distance_travelled += </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>                </span><span style="color:#888888;">// Stop dashing if a solid Creature is hit and the dasher is not intangible.
+</span><span>                </span><span style="color:#8fbfdc;">if </span><span>!map.is_passable(
+</span><span>                        final_dash_destination.x + off_x,
+</span><span>                        final_dash_destination.y + off_y,
+</span><span>                    )
+</span><span>                {
+</span><span>                    </span><span style="color:#8fbfdc;">break</span><span>;
+</span><span>                }
+</span><span>                </span><span style="color:#888888;">// Otherwise, keep offsetting the dashing creature&#39;s position.
+</span><span>                final_dash_destination.shift(off_x, off_y);
+</span><span>            }
+</span><span>
+</span><span>            </span><span style="color:#888888;">// Once finished, release the Teleport event.
+</span><span>            teleport.send(TeleportEntity {
+</span><span>                destination: final_dash_destination,
+</span><span>                entity: dasher,
+</span><span>            });
+</span><span>        }
+</span><span>    } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>        </span><span style="color:#888888;">// This should NEVER trigger. This system was chosen to run because the
+</span><span>        </span><span style="color:#888888;">// next axiom in the SpellStack explicitly requested it by being an Axiom::Dash.
+</span><span>        panic!()
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This is almost perfect, aside from the fact that we have absolutely no idea what the Player's last step direction was... And that's what <code>OrdDir</code> is for!</p>
+<h2 id="weaving-magic-from-motion-orddir-momentum-component">Weaving Magic From Motion (OrdDir momentum component)</h2>
+<p><code>OrdDir</code> already exists, but it is currently nothing but a simple enum. It could be elevated into a much greater <code>Component</code>...</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// main.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component, PartialEq, Eq, Copy, Clone, Debug)] </span><span style="color:#888888;">// CHANGED: Added Component.
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">OrdDir </span><span>{
+</span><span>    Up,
+</span><span>    Right,
+</span><span>    Down,
+</span><span>    Left,
+</span><span>}
+</span></code></pre>
+<p>It will also need to be a crucial part of each <code>Creature</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// creature.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Bundle)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Creature </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">position</span><span>: Position,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">momentum</span><span>: OrdDir, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">sprite</span><span>: Sprite,
+</span><span>}
+</span></code></pre>
+<p>This will instantly rain down errors into the crate - all Creatures must now receive this new Component.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// map.rs
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_player</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>            </span><span style="color:#888888;">// SNIP
+</span><span>                ..default()
+</span><span>            },
+</span><span>            momentum: OrdDir::Up, </span><span style="color:#888888;">// NEW!
+</span><span>        },
+</span><span>        Player,
+</span><span>    ));
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_cage</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>            </span><span style="color:#888888;">// SNIP
+</span><span>                ..default()
+</span><span>            },
+</span><span>            momentum: OrdDir::Up, </span><span style="color:#888888;">// NEW!
+</span><span>        });
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> tile_char == </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">H</span><span style="color:#556633;">&#39; </span><span>{
+</span><span>            creature.insert(Hunt);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>All good, but all Creatures are now eternally &quot;facing&quot; upwards regardless of their actions. Let us adjust this, at least for only the Player... for now.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">player_step</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;PlayerStep&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">teleporter</span><span>: EventWriter&lt;TeleportEntity&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">player</span><span>: Query&lt;(Entity, &amp;Position, &amp;</span><span style="color:#8fbfdc;">mut</span><span> OrdDir), With&lt;Player&gt;&gt;, </span><span style="color:#888888;">// CHANGED - mutable, and with &amp;mut OrdDir
+</span><span>    </span><span style="color:#ffb964;">hunters</span><span>: Query&lt;(Entity, &amp;Position), With&lt;Hunt&gt;&gt;,
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: Res&lt;Map&gt;,
+</span><span>) {
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(player_entity, player_pos, </span><span style="color:#8fbfdc;">mut</span><span> player_momentum) </span><span style="color:#888888;">// CHANGED - New mutable player_momentum
+</span><span>            = player.get_single_mut().expect(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">0 or 2+ players</span><span style="color:#556633;">&quot;</span><span>); </span><span style="color:#888888;">// CHANGED - get_single_mut
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        teleporter.send(TeleportEntity::new(
+</span><span>            player_entity,
+</span><span>            player_pos.x + off_x,
+</span><span>            player_pos.y + off_y,
+</span><span>        ));
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        </span><span style="color:#888888;">// Update the direction towards which this creature is facing.
+</span><span>        *player_momentum = event.direction;
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>
+</span><span>        </span><span style="color:#8fbfdc;">for </span><span>(hunter_entity, hunter_pos) in hunters.iter() {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="the-cleanup">The Cleanup</h2>
+<p>Remember this? <code>commands.run_system(spell_stack.cleanup_id);</code> Running Axioms is fine and all, but we'll also want to progress through the list so we aren't stuck selecting the player's tile for eternity.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">cleanup_last_axiom</span><span>(</span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;) {
+</span><span>    </span><span style="color:#888888;">// Get the currently executed spell, removing it temporarily.
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> synapse_data = spell_stack.spells.pop().unwrap();
+</span><span>    </span><span style="color:#888888;">// Step forwards in the axiom queue.
+</span><span>    synapse_data.step += </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>    </span><span style="color:#888888;">// If the spell is finished, do not push it back.
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> synapse_data.axioms.get(synapse_data.step).is_some() {
+</span><span>        spell_stack.spells.push(synapse_data);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>The <code>step</code> advances, and the spell is removed if it is finished. Therefore, a typical spell would run like this:</p>
+<ul>
+<li>Step 0, run Ego. Select the Player.</li>
+<li>Cleanup. Move to step 1, the spell isn't finished yet.</li>
+<li>Step 1, run Dash. The Player teleports.</li>
+<li>Cleanup, Move to step 2. There is no Axiom at index 2, and the spell is deleted.</li>
+</ul>
+<h1 id="the-test-run">The Test Run</h1>
+<p>After all this, the first spell <strong>Ego, Dash</strong> is ready to enter our grimoire - and while that was a lot, future spell effects will be a lot easier to implement from now on. Simply add more entries in the <code>AxiomLibrary</code> with one-shot systems to match!</p>
+<p>One last thing: actually casting it.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// input.rs
+</span><span style="color:#888888;">/// Each frame, if a button is pressed, move the player 1 tile.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">keyboard_input</span><span>(
+</span><span>    </span><span style="color:#ffb964;">player</span><span>: Query&lt;Entity, With&lt;Player&gt;&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell</span><span>: EventWriter&lt;CastSpell&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventWriter&lt;PlayerStep&gt;,
+</span><span>    </span><span style="color:#ffb964;">input</span><span>: Res&lt;ButtonInput&lt;KeyCode&gt;&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::Space) {
+</span><span>        spell.send(CastSpell {
+</span><span>            caster: player.get_single().unwrap(),
+</span><span>            spell: Spell {
+</span><span>                axioms: vec![Axiom::Ego, Axiom::Dash { max_distance: </span><span style="color:#cf6a4c;">5 </span><span>}],
+</span><span>            },
+</span><span>        });
+</span><span>    }
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>}
+</span></code></pre>
+<p>Finally, <code>cargo ruǹ</code> will allow us to escape the sticky grasp of the Hunter by pressing the spacebar! What's that? It crashed? Of course, we now need to register absolutely everything that was just added into Bevy's ECS.</p>
+<p>This is extremely easy to forget and is mostly indicated by &quot;struct is never constructed&quot;-type warnings. If you are ever testing your changes and things seem to be going wrong, check first that you registered your systems, events and resources!</p>
+<p>With that said:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">SpellPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_event::&lt;CastSpell&gt;();
+</span><span>        app.init_resource::&lt;SpellStack&gt;();
+</span><span>        app.init_resource::&lt;AxiomLibrary&gt;();
+</span><span>        app.add_systems(Update, cast_new_spell);
+</span><span>        app.add_systems(Update, process_axiom);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>And there's just one last thing I'd like to change for now: knocking down the light-speed movement down a notch.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// input.rs
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyW) { </span><span style="color:#888888;">// CHANGED to just_pressed
+</span><span>        events.send(PlayerStep {
+</span><span>            direction: OrdDir::Up,
+</span><span>        });
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyD) { </span><span style="color:#888888;">// CHANGED to just_pressed
+</span><span>        events.send(PlayerStep {
+</span><span>            direction: OrdDir::Right,
+</span><span>        });
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyA) { </span><span style="color:#888888;">// CHANGED to just_pressed
+</span><span>        events.send(PlayerStep {
+</span><span>            direction: OrdDir::Left,
+</span><span>        });
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyS) { </span><span style="color:#888888;">// CHANGED to just_pressed
+</span><span>        events.send(PlayerStep {
+</span><span>            direction: OrdDir::Down,
+</span><span>        });
+</span><span>    }
+</span></code></pre>
+<p>Try again. <code>cargo run</code>. Pressing the space bar will now allow you to escape your sticky little friend!</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/4-a-la-carte-sorcery/egodash.gif" alt="The player getting chased by the Hunter, until the player dashes out of the way and strikes the wall." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<h1 id="intermediate-wizardry-201">Intermediate Wizardry 201</h1>
+<p>The player dashing around is fun and good... but what about a projectile that knocks back whatever critter it hits? This sounds slightly far-fetched, but it actually takes almost no code that we have not already seen. Enter... <strong>MomentumBeam, Dash</strong>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">Axiom </span><span>{
+</span><span>    </span><span style="color:#888888;">// FORMS
+</span><span>    </span><span style="color:#888888;">/// Target the caster&#39;s tile.
+</span><span>    Ego,
+</span><span>
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#888888;">/// Fire a beam from the caster, towards the caster&#39;s last move. Target all travelled tiles,
+</span><span>    </span><span style="color:#888888;">/// including the first solid tile encountered, which stops the beam.
+</span><span>    MomentumBeam,
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>}
+</span></code></pre>
+<p>It, of course, receives its own implementation.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/// Fire a beam from the caster, towards the caster&#39;s last move. Target all travelled tiles,
+</span><span style="color:#888888;">/// including the first solid tile encountered, which stops the beam.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_form_momentum_beam</span><span>(
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: Res&lt;Map&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">position_and_momentum</span><span>: Query&lt;(&amp;Position, &amp;OrdDir)&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> synapse_data = spell_stack.spells.last_mut().unwrap();
+</span><span>    </span><span style="color:#8fbfdc;">let </span><span>(caster_position, caster_momentum) =
+</span><span>        position_and_momentum.get(synapse_data.caster).unwrap();
+</span><span>    </span><span style="color:#888888;">// Start the beam where the caster is standing.
+</span><span>    </span><span style="color:#888888;">// The beam travels in the direction of the caster&#39;s last move.
+</span><span>    </span><span style="color:#8fbfdc;">let </span><span>(off_x, off_y) = caster_momentum.as_offset();
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> output = linear_beam(*caster_position, </span><span style="color:#cf6a4c;">10</span><span>, off_x, off_y, &amp;map);
+</span><span>    </span><span style="color:#888888;">// Add these tiles to `targets`.
+</span><span>    synapse_data.targets.append(&amp;</span><span style="color:#8fbfdc;">mut</span><span> output);
+</span><span>}
+</span><span>
+</span><span>
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">linear_beam</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">start</span><span>: Position,
+</span><span>    </span><span style="color:#ffb964;">max_distance</span><span>: </span><span style="color:#8fbfdc;">usize</span><span>,
+</span><span>    </span><span style="color:#ffb964;">off_x</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>,
+</span><span>    </span><span style="color:#ffb964;">off_y</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>,
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: &amp;Map,
+</span><span>) -&gt; Vec&lt;Position&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> distance_travelled = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> output = Vec::new();
+</span><span>    </span><span style="color:#888888;">// The beam has a maximum distance of max_distance.
+</span><span>    </span><span style="color:#8fbfdc;">while</span><span> distance_travelled &lt; max_distance {
+</span><span>        distance_travelled += </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>        start.shift(off_x, off_y);
+</span><span>        </span><span style="color:#888888;">// The new tile is always added, even if it is impassable...
+</span><span>        output.push(start);
+</span><span>        </span><span style="color:#888888;">// But if it is impassable, the beam stops.
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>!map.is_passable(start.x, start.y) {
+</span><span>            </span><span style="color:#8fbfdc;">break</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    output
+</span><span>}
+</span></code></pre>
+<p>You may notice that this is extremely similar to the <code>Dash</code> logic... Its differences are the inclusion of the final impact tile (which is solid), and how it collects all travelled tiles in an output vector, added to <code>targets</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// Do not add this block, it is already included.
+</span><span style="color:#8fbfdc;">let mut</span><span> distance_travelled = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span style="color:#8fbfdc;">while</span><span> distance_travelled &lt; max_distance {
+</span><span>    distance_travelled += </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>    </span><span style="color:#888888;">// Stop dashing if a solid Creature is hit and the dasher is not intangible.
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>!map.is_passable(
+</span><span>            final_dash_destination.x + off_x,
+</span><span>            final_dash_destination.y + off_y,
+</span><span>        )
+</span><span>    {
+</span><span>        </span><span style="color:#8fbfdc;">break</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#888888;">// Otherwise, keep offsetting the dashing creature&#39;s position.
+</span><span>    final_dash_destination.shift(off_x, off_y);
+</span><span>}
+</span></code></pre>
+<p>In software development, &quot;don't repeat yourself&quot; is a common wisdom, but in games development, sometimes, it must be done within reason. There might be intangible creatures later capable of moving through solid blocks (a purely theoretical concern which will totally not be the subject of a future chapter). In this case, their dashes must move through walls, and their beams must not.</p>
+<p>Back to the implemention. Add this new <code>Axiom</code> to the <code>AxiomLibrary</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">impl </span><span>FromWorld for </span><span style="color:#ffb964;">AxiomLibrary </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">from_world</span><span>(</span><span style="color:#ffb964;">world</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> World) -&gt; </span><span style="color:#8fbfdc;">Self </span><span>{
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        axioms.library.insert(
+</span><span>            discriminant(&amp;Axiom::MomentumBeam),
+</span><span>            world.register_system(axiom_form_momentum_beam),
+</span><span>        );
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>And just like that, with only 1 new one-shot-system (which was very similar to our <code>Dash</code> implementation), the projectile is ready:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// input.rs
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::Space) {
+</span><span>        spell.send(CastSpell {
+</span><span>            caster: player.get_single().unwrap(),
+</span><span>            spell: Spell {
+</span><span>                axioms: vec![Axiom::MomentumBeam, Axiom::Dash { max_distance: </span><span style="color:#cf6a4c;">5 </span><span>}],
+</span><span>            },
+</span><span>        });
+</span><span>    }
+</span></code></pre>
+<p><code>cargo run</code>. Not only can you teach your sticky companion some manners, you can even break the walls of the cage, and escape into the abyss beyond.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/4-a-la-carte-sorcery/beamdash.gif" alt="The player getting chased by the Hunter, who gets repelled by a burst of knockback. Then, the player knocks a wall back and escapes the cage." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/3-getting-chased-around/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 3. Establishing the Hunting Grounds</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/5-laser-sumo-rave/">
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 5. Laser Sumo Rave</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

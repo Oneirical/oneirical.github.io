@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc2/">Testing My Patience With Tests</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-11
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <h1 id="the-rusty-sea-scrolls">The Rusty Sea Scrolls</h1>
+<p>As I informed them of the shortcomings of my hardware, the Rust Foundation generously granted me access to one of their DevDesktops - powerful remote Linux machines. How trusting of them!</p>
+<p>Little do they know, I have installed an comprehensive simulation of the material world on their systems. It's currently in the Pleistocene, and it should result in the invention of a parellel world Rust in 2.6 million years, give or take. Alternate dimension pull requests - the future of open source.</p>
+<p>As for the slight bit of computing power I am actually using for my GSoC project, it cuts down the time to <code>./x check</code> the Rust compiler for the first time from 30 minutes to around 6 minutes! Splendid.</p>
+<p>Next, I went for a quick <a href="https://github.com/rust-lang/rust/pull/124847">archeological dive</a> through the <code>run-make</code> directory, adding explanatory comments and linking relevant pull requests and issues. Some amusing discoveries include:</p>
+<ul>
+<li>Many of them were created over a decade ago, by the person who is currently the <a href="https://rust-lang.github.io/thanks/rust/all-time/">#2 contributor of all time to Rust</a>. The #1 is a bot who automatically merges accepted pull requests. Mystified by this, I looked up if this was intentional, and found a thoughtful comment:</li>
+</ul>
+<blockquote>
+<p>&quot;Top contributor&quot; is not a place of glory, it should go to a bot because people should work at a sustainable pace and prioritize touching grass every once in a while. If a person ever works harder than bors, that's a problem! -carols10cents</p>
+</blockquote>
+<ul>
+<li>
+<p>In 2017, the <code>grep</code> command utility in <code>run-make</code> tests was replaced by a custom variant, <code>CGREP</code>, scriped in Shell, for the purposes of making debugging easier. However, not everyone was aware of this change, and some additional instances of <code>grep</code> snuck in after that date, such as in the <code>compressed-debuginfo</code> test. Well, good thing there will soon be even more robust support for this command!</p>
+</li>
+<li>
+<p>It is quite interesting to see how Rust contributors were talking about the project in the threads from over a decade ago. Adoption wasn't as widespread, and there is occasional mention of how their changes will need to remain maintainable in multiple years. Well, looks like their foresight was warranted!</p>
+</li>
+</ul>
+<p>Finally, I tried to write a quick script to locate dependencies and Bash commands in each <code>run-make</code> test - a simple set of Regex to find individual words and match them against a list of common Bash utilities. Trying to add &quot;look-behind&quot; in the Regex resulted in an interesting &quot;Rust does not support look-behind!&quot; error, which led me to learn about an <a href="https://stackoverflow.com/questions/61485063/is-there-alternative-regex-syntax-to-avoid-the-error-look-around-including-loo">interesting piece of Regex lore</a>. How in-character of Rust to curate which features get to be added so carefully...</p>
+<h1 id="not-a-contender-not-a-competition">Not A Contender, Not A Competition</h1>
+<p>It was a bit anxiety-inducing back in March to submit a project proposal, as it felt like &quot;promising I'll get work done&quot; without actually getting much work done.</p>
+<p>While I am over here getting up to speed and reading archives, the <a href="https://github.com/rust-lang/rust/pull/124963">7th place all time top contributor human</a> is immaculately porting some of these tests while acknowledging the subtle ins-and-outs! It's honestly a blessing for me, as I get to read their changes and learn from them.</p>
+<p>But, most importantly, it got me to notice something.</p>
+<p>For the last 5 days, I have started my first ever internship (that is specifically in the field of technology, I've worked in the biology field before). It's no doubt exactly what the veterans remember of their intern days - antiquated codebases, project managers tracking hours and setting down expectations, daily standup... (They did let me write some Rust for them to rewrite an unstable build script, though!)</p>
+<p>Doing the Google Summer of Code at the same time is enlightening. The only deliverables open source contributors have is, at most, finishing what they start to respect the efforts of their code reviewers. An utterly different mindset from academia and industry!</p>
+<p>My situation is different, of course, as I have evaluations, engagements to respect, and a schedule of sorts. So, that is what GSoC is. <strong>An introduction to open source development, made understandable to the rat-race-brained interns like me.</strong></p>
+<p>It's a tough balance to have all these commitments at once. Motivating oneself to go write more code after a day of writing code sounds difficult, but it's made easier by the fact that one of them has that community aspect and the other does't. Truthfully, trudging through all this dusty Python has made me appreciate the Rust <code>Result</code> type to an extent I never previously reached while working on my personal projects.</p>
+<p><strong>This weekend</strong>, I'll see if I can get some real code placed down and shipped in a pull request to test if I can keep the torch burning. My little archeological dive has identified some lower-hanging fruits which, in appearance, look like a good way to get started.</p>
+<p>The goal isn't to rush in when I don't have a full overview of the testing ecosystem, but mostly to see how I fare doing something that resembles the bulk of what work will be like in the coming months.</p>
+<p>It's a test. Done on <code>run-make</code> tests.</p>
+<p>A test test.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/git-hell/">It Works, And I Will Touch It</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-03
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <blockquote>
+<p>Good day. I'm your average every-day top-notch valedictorian. 5.00 GPA, aced the MCAT, cracked the GSoC, licensed pilot, certified ski instructor. You may also know me under one of my aliases: Neil Armstrong, Alan Turing, Stephen Hawking, Rosalind Franklin or Laika the Soviet Space Dog. Pleased to make your acquaintance.</p>
+</blockquote>
+<h1 id="the-great-ping-storm">The Great Ping Storm</h1>
+<p>Getting into the <a href="https://summerofcode.withgoogle.com/">Google Summer of Code</a> was quite the adventure. I had no idea this program existed until I saw the <a href="https://blog.rust-lang.org/2024/02/21/Rust-participates-in-GSoC-2024.html">Rust blog</a> announcement on it. Stellar! A way for me to tangibly thank the Rust community for how crucial their tool was to lighting the flame of my interest in computer programming!</p>
+<p>Preparing my proposal and application drew me into a <em>vortex</em> of competitiveness and guides on how to &quot;crack GSoC&quot;... It made it sound like this ruthless, brutal filter exam where thousands of students are bundled up in a gigantic atrium and assigned a piece of paper that will determine their value as a human being depending on how the graphite marks on it are placed. It even has a really scary acronym to go with it!</p>
+<p>I learned about the outcry related to various &quot;open source initiation programs&quot;, such as <a href="https://hacktoberfest.com/">Hacktoberfest</a>, and how that one is a <a href="https://blog.domenic.me/hacktoberfest/">&quot;corporate-sponsored distributed denial of service attack against the open source maintainer community.&quot;</a>.</p>
+<p>How intimidating! How to avoid being a &quot;clueless, annoying n00b&quot; when I am easily at least 2 out of those 3 qualifiers? The allegations of aforementioned cluelessness were certainly not challenged when a few careless clicks resulted in <a href="https://github.com/rust-lang/rust/pull/123297#issuecomment-2041137569">dialing a sizable portion of the Rust squad to my location</a>. My assigned mentor later linked me to a <a href="https://rust-lang.zulipchat.com/#narrow/stream/131828-t-compiler/topic/rebase.20mishaps">discussion from February</a> where some experienced Rust contributors were prophesizing the exact pitfall I ended up falling into.</p>
+<blockquote>
+<p>imo it can also be kinda scary for newbies when you accidentally mess up your rebase, which triggers a ton of &quot;files changed&quot; and then bors notifies 20 people &quot;please look at this&quot;</p>
+</blockquote>
+<p>For any wayward souls reading this, here is what happened precisely:</p>
+<ol>
+<li>Press the big green button on GitHub &quot;sync with the master branch&quot; on your forked repository. Your <em>remote</em> repository is now up-to-date, but your <em>local</em> repository on your computer isn't.</li>
+<li>Cluelessly make some changes, then force push to the remote.</li>
+<li>This undoes all the commits separating your <em>remote</em> and your <em>local</em> repositories, changing thousands of lines of code, pinging 20+ people and making the unfortunate n00b feel <em>very</em> flustered.</li>
+</ol>
+<p>How to fix it: simply enter <code>git pull upstream master --ff-only</code> in Step 1 so your <em>local</em> repository stays up to date.</p>
+<h1 id="makefile-recipes-to-make-spaghetti">Makefile Recipes to Make Spaghetti</h1>
+<p><a href="https://blog.rust-lang.org/2024/05/01/gsoc-2024-selected-projects.html">I was not expecting to get in!</a> Yes, I am truly interested by the opportunity, and yes, I really, really like Rust. But the project itself didn't seem so... glamorous? Some other accepted GSoC contributors are doing such awesome wizardry! Especially <a href="https://fractalfir.github.io/generated_html/rustc_codegen_clr_v0_1_2.html">this one!</a> If I understand correctly, this would open up so many opportunities, such as convincing your boss, who is relying on a multi-decade old .NET codebase, that yes, they should be giving you the green light to start writing Rust on the job, that yes, your coworkers and future hires will learn this new programming language quickly and easily, and that yes, you are a reasonable employee who totally doesn't have an utterly unrealistic conception of team software development.</p>
+<p>Jokes aside, for the eternally on-hiatus hobbyist gamedev dreamers out there, it could, to quote the author, &quot;potentially, far off in the future, write Unity games with Rust&quot;.</p>
+<p>Meanwhile, I am rewriting tests that already work. A gigantic (349 directories) suite of Makefiles running scripts to check the Rust compiler's stability throughout the many pull requests and changes added over the years. They &quot;simply&quot; need to be translated into Rust files. Petty intern work, surely!</p>
+<p>Not completely. Allow me to extract some of the writing done in <a href="https://rust-lang.zulipchat.com/user_uploads/4715/Xg-vE4tMTBb0N48qvtwxU28H/gsoc-5.pdf">my proposal</a> to demonstrate... Here is<code>branch-protection-check-IBT</code>:</p>
+<pre data-lang="bash" style="background-color:#151515;color:#e8e8d3;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb964;">all:
+</span><span style="color:#ffb964;">ifeq</span><span> ($(</span><span style="color:#ffb964;">filter</span><span> x86,$(</span><span style="color:#ffb964;">LLVM_COMPONENTS</span><span>)),x86_64)
+</span><span style="color:#ffb964;">$(RUSTC) --target</span><span> x86_64-unknown-linux-gnu</span><span style="color:#ffb964;"> -Z</span><span> cf-protection=branch</span><span style="color:#ffb964;"> -L$(TMPDIR) -C
+</span><span style="color:#ffb964;">link-args</span><span>=</span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">-nostartfiles</span><span style="color:#556633;">&#39; </span><span style="color:#ffb964;">-C</span><span> save-temps ./main.rs</span><span style="color:#ffb964;"> -o </span><span>$(</span><span style="color:#ffb964;">TMPDIR</span><span>)/rsmain
+</span><span style="color:#ffb964;">readelf -nW </span><span>$(</span><span style="color:#ffb964;">TMPDIR</span><span>)/rsmain | </span><span style="color:#ffb964;">$(CGREP) -e </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">.note.gnu.property</span><span style="color:#556633;">&quot;
+</span><span style="color:#ffb964;">endif
+</span></code></pre>
+<p>Did you get all that? This test comes with no comment on its function beyond “Check for GNU Property Note”. From what I understand, it conditionally compiles a Rust program for the x86_64
+architecture with specific compiler and linker options, and then inspects the compiled binary to check for the presence of GNU-specific properties… Imagine being a contributor running into this test failing, and now needing to trudge through ancient documentation to understand what is happening here.</p>
+<p>Information on what these tests actually do is sparse and not very informative. Test names are full of acronyms and only occasionally possess explanatory comments. Some of these tests also stretch out into the dozens of lines, only returning a generic statement of failure when an error is encountered and not indicating to contributors what caused the error.</p>
+<p>There are also inconsistencies and unexpected behaviours, where oddities of the Windows operating system are accounted for using rough hacks and workarounds… And without Rust’s robust type checking and error handling, any of these tests could very well assume everything is fine when things actually are not.</p>
+<p>Take for example this <code>const-prop-lint test</code>, designed to verify that there are no object (.o) files left behind after the compilation, which could happen if the code generation process was interrupted due to an arithmetic overflow error.</p>
+<pre data-lang="bash" style="background-color:#151515;color:#e8e8d3;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb964;">all:
+</span><span style="color:#ffb964;">$(RUSTC)</span><span> input.rs; </span><span style="color:#ffb964;">test </span><span>$</span><span style="color:#ffb964;">$</span><span>?</span><span style="color:#ffb964;"> -eq</span><span> 1
+</span><span style="color:#ffb964;">ls </span><span>*.o; </span><span style="color:#ffb964;">test </span><span>$</span><span style="color:#ffb964;">$</span><span>?</span><span style="color:#ffb964;"> -ne</span><span> 0
+</span></code></pre>
+<p>Imagine a case where buggy code generation fails to create any files no matter what - this test will naturally pass, as it considers “no output at all” to be just as fine as “no .o files detected”. Not to mention cases where “ls” could behave strangely with potential special characters...</p>
+<p>Here is another example. This test is composed of only four lines of code - a job easily done, surely?</p>
+<pre data-lang="bash" style="background-color:#151515;color:#e8e8d3;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb964;">all:
+</span><span style="color:#ffb964;">$(RUSTC) --crate-type</span><span>=staticlib nonclike.rs
+</span><span style="color:#ffb964;">$(CC)</span><span> test.c $(</span><span style="color:#ffb964;">call</span><span> STATICLIB,nonclike) $(</span><span style="color:#ffb964;">call</span><span> OUT_EXE,test) \
+</span><span>$(</span><span style="color:#ffb964;">EXTRACFLAGS</span><span>) $(</span><span style="color:#ffb964;">EXTRACXXFLAGS</span><span>)
+</span><span style="color:#ffb964;">$(call RUN,test)
+</span></code></pre>
+<p>Unfortunately, this test makes use of a static library file, which looks like <code>libnonclike.a</code> on Unix and <code>nonclike.lib</code> on Windows. My mentor utilized this function to take this into account.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">if </span><span>target().contains(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">msvc</span><span style="color:#556633;">&quot;</span><span>) {
+</span><span>	format!(</span><span style="color:#556633;">&quot;</span><span style="color:#7697d6;">{name}</span><span style="color:#99ad6a;">.lib</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>} </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>	format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">lib</span><span style="color:#7697d6;">{name}</span><span style="color:#99ad6a;">.a</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>}
+</span></code></pre>
+<p>Jieyou Xu, the mentor for this project, has already written a <a href="https://github.com/rust-lang/rust/pull/113026">minimalist version of the tool</a> that will let the Rust codebase swap these tests into rmake.rs files written in pure Rust. It can handle basic and most common Makefile functions, like passing arguments around and specifying compilation targets. Features beyond this barebones functionality are progressively being implemented, such as the <code>diff</code> Bash utility in this recent <a href="https://github.com/rust-lang/rust/pull/124257">pull request</a>.</p>
+<h1 id="dust-swept-under-the-rug">Dust Swept Under The Rug</h1>
+<p>For these reasons, this task has basically remained in the realm of &quot;annoying enough to be important to fix, but not critical enough for the job to actually get done&quot; since... <a href="https://github.com/rust-lang/rust/issues/40713">2017</a>.</p>
+<p>The next steps:</p>
+<ul>
+<li>Browsing through the test directory, and understanding what each test actually does, or if it <em>actually does anything</em> at all. Some archaeology required. Certain tests are poetically named <code>issue12345</code> to track specifically a certain GitHub issue, but that is only the case of a small minority...</li>
+<li>I am thinking it may be interesting to write a quick script to go through all tests in the directory and annotate which ones are reliant on which Bash utility. For example, since <code>diff</code> is already implemented and <code>grep</code> is quite easy to implement, all tests that use these utilities only could be the first targets for working.
+<ul>
+<li>This could be put inside a .csv file for easy central access and organization.</li>
+</ul>
+</li>
+<li>Connecting to and using Remote Dev Desktops, which have been graciously offered to me after I revealed the glorified high school calculator that serves as my computer took multiple long minutes to build the Rust compiler locally.</li>
+<li>Establishing priorities, expectations and goals. Unexpectedly, after my proposal submission, a company I had forgotten about called me back for a full-time internship over the summer. Harmonizing this with GSoC will be... a true challenge in self-organization. I plan to monitor myself very closely and take action if I sense I am overworking myself. </li>
+</ul>
+<p><em>If you enjoyed this writeup, feel free to contact me!</em></p>
+<ul>
+<li>Discord: oneirical</li>
+<li>Reddit: https://old.reddit.com/user/oneirical/</li>
+<li>Zulip: https://rust-lang.zulipchat.com/#user/693959</li>
+<li>Email: julien-robert@videotron.ca</li>
+</ul>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/9/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/11/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

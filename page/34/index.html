@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-12-23-noneuclidean-mazes/">Noneuclidean Mazes</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-12-23
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;The gate has opened, revealing the arrays of pistons and tubes within. One seal broken, one more nail in the coffin of the Old World.&quot;</em></p>
+<ul>
+<li>Unraveled Seal description</li>
+</ul>
+<p><strong>The Games Foxes Play</strong> (<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play online in browser on itch.io!</a>) </p>
+<p>My motivation had been wavering in November, causing a long month of very little updates. How strange, considering how rent free my game's lore and mechanics had lived in my head during that time. This week, I asked myself, &quot;Why didn't I feel like actually putting in the work?&quot;</p>
+<p>I figured it out. My game was <em>too disconnected</em>. It had these cool robot snakes, these laser beams, these epic towers with creatures punching the daylights out of each other, but it didn't feel like a place that actually had a <em>physical presence</em>. You weren't exploring some techno-spiritual dungeon, you were solving puzzles clearly labeled as &quot;level 1&quot; or &quot;level 6&quot; like it's some bus commute mobile game.</p>
+<p>This week, I devoted myself to fixing this. No, it's not what I had planned in my last post. My lifeblood is chaos and my style is spontaneity. Design documents? Never heard of them.</p>
+<h2 id="hyperrogue-s-got-a-contender">HyperRogue's Got a Contender</h2>
+<p>The most important feature was a <strong>complete overhaul</strong> of the way the game generates rooms. Now, leaving a room does <em>not</em> cause its existence to vaporize out of the program's memory, and every single cube your @ explores is neatly stored inside a World object. This means it is now possible to retrace your steps back to any previously explored location! Consider it the equivalent to this mystical &quot;up-staircase&quot; that befuddles so many roguelike developers.</p>
+<p>Additionally, my game is no longer a linear corridor of utter boredom, but rather a twisted, sprawling maze. Each time a door is passed, a new room is generated and added to the world, while the previous ones remain in memory. This means two things: first, the dungeon is <em>infinite</em>, and second, it laughs in the face of the feeble laws of three dimensional space. Going in a loop pattern (→↓←↑) will result in reaching a <em>completely different location</em> than the original room. This latter mechanic is the result of <del>me being too lazy to program an actual room matrix that makes sense</del> reinforcing the atmosphere that the corridors of Faith's End truly embody the meaning of &quot;mind over matter&quot;, fitting for its nature as a divinity's dream. I want the player to feel lost, and to occasionally ask themselves &quot;wait, that didn't make sense...&quot; while trying to parse the structure of the dungeon in their minds. For the game's setting to succeed, its world must feel &quot;convincingly fake&quot;.</p>
+<p>Okay. Maybe I'm just hyping myself up over some &quot;it's not a bug, it's a feature&quot; kind of deal. As I continue development, I will decide whether I want sensible room geometry or not. It would certainly make a minimap much easier to implement.</p>
+<p>Dying (my game is still a roguelike, you have very limited extra lives, it's a whole mechanic) will also whisk you off to a <em>completely</em> new location, and <em>delete</em> the World object's maze you met your demise in, replacing it with a fresh one. You will <em>not</em> be returning to that previous location without external help. Right when you start to feel a sense of familiarity and knowing your way around a few rooms, all it takes is a careless battle to go back to prodding in the darkness. I imagine Faith's End as this planetary-sized brutalist complex of dull stone and metal, so incredibly massive each reincarnation draws you thousands of kilometers away from your death point.</p>
+<p>As always, <a href="https://youtu.be/p6wzGk3m7tg">demonstration</a>.</p>
+<p>This implementation challenged my neurons quite significantly, and it caused a few weird quirks. I am grateful for the commenters from <a href="https://www.reddit.com/r/roguelikedev/comments/zsn3fw/what_are_some_of_your_most_cursed_examples_of/">yesterday's thread</a> - thanks to the advice I received, I figured out that the invisible player clones were in fact the player entity getting &quot;saved&quot; alongside everything else in the room just before the room transition actually happens. Now, I made it so the Player entity isn't saved upon leaving a room, which seems to have fixed the issue in a much cleaner way! As for the &quot;player phased out until they move&quot; bug, I realized that this was because the player entity was actually getting placed in the <em>previous</em> room they just came from, and that the real position was only updated after calling the move function. I changed the player spawning function to be based off the level itself instead of arbitrary coordinates, and now it works like a charm!</p>
+<h2 id="the-illusion-of-choice">The Illusion of Choice</h2>
+<p>Now, of course, there is the issue that in an infinite space, there is no difference between going left, right or forwards. A player who has understood the true nature of Faith's End could simply go in random directions and constantly uncover uncharted lands, never bothering to retrace their steps. While that illusion of choice does fit well with the game's lore, I have a plan to make one's path through the dungeon more meaningful... stay tuned.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-12-16-edgeguard-upair/">Edgeguard Upair</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-12-16
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;As they bore the most vulnerable minds of all, the mere presence of a Collectivist sufficed to induce oddly intelligent behaviour in wild beasts. Some paranoid individuals held a caged bird atop their homes, waiting for its chirping to turn to discernible words. Even as they reached for their bunkers, they quickly learned that cement cannot silence the Harmonic song.&quot;</em></p>
+<ul>
+<li>Harmonized Feral Soul description</li>
+</ul>
+<p><strong>The Games Foxes Play</strong> (<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://www.reddit.com/r/roguelikedev/comments/uzb3iu/sharing_saturday_416/iaa1w3u/">original post</a> | <a href="https://oneirical.itch.io/tgfp">play online in browser on itch.io!</a>)</p>
+<p>It seems my eternal cycle of obsession and laziness has circled back to the former. Things quieted down in Real Life™ after completion of a major project at work, so I've had plenty of time to devote to the finding of new ways of pulverizing pixelated creatures.</p>
+<p>My main focus this week was centered around solving a design issue. I have three main branches, each with unique gameplay, but spells and player abilities that are the same everywhere. This is a problem: whereas a simple dashing ability (Feral Soul) is very powerful in a traditional top-down roguelike grid, in the Serene Spire where gravity is a factor, I've noticed that using a dash like this is especially suicidal and ends half the time with the player falling down a death pit.</p>
+<p>Enter Adaptative Souls. All six Common souls of the game have been reworked to have a different effect depending on which branch they are used in - the effects are similar in theme across all branches, but are more adapted to their environment. They thus come in Subdued (Faith's End), Harmonized (Serene Spire) or Glamorous (Roseic Circus) forms.</p>
+<p>Here are some of these new variants:</p>
+<p><strong>The Harmonized Unhinged Soul</strong> fires a slow-moving orb bearing a devastating payload. The moment it hits a wall or a creature, it detonates, knocking back everything in an X-shaped cross and also teleporting the player to the burst location. Besides the obvious offensive purpose, this also serves as a fun recovery tool: fire an orb towards a safe location, make a leap of faith into the void, go all out with aerial combat against flying enemies and be teleported back to safety before you plummet to your doom.</p>
+<p><strong>The Harmonized Artistic Soul</strong> is another powerful recovery option. Upon use, it places down a waypoint, which you will be instantly teleported back to the next time you are struck by an attack. This can be lifesaving, as Serene Spire enemies rely on knocking you out of the map instead of doing damage to kill you. You can therefore engage in a really risky position or expose yourself to a devastating blow, and return to safety the next turn. In addition, the waypoint also detonates in a cross-shaped laser upon being teleported back to it, potentially returning the favour on the attacker that was just about to demolish you.</p>
+<p><a href="https://www.youtube.com/watch?v=iEspyOTxqpQ">In this video</a>, I climb through the first few levels of the Serene Spire and battle its homogenous denizens with a varied assortment of Harmonized Souls.</p>
+<p><strong>Glamorous Souls</strong> in general have all been turned into summoning-based powers. I realized that having allies is one of the most fun parts of my game, but despite my attempts at making multiple ways to charm enemies, it was still too scarce in my game. The Roseic Circus is really well suited to ally combat due to the wide open space, so why not let the player form their own personal militia? It's less development time (as now every enemy in the game also serves as a potential effect of an ally spell, and I'm already coding them this way due to the existence of charming effects already in the game), and the player gets to use their most hated foes as assets to thwart the Circus's challenges.</p>
+<p>There are quite a bit more. A part of me hopes it's not getting too confusing, with many of your spells having their effects changed completely just because you are in a different location. It's not something that the player usually expects from a roguelike.</p>
+<p>I've long debated what I wanted the gimmick of Roseic Circus to be exactly. I think I've settled on it at last: flipping the roguelike formula on its head. There will be only one single enemy, the tyrant Rose, serving as a boss, and the vast swarms of enemies will be on the <em>player's</em> side, so fed up with Rose's narcissism that they are putting aside their animosity, just this once. I'm interested to see how fun using the Glamorous summoning powers will be to take down a single highly-evasive, overpowered and tricky target. Also known as a @ - a &quot;protagonist&quot;! If my neurons fire their productivity juices correctly, I'll return soon with an implementation of this concept.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/33/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/35/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

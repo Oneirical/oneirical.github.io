@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/gsocfinal/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/gsocfinal/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsocfinal/">Unmaking the Makefiles - exorcising the Rust compiler test suite one file at a time</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-09-02
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+        <div class="post-content">
+            <blockquote>
+<p>You descend into the pit of exit codes and one-character flags,
+<br />
+The sunken abyss of the Makefiles,
+<br />
+The mill of 11-year-old legacy scripting.
+<br />
+The writhen shell commands serve in adoration,
+<br />
+Immured beneath a rotten <code>run-make</code> directory.
+<br />
+Before you lies the servitor of order,
+<br />
+The cleaver,
+<br />
+The redeemer,
+<br />
+The recreator,
+<br />
+The <code>run-make-support</code> crate.
+<br />
+Vessel of rust-lang,
+<br />
+You are the unmaker,
+<br />
+You bring the rapture,
+<br />
+The murmurs of error logs rise...
+<br />
+The theatre of CI failures begins.</p>
+</blockquote>
+<ul>
+<li>Derived from <a href="http://crawl.chaosforge.org/Arena_of_Blood">Dungeon Crawl Stone Soup's &quot;Arena of Blood&quot; flavour text</a></li>
+</ul>
+<p>Let's say, theoretically, that you are some average every day nerd who wants to git gud and do a cool techy thing for once. Unfortunately, you have been locked into various educational institutions since the age of 5 and have been constantly at the centre of shallow praise, leading you to believe you do not need to work hard to succeed in life. Now, painfully mediocre compared to the legends writing operating systems in the womb, how will you accomplish this feat?</p>
+<p>The answer, of course, is relentless violence.</p>
+<p>Before me stood 352 Makefiles, used for various compiler integrity and correctness checks in the master Rust repository. Note the past tense - each day of the summer of 2024, I have hacked away at them without pause, rewriting them in Rust with the use of the <code>run-make-support</code> crate - which also needed multiple extensions to emulate the various features present in the Makefile swarm.</p>
+<p>Here is an example of one such rewrite:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#888888;"># needs-profiler-support
+</span><span style="color:#888888;"># ignore-cross-compile
+</span><span>
+</span><span style="color:#8fbfdc;">include </span><span style="color:#99ad6a;">../tools.mk
+</span><span>
+</span><span style="color:#ffb964;">COMPILE_FLAGS</span><span>=</span><span style="color:#99ad6a;">-g -Cprofile-generate=&quot;</span><span style="color:#ffb964;">$(TMPDIR)</span><span style="color:#99ad6a;">&quot;
+</span><span>
+</span><span style="color:#fad07a;">all</span><span>:
+</span><span>	</span><span style="color:#ffb964;">$(RUSTC) $(COMPILE_FLAGS) test.rs
+</span><span>	$(call </span><span style="color:#ffb964;">RUN</span><span>,test) || exit 1
+</span><span>	[ </span><span style="color:#ffb964;">-e </span><span style="color:#556633;">&quot;</span><span style="color:#ffb964;">$(TMPDIR)</span><span style="color:#556633;">&quot;</span><span>/default_*.profraw ] || (echo </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">No .profraw file</span><span style="color:#556633;">&quot;</span><span>; exit 1)
+</span></code></pre>
+<p>which becomes:</p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#888888;">// -C profile-generate, when used with rustc, is supposed to output
+</span><span style="color:#888888;">// profile files (.profraw) after running a binary to analyze how the compiler
+</span><span style="color:#888888;">// optimizes code. This test checks that these files are generated.
+</span><span style="color:#888888;">// See https://github.com/rust-lang/rust/pull/48346
+</span><span>
+</span><span style="color:#888888;">//@ needs-profiler-support
+</span><span style="color:#888888;">//@ ignore-cross-compile
+</span><span>
+</span><span>use run_make_support::{cwd, has_extension, has_prefix, run, rustc, shallow_find_files};
+</span><span>
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    rustc().arg(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">-g</span><span style="color:#556633;">&quot;</span><span>).profile_generate(cwd()).input(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">test.rs</span><span style="color:#556633;">&quot;</span><span>).run();
+</span><span>    run(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">test</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> profraw_files = shallow_find_files(cwd(), |</span><span style="color:#ffb964;">path</span><span>| {
+</span><span>        has_prefix(path, </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">default</span><span style="color:#556633;">&quot;</span><span>) &amp;&amp; has_extension(path, </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">profraw</span><span style="color:#556633;">&quot;</span><span>)
+</span><span>    });
+</span><span>    assert!(!profraw_files.is_empty(), </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">no .profraw file generated</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>}
+</span></code></pre>
+<p>All progress was neatly catalogued in <a href="https://github.com/rust-lang/rust/issues/121876">this issue</a>, acting as a Most Wanted hitlist of sorts for the most resilient of Makefiles. As of writing this, <strong>11/352 Makefiles</strong> remain, which mean the porting efforts are <strong>97% complete</strong>. This project was sponsored as part of the Rust Foundation's first year entry into <a href="https://blog.rust-lang.org/2024/05/01/gsoc-2024-selected-projects.html">Google Summer of Code</a>.</p>
+<p>Due to the extremely commit-spammy nature of this work, this project has rocketed me to - at the time of writing - position #153 of all time in the <a href="https://thanks.rust-lang.org/rust/all-time/">Rust Contributors Leaderboard</a>. I even soared past my mentor jieyouxu, who is an established maintainer. Anyone with two neurons and a functional synapse in between will understand that this is laughably meaningless, especially considering they made the #1 a bot to remind the monomanic maintainers to touch grass and stop burning themselves out. But, hey, it might deceive some foolish figure of authority one day to give me some respect. </p>
+<p>Now that your attention is starting to wane, let me proceed right away to stories of various fun moments throughout this project. I wanted to call this part the &quot;House of Horrors&quot;, though it's more a &quot;House of Curiosities&quot; by now.</p>
+<h3 id="what-blasphemy-really-looks-like">What Blasphemy Really Looks Like</h3>
+<p>Let's start with a demonstration of how cursed these Makefiles can get:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#8fbfdc;">ifneq </span><span>(,$(findstring x86,</span><span style="color:#ffb964;">$(TARGET)</span><span>))
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/125165">Source.</a></p>
+<p>What do you think this means? &quot;If the string <code>x86</code> is not found in the target name, run this block&quot;? <strong>WRONG!</strong> <code>findstring</code> will return <code>x86</code> if it finds it in TARGET, and an empty string otherwise. This is compared with the first argument of the expression, <code>(,</code> (did you miss it?), which is an empty string. That means &quot;if TARGET contains <code>x86</code>, then empty string is not equal to <code>x86</code> (returned by <code>findstring</code>), then run this block.&quot; It's the OPPOSITE of my first impression.</p>
+<p>Yes, this is real Rust repository code, running on every single pull request merge as part of the test suite, and it has been present there for <em>years</em>.</p>
+<p>Until I arrived, of course. You may start applauding now.</p>
+<h3 id="traps-and-tricks">Traps and Tricks</h3>
+<p>Some parts of Makefile syntax truly cut a line between the wheat and the chaff, with the measured quality being an obsessive tendency to read between the lines. Observe:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#ffb964;">FLAGS </span><span>:= </span><span style="color:#99ad6a;">-C link-args=-Wl,--no-undefined
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/126484">Source</a></p>
+<p>No whitespace after the comma? Is the formatter broken? Much the opposite: adding a space here would cause <code>--no-undefined</code> to become an extra argument. The test will then crash and burn. You, acute dear reader, have obviously spotted the other whitespace in this string - the third character. That one, as you have guessed with your unmatched intellect, is completely unnecessary:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#ffb964;">FLAGS </span><span>:= </span><span style="color:#99ad6a;">-Clink-args=-Wl,--no-undefined
+</span></code></pre>
+<p>Perfectly acceptable.</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#ffb964;">FLAGS </span><span>:= </span><span style="color:#99ad6a;">-C link-args=-Wl, --no-undefined
+</span></code></pre>
+<p>Cast down a Hell pit to be pinched by crabs for all eternity.</p>
+<p>Another fun one:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#888888;"># Check that a primary bundle can be loaded and will be preferentially used
+</span><span style="color:#888888;"># where possible.
+</span><span style="color:#fad07a;">custom</span><span>: </span><span style="color:#99ad6a;">test.rs working.ftl
+</span><span>	</span><span style="color:#ffb964;">$(RUSTC) $&lt; -Ztranslate-additional-ftl</span><span>=</span><span style="color:#ffb964;">$(CURDIR)</span><span style="color:#99ad6a;">/working.ftl </span><span style="color:#cf6a4c;">2</span><span>&gt;&amp;</span><span style="color:#cf6a4c;">1 </span><span>| </span><span style="color:#ffb964;">$(CGREP) </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">this is a test message</span><span style="color:#556633;">&quot;
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/129011">Source</a></p>
+<p>Please divert your attention for now from the glorious intuitiveness of <code>$&lt;</code> (replaced by <code>test.rs</code>, the first dependency) and <code>2&gt;&amp;1</code> (prints out errors alongside normal output). There is something much more evil at play. Normally, <code>RUSTC</code> calls that are expected to fail will be written like this:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span>	</span><span style="color:#ffb964;">$(RUSTC)</span><span> broken-file.rs &amp;&amp; exit 1 || exit 0
+</span></code></pre>
+<p>This basically means, &quot;if we run <code>RUSTC</code> and it returns 1 (fail), instead, return 0 (success)&quot;. This pattern is extremely common. However, the <code>RUSTC</code> call shown in the bundle test <em>will</em> fail, but has no indication of this. How does the test pass at all? Because the pipe <code>|</code> throws away any resulting exit codes, completely ignoring whether compilation succeeded or failed.</p>
+<p>This time, it's supposed to fail, and the error should contain &quot;this is a test message&quot;, but a rust program composed of simply <code>println!(&quot;this is a test message&quot;)</code> would pass this test just as well.</p>
+<p>Thankfully, the test rewrite roots out such glaring weaknesses:</p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">custom_bundle</span><span>() {
+</span><span>    </span><span style="color:#888888;">// Check that a primary bundle can be loaded and will be preferentially used
+</span><span>    </span><span style="color:#888888;">// where possible.
+</span><span>    rustc()
+</span><span>        .arg(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">-Ztranslate-additional-ftl=working.ftl</span><span style="color:#556633;">&quot;</span><span>)
+</span><span>        .input(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">test.rs</span><span style="color:#556633;">&quot;</span><span>)
+</span><span>        .run_fail()
+</span><span>        .assert_stderr_contains(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">this is a test message</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>}
+</span></code></pre>
+<h3 id="non-euclidean-symlinks">Non-Euclidean Symlinks</h3>
+<p>Here is something much less bad, but that launched me into a Schrödinger's cat-approved adventure due to a misunderstanding:</p>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#ffb964;">  NAME </span><span>:= </span><span style="color:#99ad6a;">$(shell </span><span style="color:#ffb964;">$(RUSTC) --print</span><span style="color:#99ad6a;"> file-names foo.rs)
+</span><span>  mkdir -p </span><span style="color:#ffb964;">$(TMPDIR)</span><span>/outdir
+</span><span>	</span><span style="color:#ffb964;">$(RUSTC)</span><span> foo.rs -o </span><span style="color:#ffb964;">$(TMPDIR)</span><span>/outdir/</span><span style="color:#ffb964;">$(NAME)
+</span><span>	ln -nsf outdir/</span><span style="color:#ffb964;">$(NAME) $(TMPDIR)
+</span><span style="color:#fad07a;">	RUSTC_LOG=rustc_metadata</span><span>::</span><span style="color:#99ad6a;">loader </span><span style="color:#ffb964;">$(RUSTC)</span><span style="color:#99ad6a;"> bar.rs
+</span></code></pre>
+<p>The pertinent line is the one starting with <code>ln</code>, which creates a systemic link (basically, a portal leading from one place to another) in the file system. We are creating a symlink from <code>TMPDIR</code> to <code>outdir/libfoo.rlib</code> (NAME is libfoo.rlib), which is itself contained inside TMPDIR. What? This &quot;portal&quot; leads to itself? It's a box containing the box?? A house in which the house is stored???</p>
+<p>No, I just forgot that command-line utilities tend to auto-complete the destination, and that the operation is actually creating a symlink from <code>TMPDIR/&lt;any symlink cool name&gt;</code> to <code>outdir/libfoo.rlib</code>.</p>
+<h3 id="final-testination">Final Testination</h3>
+<p>Porting tests requires opening up a massive amount of pull requests. Pull requests require branches. Branches need to be named. And, so it is said...</p>
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things.
+-- Phil Karlton </p>
+</blockquote>
+<p>None of that &quot;informative naming convention&quot; nonsense. <a href="https://ntietz.com/blog/name-your-projects-cutesy-things/">Names should be cute, not descriptive.</a></p>
+<p>Which led to the glorious rise of:</p>
+<ul>
+<li>final-testination</li>
+<li>dwarf-fortestress (on a test <a href="https://github.com/rust-lang/rust/pull/128410">about the DWARF data format!</a>)</li>
+<li>infinite-test-a-novel</li>
+<li>one-flew-over-the-cuckoo's-test</li>
+<li>exitestial-crisis</li>
+<li>bootest-contestllation</li>
+<li>testigitation-cantrip</li>
+<li>no-test-for-the-wicked</li>
+<li>the-intelligent-intestor</li>
+<li>...and too many others to list.</li>
+</ul>
+<h3 id="the-feline-professionals">The Feline Professionals</h3>
+<p>Many, <em>many</em> tests involved looking at symbols in an object file, and doing something with them, such as checking that a certain one is present. In the Makefiles, this used the <code>nm</code> command-line utility. How to port this over? &quot;I'll just rewrite <code>nm</code> in Rust&quot;, I thought. &quot;it will be so easy.&quot;</p>
+<p>It wasn't. After a few days, I modestly accepted my fate and used <a href="https://llvm.org/docs/CommandGuide/llvm-readobj.html">llvm-readobj</a> instead.</p>
+<p>Much, much later in the summer, a new contributor arrived and wrote a <a href="https://github.com/rust-lang/rust/pull/128147/files">custom object file traversal</a> to help port a Makefile. I clicked on her website, where I discovered ASCII-art cats and links leading to other sites containing pride flags.</p>
+<p>Sometimes, you need to let the professionals do the job.</p>
+<h3 id="assorted-fun-comments">Assorted Fun Comments</h3>
+<pre data-lang="make" style="background-color:#151515;color:#e8e8d3;" class="language-make "><code class="language-make" data-lang="make"><span style="color:#888888;"># Check that the compiler errors out when the sysroot requested cannot be
+</span><span style="color:#888888;"># found. This test might start failing if there actually exists a Klingon
+</span><span style="color:#888888;"># translation of rustc&#39;s error messages.
+</span><span style="color:#fad07a;">sysroot-missing</span><span>:
+</span><span>	</span><span style="color:#ffb964;">$(RUSTC) $&lt; -Ztranslate-lang</span><span>=</span><span style="color:#99ad6a;">tlh </span><span style="color:#cf6a4c;">2</span><span>&gt;&amp;</span><span style="color:#cf6a4c;">1 </span><span>| </span><span style="color:#ffb964;">$(CGREP) </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">missing locale directory</span><span style="color:#556633;">&quot;
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/129011">Source</a></p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#888888;">// This is a test which attempts to blow out the system limit with how many
+</span><span style="color:#888888;">// arguments can be passed to a process. This&#39;ll successively call rustc with
+</span><span style="color:#888888;">// larger and larger argument lists in an attempt to find one that&#39;s way too
+</span><span style="color:#888888;">// big for the system at hand. This file itself is then used as a &quot;linker&quot; to
+</span><span style="color:#888888;">// detect when the process creation succeeds.
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/128196">Source</a></p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#888888;">// Tests are run in alphabetical order, and the second test is dependent on the
+</span><span style="color:#888888;">// first to set THREAD_ID. Do NOT rename the tests in such a way that `test_run_in_same_thread`
+</span><span style="color:#888888;">// would run before `spawn_thread_would_block`.
+</span><span style="color:#888888;">// See https://doc.rust-lang.org/rustc/tests/index.html#--shuffle
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/128507">Source</a></p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span style="color:#888888;">// A very specific set of circumstances (mainly, implementing Deref, and
+</span><span style="color:#888888;">// having a procedural macro and a Debug derivation in external crates) caused
+</span><span style="color:#888888;">// an internal compiler error (ICE) when trying to use rustdoc. This test
+</span><span style="color:#888888;">// reproduces the exact circumstances which caused the bug and checks
+</span><span style="color:#888888;">// that it does not happen again.
+</span><span style="color:#888888;">// See https://github.com/rust-lang/rust/issues/38237
+</span></code></pre>
+<p><a href="https://github.com/rust-lang/rust/pull/125421">Source</a></p>
+<h3 id="a-glimpse">A Glimpse</h3>
+<p>Rewriting 300+ Makefiles is, by all sane metrics, an exercise in tedium. What I did here was repetitive and somewhat detached from the &quot;puzzly&quot; part of programming that most nerds seem to name as the reason why they love what they do. According to everything I know about myself, I should have given up way earlier. I should have said &quot;this sucks&quot; or something like that. But I didn't. I actually liked doing it. I put on some dark ambient music albums, entered a trance state and just did it.</p>
+<p>I announced at the beginning of the summer that I had a full time 40 hours/week internship that had unexpectedly sprung up. I completed both it and this open source project simultaneously. How I was able to find the time to fulfill my project and still work full time at a software company without getting burnt out of looking at computer screens will be left as an exercise to the reader.</p>
+<p>I was assigned tasks, of course. The main one - avoiding excessive detail - was related to implementing an AI product into their application. The task itself probably has more technological complexity than the Makefiles, even though I have a sneaking suspicion that a sizable portion of people part of a community like Rust are going to be at the very least business-AI-skeptics.</p>
+<p>The central point: even though it was more &quot;crunchy&quot; in raw programming terms, I found myself enjoying much more the Google Summer of Code to an extent that's not even comparable. And it's only now that I learn something important:</p>
+<p>It's not about the tedium of the task, it's about the context of the task.</p>
+<p>Pretty much everyone I talked to throughout the summer has been way more knowledgeable than me, and yet I still felt among equals. I wasn't working <em>for</em> them, I was <strong>working</strong> with them. At no point did my heart ache with the paranoia I associate with an authority figure prowling about the creaky floorboards of a cubicle maze.</p>
+<p>At my &quot;official&quot; workplace, I saw the masquerade of meetings, the theatrics of project managers. I felt like in a playground where the children are replaced by adults pretending to play with the multicoloured slides and swings, their smiles saccharine and hollow.</p>
+<p>So much of our world still seems ordered in masters and servants. But, this summer, I saw a glimpse of something different.</p>
+<p>The next time a fellow undergraduate student imagines with glee their future in the forges of FAANG/MAMAA and asks me to reciprocate, I'll answer with respectful doubt instead of shared excitement.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>I will be in person at <a href="https://rustconf.com/">Rustconf</a> on September 11-12. I'll be accompanied by <a href="https://github.com/eievui5/">an amazing friend</a> whom I'll be seeing in real life for the first time. My excitement is barely contained.</p>
+<p>I went from not knowing Rust at all 1 year ago to having my life rewritten in it. Who could have thought the Rewrite It In Rust evangelists had their dominion extend even to people's lives?</p>
+<p>If anyone reading this blog is coming to the conference in person, feel free to let me know!</p>
+<p><em>Reddit: u/oneirical</em></p>
+<p><em>Discord: oneirical</em></p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/gsoc9/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">The Middlepoint</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/rustconf1/">
+                            <span class="button__text">My Day at the Rust Conference - because let&#x27;s grab all the most hardcore introverts in the world and put them in the same room, why not</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

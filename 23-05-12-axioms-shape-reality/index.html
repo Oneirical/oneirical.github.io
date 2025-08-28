@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-05-12-axioms-shape-reality/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-05-12-axioms-shape-reality/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-05-12-axioms-shape-reality/">Axioms Shape Reality</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-05-12
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;In a realm where sheer belief draws the line between what is and what is not, pride is omnipotence. The Saints were the first to learn this primordial truth.&quot;</em></p>
+<ul>
+<li>Flavour text of Haughty As The Saints Were, form component</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>Rough days all around. Without going into too much detail, I work in the research sector, and the culture of trickling down the most grueling tasks to the bottom of the ladder is ever-present. Thankfully, when I wasn't watching video feeds of test chambers for hours and annotating hundreds of samples, I found some time to cook up a little more cyber-arcana:</p>
+<h1 id="axioms-dictate-what-is">Axioms Dictate What Is</h1>
+<p>I am in the process of reworking <em>every single creature</em> to operate according to my new spell-crafting system. This is, in a way, showing the player a simplified view of the code blocks that make them tick! For example, our dedicated Apiarist robots now hold the spell <strong>&quot;When a step is taken, on self, apply 1 Paralysis&quot;</strong>. Before this new feature, each enemy had a special block of code dictating what they did in particular (in the case of Apiarists, it was &quot;skip every other turn&quot;), but now, every little bit of their behaviour is modular and - most importantly - can also be used by the player.</p>
+<p>Why do this? Well, I am just salivating at all the doors this opens up. Polymorphing the player into <em>any</em> creature and having it work Nethack-style is now a feasible feature, since every entity is really just a critter with legs to move with, claws to attack with, and a list of cool spells. You might be able to permanently change a creature type's innate spells so they heal you instead. You could soul-swap with an enemy and have them attack you with <em>your own spells that you carefully crafted</em> while you thrash around in their body that gets stunned and confused every other turn. Now THIS is the traditional roguelike spirit I seek!</p>
+<p>For clarity, these spells are now named Axioms. Lore-wise, they are an unshakable belief that reality works in a certain way - robots are programmed to think that their body is too bulky to move quickly, so they advance at a snail's pace. The main character's abilities are centered around ideology and identity, so it is only right that they might be able to entrance creatures into believing something entirely different - or be entranced themselves...</p>
+<p>This ironically also makes it much easier for me to add new enemies, since all I must do is look at my ever-growing list of spell components, jam a couple that seem funny together, and go for a test run. If I'm happy, I sketch a quick sprite, give it some crispy lore and I'm done.</p>
+<p>Hard to show off this feature in a screenshot, since everything mechanically works the same as it used to, but I guess <a href="https://cdn.discordapp.com/attachments/504088568084561930/1106749090638864414/image.png">this code</a> looks pretty neat.</p>
+<h1 id="vision-stretches-out-from-squares">Vision Stretches Out From Squares</h1>
+<p>While I was reading about Path of Achra's awesome launch on Steam, I fell upon an interesting exchange questioning why the game had been made with a 4:3 aspect ratio. This sent me into a reading frenzy about the way games should be displayed, until I eventually came to the harrowing conclusion that my game is impossible to display in glorious fullscreen in its current state.</p>
+<p>Following my horror, I then grabbed my big metaphorical axe and butchered up my UI to bits, expanded the screen to majestuous 16:9, and began the rather daunting task of putting everything back together. On the plus side, this gave me much more space to work with, and allowed me to add a <a href="https://cdn.discordapp.com/attachments/504088568084561930/1106749495615701042/image.png">miniature (to the right)</a> Axiom equip screen accessible directly at any time. There are reasons why one would want to swap between two Axioms for a certain task, and speeding up the process instead of mashing the keyboard each time is such a huge improvement. It also makes me feel like I added the equivalent of an &quot;Right arm: Steel Gauntlet&quot; equipment display sidebar to my game, which earns bonus True Roguelike™ points.</p>
+<p>Additionally, all Souls loaded up for future usage now spin around your casting wheel. <a href="https://postimg.cc/XGBG5FjH">Look at them go!</a></p>
+<p>If any readers feel like this new UI has something out of place or should be improved at some location, now is the time.</p>
+<p>At the risk of horrifying some readers of the subreddit, I will say that I build my UI by literally saying &quot;draw this symbol at pixels x: 1473 and y: 843&quot; and going at it trial and error style until everything looks centered and pleasant.</p>
+<p>So far, I've been going at it pure JavaScript Canvas Vanilla style, but I am starting to get quite fed up about the graphics constantly getting in the way and sucking up my limited development time moving pixels around instead of coding actually fun stuff. Not to mention my CPU fans going <em>brrrrrr</em> every time I open the world map screen due to the hundreds of sprites getting drawn every 15 milliseconds on it. I've been looking into libraries - PixiJS especially, but any one would imply a complete rewrite of my rendering code. Sigh.</p>
+<h1 id="long-days-ahead">Long Days Ahead</h1>
+<p>I'm really excited about making all this awesome content, but work is getting really demanding with full-time hours. It comes and goes... I've had to relocate because of it and now only have an old laptop to develop on. After weeping at how slow this glorified calculator was, I surrendered to the penguin elitists and changed the OS to Linux Mint - best decision ever. This thing now works like a charm. I won't ever be able to run any of my old games on it, but honestly, that's a good thing. Those who have lost days to bashing pixelated creatures across a grid will understand what I mean.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-05-05-strokes-on-canvas/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Strokes on Canvas</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-05-19-selves-malleable-as-clay/">
+                            <span class="button__text">Selves Malleable As Clay</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

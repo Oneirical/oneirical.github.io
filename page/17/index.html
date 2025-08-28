@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-09-29-many-worlds-interpretation/">Many-Worlds Interpretation</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-09-29
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;There were a few who craved peace, who undid art in search of a moment without meaning. When they realized their zeal for annihilation was Artistic in itself, their cries could be heard even through the walls of Faith's End.&quot;</em></p>
+<ul>
+<li>Stillness of Granite, Returned flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io! (very old)</a>)</em></p>
+<p>The Great Purge continues, with easily 25% of my old code having now been subjugated to utter annihilation. In doing so, I have finally achieved what I wanted: a world map that actually works!</p>
+<h1 id="many-worlds-interpretation">Many-Worlds Interpretation</h1>
+<p>I can now put all kinds of floor themes in <a href="https://cdn.discordapp.com/attachments/504088568084561930/1157380710827573298/Capture_decran_le_2023-09-29_a_14.17.28.png?ex=65186648&amp;is=651714c8&amp;hm=ccd427521bd2fac7fd5410efcb48c981c135be4f4115c666c21aef91019e5c76&amp;">these</a> little mosaics to connect them. Automatically, Hypnotic Wells are generated on each floor to allow passage between each layer. The transition is <em>seamless</em>, and I've put in so much work in making sure the illusion looked perfect. Some may have seen <a href="https://www.reddit.com/r/roguelikes/comments/16t8tih/an_alternative_to_stairs_in_my_workinprogress/">my post</a> on r/roguelikes, which was, as much as I hate to admit it, quite motivating. Wretched crow-brained fool that I am, who judges worth according to internet clout!</p>
+<p>Additionally, I've been working on a rework of the <a href="https://cdn.discordapp.com/attachments/504088568084561930/1157432738878603284/Capture_decran_le_2023-09-29_a_17.44.02.png?ex=651896bd&amp;is=6517453d&amp;hm=bb8783f3644675ccc16a5eda1712fe2a5bf6f6e798e6d910635431489286c24e&amp;">UI sidebar</a> to inspect creatures on click. I'm not too sure about those lore descriptions spoken in the protagonist's voice, it's a little cringe, uninformative and I'll probably be remaking those. However, it is much more minimalist than the last iteration! To match my recent Great Purge of many game mechanics, it only has a name, lore description, Soul menu and health bar. The latter capping at 4!</p>
+<p>Indeed, every entity in the game can only have between 1 to 4 health points. Naturally, there is a catch - the system already allows for creating Souls like &quot;up to 3 times, on death, respawn at full health&quot;. Every creature might be as squishy as a wet tissue, but with the power of soul-forging, nothing is impossible.</p>
+<p>I am currently working on a saving-and-loading system (completely different from my failed first attempt) For this purpose, I am simplifying the data structures all over the game, making sure everything can be stored in a compact JSON file that isn't as long as the distance between the Sun and Proxima Centauri. It's actually quite the interesting puzzle! I've already made it so all RNG in the game is derived from a one word seed, which should save me the horrendous burden that would be storing the position of every single tile in the save file.</p>
+<p>In the last hour, I just tinkered up a possibly cursed but infinitely amusing system where I log every single player action and replay it on loading. Thank you Chaigidel for <a href="https://www.reddit.com/r/roguelikedev/comments/10zt7w5/learning_how_to_rewind_time_save_load/j87okyw/">the suggestion</a>. It is surprisingly fast, but I do not know how it will scale up as I expand my game.</p>
+<h1 id="annoying-technowizardry">Annoying Technowizardry</h1>
+<p>My crusty 8 years old laptop is now only capable of running my game at 30 FPS, which I judge to be a disgrace for a traditional roguelike. Yes, the GPU in it is ranked as &quot;terrible&quot; on <a href="https://gpu.userbenchmark.com/SpeedTest/38173/IntelR-HD-Graphics-515">UserBenchmark</a>, but that seems like a poor excuse for what is basically a 2D game with almost no animation. The game used to run a lot better on it, but I did something in the last month that wrecked it (while I was developing on another computer) and I have no idea what it was.</p>
+<p>Meanwhile, the M1 Mac Mini I also tested my game on has perfect performance. I'm actually not sure what the community's expectations are - I know roguelikes are supposed to be able to run on glorified calculators, but how far do people stretch this? Are you exiled and unpersoned from the community should you dare release something that can't run on a Commodore 64?</p>
+<p>I have a few ideas for optimization. But I don't expect it to be easy.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-09-22-purging-the-weak/">Purging the Weak</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-09-22
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Congealed, thought becomes art. Material things become stained with belief, slowly eroding away the beauty of oblivion until everything becomes cursed with meaning.&quot;</em></p>
+<ul>
+<li>Soaked Tails Trail Across The Soil flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io! (very old)</a>)</em></p>
+<p>I tried to pull off some awesome stunt involving a whole portal network leading to different pocket dimensions, but quickly entered rage mode as a mega-ton of strange glitches and conflicts with old code from 1 year ago started to rain down on me. And JavaScript's undefined-null-NaN's funhouse was not helping. After doing my best to dismiss the ever-invasive thoughts of &quot;wipe the entire thing and restart with a new programming language&quot;, I came to the following conclusion:</p>
+<p><em>Another Great Purge is needed</em>.</p>
+<p>I have been ruthlessly wiping out codeblock after codeblock of ancient work from back when I didn't even know how to use Git. It feels a little sad to see all those hours going down the drain, but the knowledge I acquired getting here will not be taken away from me.</p>
+<p>Development must halt for now as I refactor everything and purge the weak. It is hard to understate how fantastic it feels to go from <a href="https://cdn.discordapp.com/attachments/504088568084561930/1154849776148422666/Capture_decran_le_2023-09-22_a_14.40.13.png">this crime against computing</a> to <a href="https://cdn.discordapp.com/attachments/504088568084561930/1154849776400076930/Capture_decran_le_2023-09-22_a_14.40.27.png">this work of art</a>.</p>
+<p>Still, there were some minor gameplay tweaks. For example, to encourage more interesting interactions &quot;summoning&quot;-type Axioms have been changed to clone existing creatures instead. This means that just running around and spamming the same old goon (boring) is no longer possible. Instead, one must use the force of the enemy against itself, like a martial artist would.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/16/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/18/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

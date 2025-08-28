@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/bevyrage/">Bashing Bevy To Bait Internet Strangers Into Improving My Code</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-03-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/bevy/">#bevy</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/writeups/">#writeups</a></span>
+    
+
+
+                    <div class="post-content">
+            <blockquote>
+<p>&quot;Online, the best way to obtain information is not to ask a question, but to state incorrect information and wait for someone to correct you.&quot; - Common Internet Wisdom</p>
+</blockquote>
+<p>It is said that one can judge the nerdiness level of a programming language based off the ratio of games-to-game-engines it has.</p>
+<p>Considering that - without looking anything off and purely off the top of my head - I am incapable of naming a single published Rust game, but can name at least 4 Rust game engines, (Bevy, Macroquad, ggez, Fyrox) I'd say we're dealing with a particularly severe case Terminal Technowizardry Syndrome.</p>
+<p>Like many brave dungeoneers before me, I have ventured off into the damp caves of Rust game development in a quest to right these wrongs. And just like all those aforementioned adventurers, I am failing epically.</p>
+<p>However, instead of being reasonable and recognizing my personal shortcomings, I will now proceed to become the protagonist of the adage &quot;The shoddy craftsman blames their tools.&quot;</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/bevyrage/z32HfPw.png" alt="Saint the slugcat, very frustrated over some puzzle pieces" class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<h1 id="background">Background</h1>
+<p><a href="https://bevyengine.org/">Bevy</a> is currently the most popular Rust game engine out there. In fact, it is so popular that non-Rust programmers might have actually heard of it, which is a feat of its own. As it is designed by Rust programmers, it is sculpted in the image of the substance which composes it - that means, it is extremely opinionated and devoid of any user interface.</p>
+<p>Based on the ECS (Entity, Component, Systems) design style, it adopts a philosophy that banishes feeble concepts such as &quot;node trees&quot; or &quot;inheritance&quot; back into the OOP abyss where they belong.</p>
+<blockquote>
+<p>&quot;I don't think ECS is a new concept... like a lot of current trends it's making the old ways of doing things sound new again. It does do some exciting stuff... but it's ultimately just structs and composition, like how we used to do things - but adapted for the modern Unity Node Tree palette.&quot; - Evie, my most highly esteemed and very opinionated mentor</p>
+</blockquote>
+<p>Because looking at the people currently raking in boatloads of money and deciding to do things completely differently is cool, Bevy stretches ECS to the extreme, making even UI elements be ECS entities and forcing all code to run inside Systems.</p>
+<p>I have completed 2 small projects with Bevy, both open source:</p>
+<ul>
+<li><a href="https://oneirical.itch.io/plerokeno">Pleroma &amp; Kenoma</a>, a 48 hour game jam submission</li>
+<li><a href="https://github.com/Oneirical/tango-problem">The Tango Problem</a>, an experiment with neuroevolutive genetic algorithms (holy buzzwords!)</li>
+</ul>
+<p>And, I am currently working on my larger scale forever-project:</p>
+<ul>
+<li><a href="https://oneirical.github.io/tags/tgfp/">The Games Foxes Play</a>, don't ask me what it's about, even I do not know, but you can see <a href="https://www.youtube.com/watch?v=yhfpTkU6osk">what it looks like</a>.</li>
+</ul>
+<p>I will now proceed to bash what I believe are currently Bevy's greatest shortcomings, with the highly devious plan of getting Internet strangers to go &quot;<em>You absolute buffoon! How can you forget to use [HIGHLY ESSENTIAL BEVY FEATURE I NEVER HEARD OF] to save yourself hours of time? You dunce! You fluff-bloated addlepated simpleton!&quot;</em> Because finding those things myself can be... actually, that just brings me to my first main point.</p>
+<h1 id="bevy-contributors-are-way-too-productive">Bevy Contributors Are Way Too Productive</h1>
+<p>I was only just finishing up updating my game to match Bevy 0.12's new conventions (December 2023) when they released Bevy 0.13 (February 2024). I must now once again comb through my code to knock out all now-obsolete conventions, such as the <code>TextureAtlasSprite</code>s liberally scattered throughout my code.</p>
+<p>Bevy needs to be hyped up to get people working on it, I fully understand that. But it is not a complete project by any means. Working with it feels like constantly reaching for a tool in your toolbox which you expect to be there, but instead, your hand simply passes through the case and enters a wormhole reaching into a Draft pull request on their GitHub. Tutorials become full of incorrect and outdated information in a matter of months - and as a result, people are not very motivated to actually make them. A significant portion of Bevy-related knowledge is found on YouTube, which is, in my opinion, NOT a good resource when it comes to fetching a quick answer like &quot;how do I schedule this System to only run in this specific GameState&quot;.</p>
+<p>Bevy programmers probably already know this, but beyond the official docs.rs Bevy documentation, these two resources are highly valuable and tend to be updated... occasionally.</p>
+<ul>
+<li><a href="https://taintedcoders.com/">Tainted Coders</a></li>
+<li><a href="https://bevy-cheatbook.github.io/">Bevy Cheatbook</a></li>
+</ul>
+<p>In addition to this, a large portion of Bevy development is fetching third-party crates to complement your Bevy development experience. For instance, I make extensive use of the <a href="https://github.com/djeedai/bevy_tweening">Bevy Tweening</a> crate in my own projects. I am fully dependent on their maintainers to keep up the pace with new Bevy releases - if a cosmic ray vaporizes every atom of their bodies in an unfortunate astral accident, I will be forced to update their libraries myself to keep my game running with the latest Bevy version. Bevy Tweening maintainers are very active right now, but that might not be the case for the dozen of external Bevy crates a game developer might see themselves using for a larger scale project.</p>
+<h1 id="bevy-types-expand-in-mass-until-they-blot-out-the-sun">Bevy Types Expand In Mass Until They Blot Out The Sun</h1>
+<p>Hmm, yes, dear waiter, I believe I'll be getting a <code>ParamSet&lt;(Query&lt;(&amp;Transform, &amp;mut Species, &amp;mut SoulBreath, &amp;mut AxiomEffects, &amp;mut Animator&lt;Transform&gt;, &amp;mut Position, Has&lt;RealityAnchor&gt;)&gt;, Query&lt;&amp;Position&gt;, Query&lt;&amp;Species&gt;, Query&lt;&amp;SoulBreath&gt;, Query&lt;(&amp;Position, &amp;Transform), With&lt;RealityAnchor&gt;&gt;)&gt;</code> for breakfast, <em>por favor</em>. Keep the change.</p>
+<p>Bevy Queries are black magic. Given thousands of entities with multiple components, they will somehow fetch every single one that possess only the ones you want in record time, once every frame. This somehow does not turn my 8 GB of RAM computer into a localized micro-Sun, and is quite efficient. I probably should devote some time to understanding at least 10% of the process of how this is done.</p>
+<p>However, this is still Rust, and as the commandments go, <em>Thou shall not access a mutable and an immutable reference to the same object simultaneously</em>. This causes issues.</p>
+<p>One of the Systems in The Games Foxes Play is tracking the spells cast by creatures and executing their effects. It looks roughly like this:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/*
+</span><span style="color:#888888;"> We obtain the entity on which the spell is getting cast, 
+</span><span style="color:#888888;"> what the function of the spell is, 
+</span><span style="color:#888888;"> and what info we can get from the creature that casted it.
+</span><span style="color:#888888;">*/
+</span><span style="color:#8fbfdc;">let </span><span>(entity, function, </span><span style="color:#8fbfdc;">mut</span><span> info) = world_map.targeted_axioms.pop().unwrap(); 
+</span><span style="color:#888888;">/* 
+</span><span style="color:#888888;"> We grab a bunch of mutable fields and
+</span><span style="color:#888888;"> get ready to modify the targeted creature&#39;s data. 
+</span><span style="color:#888888;">*/
+</span><span style="color:#8fbfdc;">if let </span><span>Ok((transform_source, </span><span style="color:#8fbfdc;">mut</span><span> species, </span><span style="color:#8fbfdc;">mut</span><span> breath, 
+</span><span>	</span><span style="color:#8fbfdc;">mut</span><span> effects, </span><span style="color:#8fbfdc;">mut</span><span> anim, </span><span style="color:#8fbfdc;">mut</span><span> pos, is_player)) = creatures.p0().get_mut(entity.to_owned()) { 
+</span><span>	</span><span style="color:#8fbfdc;">match</span><span> function {
+</span><span>	    Function::Teleport { x, y } =&gt; {
+</span><span>	    	</span><span style="color:#888888;">//SNIP
+</span><span>	    	</span><span style="color:#888888;">// The creature has been teleported, 
+</span><span>	    	</span><span style="color:#888888;">// edit the &quot;x&quot; and &quot;y&quot; fields on its Position component.
+</span><span>	    	(pos.x, pos.y) = (x, y); 
+</span><span>	    	</span><span style="color:#888888;">//SNIP
+</span><span>	    }
+</span><span>    	Function::ApplyEffect { effect } =&gt; {
+</span><span>    		</span><span style="color:#888888;">//SNIP
+</span><span>    		 </span><span style="color:#888888;">// The creature has received a status effect, 
+</span><span>    		 </span><span style="color:#888888;">// edit the &quot;status&quot; field on its AxiomEffects component.
+</span><span>		    effects.status.push(effect);
+</span><span>		    </span><span style="color:#888888;">//SNIP
+</span><span>		},
+</span><span>	</span><span style="color:#888888;">// LOTS, and I mean LOTS, of other spell effects
+</span></code></pre>
+<p>As you can see, I require accessing all those fields to manage all these possible spell effects. That is the <code>Query&lt;(&amp;Transform, &amp;mut Species, &amp;mut SoulBreath, &amp;mut AxiomEffects, &amp;mut Animator&lt;Transform&gt;, &amp;mut Position, Has&lt;RealityAnchor&gt;)&gt;</code> part of the giga-type I posted at the summit of this chapter. That is <code>creature.p0()</code>.</p>
+<p>But, let's say that we want to only grab an entity's Position or Species component. No modifications, no mutability, we simply want to know where a creature is currently located in terms of &quot;x&quot; and &quot;y&quot; coordinates, or what species it belongs to.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span>Function::Collide { with } =&gt; { </span><span style="color:#888888;">// &quot;with&quot; is the entity being collided with.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> coll_species = creatures.p2().get(with).unwrap().clone();
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> coll_pos = creatures.p1().get(with).map(|</span><span style="color:#ffb964;">e</span><span>| (e.x, e.y)).unwrap();
+</span></code></pre>
+<p>We <em>cannot</em> reuse <code>creatures.p0()</code> as it is currently in use by <code>get_mut</code>. Its ownership is unavailable, and creating a new immutable reference to Position while it is currently mutably borrowed by <code>creatures.p0()</code> (in order to mutate coordinates to fulfill Teleport) is impossible. We must use Bevy's ParamSet type, designed to handle these conflicts.</p>
+<p>Even in a situation where I could re-use <code>creatures</code>, I wouldn't necessarily need all those fields but would still need to call every single one, resulting in tons of unused variables:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">let</span><span> stem_block = </span><span style="color:#8fbfdc;">if let </span><span>Ok((entity, _queue, _species, _effects,
+</span><span>	_breath, pos, _is_player)) = creatures.get(*segment) {
+</span></code></pre>
+<p>And that is the source of this extreme bloat. This entire spell handling system thus has the following function fields:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">dispense_functions</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creatures</span><span>: ParamSet&lt;(
+</span><span>        Query&lt;(&amp;Transform, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Species, &amp;</span><span style="color:#8fbfdc;">mut</span><span> SoulBreath, &amp;</span><span style="color:#8fbfdc;">mut</span><span> AxiomEffects, 
+</span><span>        	&amp;</span><span style="color:#8fbfdc;">mut </span><span>Animator&lt;Transform&gt;, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Position, Has&lt;RealityAnchor&gt;)&gt;,
+</span><span>        Query&lt;&amp;Position&gt;,
+</span><span>        Query&lt;&amp;Species&gt;,
+</span><span>        Query&lt;&amp;SoulBreath&gt;,
+</span><span>        Query&lt;(&amp;Position, &amp;Transform), With&lt;RealityAnchor&gt;&gt;,
+</span><span>    )&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">plant</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Plant&gt;,
+</span><span>    </span><span style="color:#ffb964;">faction</span><span>: Query&lt;&amp;Faction&gt;,
+</span><span>    </span><span style="color:#ffb964;">check_wound</span><span>: Query&lt;Entity, With&lt;Wounded&gt;&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">next_state</span><span>: ResMut&lt;NextState&lt;TurnState&gt;&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">world_map</span><span>: ResMut&lt;WorldMap&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">souls</span><span>: Query&lt;(&amp;</span><span style="color:#8fbfdc;">mut </span><span>Animator&lt;Transform&gt;, &amp;Transform, 
+</span><span>    	&amp;</span><span style="color:#8fbfdc;">mut</span><span> TextureAtlasSprite, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Soul), Without&lt;Position&gt;&gt;,
+</span><span>    </span><span style="color:#ffb964;">ui_center</span><span>: Res&lt;CenterOfWheel&gt;,
+</span><span>    </span><span style="color:#ffb964;">time</span><span>: Res&lt;SoulRotationTimer&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventWriter&lt;LogMessage&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">zoom</span><span>: ResMut&lt;ZoomInEffect&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">current_crea_display</span><span>: ResMut&lt;CurrentEntityInUI&gt;,
+</span><span>    </span><span style="color:#ffb964;">texture_atlas_handle</span><span>: Res&lt;SpriteSheetHandle&gt;,
+</span><span>
+</span><span>){
+</span></code></pre>
+<p>Rust's Clippy (an assistant that tries to improve your code) is NOT a fan. Not only is this massively bulky, this forces me to keep my code contained inside this single system. It is very hard to outsource work to other functions, because passing around data is a nightmare. I need to unpack components into relevant fields, call the function, get an output, and <em>then</em> mutate the fields with that output, back inside the giga-system.</p>
+<p>For example, if I want to pass around Position to do some calculations and mutate it, I can't just have a function that accepts <code>&amp;mut Position.</code> The actual Bevy type is <code>Mut&lt;'_, Position&gt;</code>. It needs to be turned into fields &quot;x&quot; and &quot;y&quot;. Only then can I pass those numbers to a &quot;calculate_pathfinding&quot; function, which returns numbers, and allows me to edit Bevy Components back inside the System.</p>
+<p>As a result, that <code>dispense_functions</code> System is currently at 594 lines of code, and will keep growing until it swallows the universe.</p>
+<p>I find it quite peculiar how Bevy demos focus very highly on presentation and little on gameplay. Art is obviously a huge part of game development, but reading changelogs show there is a bias towards talking about the latest shader and high performance wgpu computing improvements.</p>
+<p>Spawning a transparent 3D glass sphere in Bevy that distorts your vision when you gaze through is now well-supported. But games in the vein of &quot;Dwarf Fortress&quot; or &quot;Zachtronics&quot; with a large quantity of interactions feel much, much harder to do in Bevy due to how much data needs to be passed around.</p>
+<h1 id="bevy-is-not-rusteic">Bevy Is Not &quot;Rusteic&quot;</h1>
+<blockquote>
+<p>&quot;Getting it to compile will be difficult. But when it does compile, it will usually do everything you expected it to.&quot; - Rust Cultists</p>
+</blockquote>
+<p>I am proud to say I have never once used a classical runtime debugger with breakpoints in Rust. I never felt like I needed one. The compiler (and its trusty watchman Rust-Analyzer) judge my every move, like they are a team of senior engineers with decades of experience hovering over my shoulders and slowly drooling on the floor, waiting for the moment I make a mistake to bark out at me.</p>
+<p>&quot;THAT VARIABLE DOESN'T LIVE LONG ENOUGH!!&quot;</p>
+<p>As a former JavaScript plebeian who has only been semi-recently illuminated by the suspiciously pastel pink, white and blue radiance of Rust developers, NOT having to sit in my web console debugger for hours pushing some lovingly crafted <code>[object Object]</code> or <code>undefined</code> is a blessing.</p>
+<p>But Bevy, despite being built in Rust, does not offer such guarantees, and I find myself constantly reaching for those <code>dbg!</code> macros I thought I could mostly forget.</p>
+<ol>
+<li>
+<p>There is the lack of warnings. In the previous chapter, I presented some particularly bloated Queries - well, I occasionally find one with some unneeded Without filters. The compiler, of course, is blind to such things.</p>
+</li>
+<li>
+<p>There is also the grave matter of System Scheduling. You see, without a precise order being given to them, <strong>Bevy systems run in complete chaos, and there is no guarantee that they will always continue their execution in the same order</strong>. It took me a little while to figure this out, and I now carefully specify game states to ensure Systems are running when they should:</p>
+</li>
+</ol>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">TurnPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_systems(Update, calculate_actions
+</span><span>        	.run_if(in_state(TurnState::CalculatingResponse)));
+</span><span>        app.add_systems(Update, execute_turn
+</span><span>        	.run_if(in_state(TurnState::ExecutingTurn)));
+</span><span>        app.add_systems(Update, dispense_functions
+</span><span>        	.run_if(in_state(TurnState::DispensingFunctions)));
+</span><span>        app.add_systems(Update, unpack_animations
+</span><span>        	.run_if(in_state(TurnState::UnpackingAnimation)));
+</span><span>        app.add_systems(Update, fade_effects);
+</span><span>        app.insert_resource(TurnCount{turns: </span><span style="color:#cf6a4c;">0</span><span>});
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>However, unscheduled systems can be <em>very</em> stealthy in how they induce bugs. A single oversight can mean your game works correctly 99% of the time, then suddenly has unexpected behaviour in a very specific situation because a System outsped another when it was least predictable.</p>
+<ol start="3">
+<li>Another feature is the extremely bloated standard &quot;Bevy library&quot;. Yes, Bevy is divided into multiple sub-crates (like &quot;bevy-ui&quot;), but most developers will simply import the whole thing. This makes compilation times quite severe (my 2016 glorified calculator laptop is incapable of even finishing the compilation process). It is possible to activate &quot;dynamic linking&quot; for a mild speedup:</li>
+</ol>
+<p><code>bevy = { version = &quot;0.13&quot;, features = [&quot;dynamic_linking&quot;]}</code></p>
+<p>but, you'll need to REMEMBER to remove this when releasing your game, or you'll need to bundle some obscure module <code>libbevy_dylib</code> alongside your game to ensure it works at all. Fun.</p>
+<p>Yes, it's just 8-12 seconds, but when trying to design an UI and reloading every so often to see how it looks, it adds up. My Rust mentor is developing her own Rust game in SDL, and compiling that is more in the realm of a single second.</p>
+<p>There is an ocean of features, structs and functions in Bevy you won't ever use if you are merely making a 2D game. It is meant to be a general purpose game engine and a competitor to the likes of Unity, and it shows.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Bevy is an amazing piece of technology that isn't ready yet. </p>
+<p>I often end up feeling like I don't actually &quot;own&quot; every part of my game when using Bevy, which is what makes Rust so fun for me. When using Generic JavaScript Framework #28375, I don't feel like a programmer, I feel like a clueless child who has found black boxes of ancient alien technology and a tube of superglue to stitch them together. This is naturally a requirement in some giga-enterprise codebase - you can't understand the whole thing top to bottom - but when it comes to a personal gamedev project, I'd prefer having at least an idea of what is going on behind the scenes.</p>
+<p>When reading Bevy changelogs, I constantly think &quot;if only that feature was around when I was developing THAT system in my game!&quot;</p>
+<p>Bevy will be a great thing eventually that will challenge the status quo of the gamedev sphere.</p>
+<p>But, in my opinion, that time has not yet come.</p>
+<p><em>If you enjoyed this writeup, feel free to contact me! I am currently looking for:</em></p>
+<ul>
+<li><em>Summer internships</em></li>
+<li><em>Full time positions after April 2025</em></li>
+<li><em>People to join my Northsec team - no large proficiency in security required, but the drive to learn about technology is mandatory</em></li>
+</ul>
+<p><em>Discord: oneirical</em></p>
+<p><em>Email: julien-robert@videotron.ca</em></p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/csgamesos/">Proper Work-Life Balance In The Packet Factory - First Place in Operating Systems at CS Games</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-03-18
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/networking/">#networking</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/writeups/">#writeups</a></span>
+    
+
+
+                    <div class="post-content">
+            <blockquote>
+<p>&quot;We have discovered a file crawler in a mysterious PC containing an unfamiliar OS. The resistance believes that it could contain crucial information against the green threat. Therefore, your mission is to interact with it and extract all its secrets. But be careful: who knows what defence mechanisms this device may have?&quot;</p>
+</blockquote>
+<p>Well? How hard could this possibly be?</p>
+<p>Spoiler: very much so.</p>
+<p><strong><a href="https://github.com/Oneirical/OS-CSGAMES2024">Source Code</a></strong></p>
+<h1 id="background">Background</h1>
+<p>On the 15-16-17 weekend of March 2024, I participated in the <a href="https://csgames.org/en/">CS Games</a> competition for the first time, one of the largest undergraduate computer science contests in the noble province of Québec. I expected questionable odours, high levels of introversion and extremely difficult challenges. It appears only the latter conformed to my expectations, for the contenders truly did know how to party with the vast array of costumes, singing and loud electronic music at their disposition. Much to the chagrin of my fragile and sensitive ears.</p>
+<p>I &quot;selected&quot; the challenges <strong>Operating Systems, Moldable Development and High Performance Computing</strong>. Since I am the only person who could not attend the Concordia introductory meeting, my team leaders chose for me - but I must celebrate their skill at making decisions in my place, for I thoroughly enjoyed two out of the three. Sorry, Moldable Development organizers, but I'd rather NOT drown in a deluge of UI micro-buttons and programming syntax hauled straight from the 1970s.</p>
+<p>Mildly disappointed at the end of the competition, I sincerely thought I was going to win nothing. My bewildered face is now immortalized on the podium photo of the Operating Systems category, in the highly unexpected ranking of first place.</p>
+<p>This post will reveal to you a fragment of the endured suffering.</p>
+<h1 id="the-assignment">The Assignment</h1>
+<p><a href="https://github.com/Oneirical/OS-CSGAMES2024/blob/master/instructions/os.en.md">You may read here the instructions given to me and my teammate, Jaspreet, at the beginning of this 3 hour battle.</a></p>
+<p>If you, dear reader, are NOT a demigod of technology, your expression upon consulting this document may come to closely resemble mine at the time I opened this file for the first time:</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/csgamesos/agony.png" alt="A slugcat screaming AAAAAAAAAAa" class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>First course of action: dumb it down a bit so that it may be parsed by my feeble brain where 50% of storage is clogged by fluffiness and pictures of cute cats. Clearly, we are dealing here with a MACHINE that RECEIVES THINGS, does some stuff with them, and outputs a transformed version of those THINGS.</p>
+<p>Also known as a &quot;server&quot;. Yeah, I know what those are, right? I used to play Minecraft all the time on those! I can choose any programming language for this task...</p>
+<p>The answer is obviously Rust. Sure, it has unimportant features like &quot;multithreading&quot;, &quot;memory safety&quot; or &quot;static typing&quot;, but what I truly care about is how its proponents occasionally possess profile pictures on Github of cute Pokémon wearing adorable bowties and ribbons. And, if someone got a job in technology with this little professionalism, then I would be wise to follow their every word of advice.</p>
+<p>The challenge allows for use of any tool, including LLMs and full internet access. Sweet! It's just like working at a real job.</p>
+<blockquote>
+<p>Even ChatGPT won't save you. Good luck. - Mr Gorley, challenge organizer</p>
+</blockquote>
+<h1 id="things-in-and-out">Things, In And Out</h1>
+<blockquote>
+<p>Warning: I am a Biology undergraduate student self-teaching myself technology to escape the gulf of academia. I make mistakes. If anything in this post is wrong, I genuinely want to be corrected so that I may learn. Contact me at my email: julien-robert@videotron.ca, or message me on Discord - my username is &quot;oneirical&quot;.</p>
+</blockquote>
+<p>So, according to the intructions, the poor file crawler is currently throwing its delivery crates (&quot;packets&quot;) in the abyss known as &quot;port 7331&quot; where no one cares about it or gives it any attention. Let us fix that.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() -&gt; std::io::Result&lt;()&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> listener = TcpListener::bind(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">127.0.0.1:7331</span><span style="color:#556633;">&quot;</span><span>)?;
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> stream in listener.incoming() {
+</span><span>        </span><span style="color:#8fbfdc;">match</span><span> stream {
+</span><span>            Ok(stream) =&gt; {
+</span><span>                thread::spawn(</span><span style="color:#8fbfdc;">move </span><span>|| {
+</span><span>                    handle_connection(stream).unwrap();
+</span><span>                });
+</span><span>            }
+</span><span>            Err(e) =&gt; {
+</span><span>                eprintln!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Failed to accept connection; err = </span><span style="color:#7697d6;">{:?}</span><span style="color:#556633;">&quot;</span><span>, e);
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    Ok(())
+</span><span>}
+</span></code></pre>
+<p>Now, I have no idea what a TCP or UDP stream is. I don't really remember what they mean, probably something like Tragically Cute Puppies or Unrealistically Desirable Pets. What I did, however, find out, is that when it comes to these kinds of server challenges, you'll usually want to make your connection follow the TCP type. Put a metaphorical pin in that, this will be relevant later.</p>
+<p>Each &quot;stream&quot; is like a conveyor belt transporting packets into my little letterbox. All such streams should be correct (marked as &quot;Ok&quot;), in which case a &quot;thread&quot; will spawn to start taking care of the deliveries, like a <del>loyal servant</del> volunteer assigned to unpacking the delivery crates. This thread-worker needs to be able to actually touch the crates to do anything, so the &quot;move&quot; keyword transmits ownership of the data to them! Let's see what is happening inside the other end of the stream-conveyor-belt.</p>
+<h2 id="packets-of-all-shapes-and-sizes">Packets Of All Shapes And Sizes</h2>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">enum </span><span style="color:#ffb964;">Packet </span><span>{
+</span><span>    </span><span style="color:#7697d6;">UPLD </span><span>{ crawler_id: </span><span style="color:#8fbfdc;">u16</span><span>, file_path: String },
+</span><span>    </span><span style="color:#7697d6;">MODE </span><span>{ mode: Mode },
+</span><span>    </span><span style="color:#7697d6;">SEQN </span><span>{ seq_num: </span><span style="color:#8fbfdc;">u16 </span><span>},
+</span><span>    </span><span style="color:#7697d6;">DATA </span><span>{ upload_id: </span><span style="color:#8fbfdc;">u16</span><span>, seq_num: </span><span style="color:#8fbfdc;">u16</span><span>, data: Vec&lt;</span><span style="color:#8fbfdc;">u8</span><span>&gt; },
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Clone, Copy)]
+</span><span style="color:#8fbfdc;">enum </span><span style="color:#ffb964;">Mode </span><span>{
+</span><span>    Block,
+</span><span>    Compressed,
+</span><span>}
+</span></code></pre>
+<p>Not all packets serve the same purpose! We want that juicy intel contained in those DATA packets, yes, but such precious payload is to be handled with care. To prepare ourselves, we have:</p>
+<ul>
+<li>UPLD packets announcing the arrival of a fresh delivery. They contain the identification number of the crawler (conveyor belt) from where the delivery is coming, and the file path in the source OS (&quot;country of origin&quot;) from which the data is getting extracted.</li>
+<li>MODE packets only announce whether or not the incoming data is compressed and needs to have some water splashed onto it to revert to its original form, or if it's good as it currently is. Note the two Mode enums dictating this.</li>
+<li>SEQN packets contain the &quot;sequence number&quot; of the packets. I am not as confident about these, but I believe they are counting what is the current number of DATA packets received, and if, for example, the next one will be the fifth or tenth one.</li>
+</ul>
+<h2 id="let-s-unpack-this">Let's Unpack This</h2>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">handle_connection</span><span>(</span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">stream</span><span>: TcpStream) -&gt; std::io::Result&lt;()&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> buffer = [</span><span style="color:#cf6a4c;">0</span><span>; </span><span style="color:#cf6a4c;">508</span><span>]; </span><span style="color:#888888;">// Maximum packet size
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> mode: Mode;
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">loop </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> n = </span><span style="color:#8fbfdc;">match</span><span> stream.read(&amp;</span><span style="color:#8fbfdc;">mut</span><span> buffer) {
+</span><span>            Ok(n) </span><span style="color:#8fbfdc;">if</span><span> n == </span><span style="color:#cf6a4c;">0 </span><span>=&gt; </span><span style="color:#8fbfdc;">return </span><span>Ok(()), </span><span style="color:#888888;">// Connection closed
+</span><span>            Ok(n) =&gt; n,
+</span><span>            Err(e) =&gt; {
+</span><span>                eprintln!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Failed to read from socket; err = </span><span style="color:#7697d6;">{:?}</span><span style="color:#556633;">&quot;</span><span>, e);
+</span><span>                </span><span style="color:#8fbfdc;">return </span><span>Err(e);
+</span><span>            }
+</span><span>        };
+</span><span>
+</span><span>        </span><span style="color:#888888;">// Parse the packet
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> packet = parse_packet(&amp;buffer[..n]);
+</span><span>        </span><span style="color:#8fbfdc;">match</span><span> packet {
+</span><span>            Ok(packet) =&gt; {
+</span><span>                </span><span style="color:#888888;">// Handle the packet
+</span><span>                mode = </span><span style="color:#8fbfdc;">match</span><span> packet {
+</span><span>                    Packet::</span><span style="color:#7697d6;">MODE </span><span>{ mode } =&gt; {
+</span><span>                        mode
+</span><span>                    },
+</span><span>                    _ =&gt; Mode::Block,
+</span><span>                };
+</span><span>                handle_packet(&amp;</span><span style="color:#8fbfdc;">mut</span><span> stream, packet, mode)?;
+</span><span>            }
+</span><span>            Err(e) =&gt; {
+</span><span>                eprintln!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Failed to parse packet; err = </span><span style="color:#7697d6;">{:?}</span><span style="color:#556633;">&quot;</span><span>, e);
+</span><span>                </span><span style="color:#888888;">// Send error response
+</span><span>                send_error_response(&amp;</span><span style="color:#8fbfdc;">mut</span><span> stream, </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Failed to parse packet</span><span style="color:#556633;">&quot;</span><span>)?;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Have a glance inside our &quot;volunteer&quot;'s crate-unpacking room. Because there is no such thing as sensible work-life balance in MY factory, their task continues eternally with the &quot;loop&quot; keyword (same thing as &quot;while true&quot;) until they are finally done and no further packets are coming out of the stream. The &quot;n&quot; variable is monitoring how many bytes are currently on the stream - how many crates remain on the conveyor belt, if you will. n = 0 returns Ok(()) and terminates our poor worker's employment.</p>
+<p>&quot;508&quot; is the maximum size of a Packet, measured in bytes.</p>
+<p>First, packets are <strong>parsed</strong>. This is because the shipping company sending these crates to us is laughably incompetent, and is basically just throwing a bunch of hexadecimal numbers on the conveyor belts wrapped in flimsy plastic packaging. The only way to identify where the crates begin and end, and what they actually are (UPLD, MODE, etc.) is through their <strong>header</strong>, a 10-byte sequence containing:</p>
+<ul>
+<li>2 bytes: Magic number 0xC505</li>
+<li>2 bytes: Total packet size, including header</li>
+<li>2 bytes: Crawler identifier</li>
+<li>4 bytes: Command name in ASCII</li>
+</ul>
+<p>Basically, it's some cheap paper stickers slapped on top of the incoming transmission. We can do better. The &quot;parse_packet&quot; function makes all those messy bytes get tucked into a pristine box - the Packet enum shown earlier (UPLD, MODE, etc.) - all safe and sound for processing :3</p>
+<p>I will demonstrate its inner workings in the following chapter. For now, the neatly processed Packet arrives in &quot;match packet&quot;, where a quick check verifies if our esteemed volunteer did their job correctly. Yes, sometimes, the incoming data contains spiky or dangerous things poking out - most importantly &quot;bit flips&quot; causing erronous tagging. This is a part of the assignment! Should that be detected by &quot;parse_packet&quot;, the &quot;match packet&quot; will throw the suspicious delivery into the incinerator of &quot;send_error_response&quot;, where it shall be destroyed:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">send_error_response</span><span>(</span><span style="color:#ffb964;">socket</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> TcpStream, </span><span style="color:#ffb964;">message</span><span>: &amp;</span><span style="color:#8fbfdc;">str</span><span>) -&gt; std::io::Result&lt;()&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> response = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">IAMERR\x00</span><span style="color:#7697d6;">{:02X}{}</span><span style="color:#556633;">&quot;</span><span>, message.len() + </span><span style="color:#cf6a4c;">4</span><span>, message);
+</span><span>    socket.write_all(response.as_bytes())?;
+</span><span>    Ok(())
+</span><span>}
+</span></code></pre>
+<p>Hopefully, the next packet will fare better than its predecessor.</p>
+<p>Let us return our attention to jobs well done - instances of &quot;Ok(packet)&quot;. First, we check if we are currently dealing with a MODE packet - if yes, change the current active mode to match it - this will enable or disable the miraculous Decompressor 9000 located inside &quot;handle_packet&quot;. We shall return to that later.</p>
+<h2 id="nice-and-tidy-boxes">Nice And Tidy Boxes</h2>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">parse_packet</span><span>(</span><span style="color:#ffb964;">data</span><span>: &amp;[</span><span style="color:#8fbfdc;">u8</span><span>]) -&gt; Result&lt;Packet, &amp;</span><span style="color:#8fbfdc;">&#39;static str</span><span>&gt; {
+</span><span>    </span><span style="color:#888888;">// Check if the data is long enough to contain a header
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> data.len() &lt; </span><span style="color:#cf6a4c;">10 </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">return </span><span>Err(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Packet too short</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// Parse the header
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> magic_number = </span><span style="color:#8fbfdc;">u16</span><span>::from_be_bytes([data[</span><span style="color:#cf6a4c;">0</span><span>], data[</span><span style="color:#cf6a4c;">1</span><span>]]);
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> total_packet_size = </span><span style="color:#8fbfdc;">u16</span><span>::from_be_bytes([data[</span><span style="color:#cf6a4c;">2</span><span>], data[</span><span style="color:#cf6a4c;">3</span><span>]]);
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> crawler_id = </span><span style="color:#8fbfdc;">u16</span><span>::from_be_bytes([data[</span><span style="color:#cf6a4c;">4</span><span>], data[</span><span style="color:#cf6a4c;">5</span><span>]]);
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> command_name = &amp;data[</span><span style="color:#cf6a4c;">6</span><span>..</span><span style="color:#cf6a4c;">10</span><span>];
+</span><span>
+</span><span>    </span><span style="color:#888888;">// Validate the magic number
+</span><span>    
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> magic_number != </span><span style="color:#cf6a4c;">0xC505 </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">return </span><span>Err(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Invalid magic number</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// Validate that the received data is of the expected length
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> data.len() != total_packet_size as </span><span style="color:#8fbfdc;">usize </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">return </span><span>Err(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Packet size mismatch</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// Determine the packet type based on the command name
+</span><span>    </span><span style="color:#8fbfdc;">match</span><span> command_name {
+</span><span>        </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">UPLD</span><span style="color:#556633;">&quot; </span><span>=&gt; {
+</span><span>            </span><span style="color:#888888;">// Parse the UPLD packet
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> file_path = String::from_utf8_lossy(&amp;data[</span><span style="color:#cf6a4c;">10</span><span>..]).to_string();
+</span><span>            Ok(Packet::</span><span style="color:#7697d6;">UPLD </span><span>{ crawler_id, file_path })
+</span><span>        },
+</span><span>        </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">MODE</span><span style="color:#556633;">&quot; </span><span>=&gt; {
+</span><span>            </span><span style="color:#888888;">// Parse the MODE packet
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> new_mode = </span><span style="color:#8fbfdc;">match </span><span>String::from_utf8_lossy(&amp;data[</span><span style="color:#cf6a4c;">10</span><span>..]).as_ref() {
+</span><span>                </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">block</span><span style="color:#556633;">&quot; </span><span>=&gt; Mode::Block,
+</span><span>                </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">compressed</span><span style="color:#556633;">&quot; </span><span>=&gt; Mode::Compressed,
+</span><span>                _ =&gt; Mode::Block,
+</span><span>            };
+</span><span>            Ok(Packet::</span><span style="color:#7697d6;">MODE </span><span>{ mode: new_mode })
+</span><span>        },
+</span><span>        </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">SEQN</span><span style="color:#556633;">&quot; </span><span>=&gt; {
+</span><span>            </span><span style="color:#888888;">// Parse the SEQN packet
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> data.len() &lt; </span><span style="color:#cf6a4c;">12 </span><span>{
+</span><span>                </span><span style="color:#8fbfdc;">return </span><span>Err(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Packet too short for SEQN</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>            }
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> seq_num = </span><span style="color:#8fbfdc;">u16</span><span>::from_be_bytes([data[</span><span style="color:#cf6a4c;">10</span><span>], data[</span><span style="color:#cf6a4c;">11</span><span>]]);
+</span><span>            Ok(Packet::</span><span style="color:#7697d6;">SEQN </span><span>{ seq_num })
+</span><span>        },
+</span><span>        </span><span style="color:#8fbfdc;">b</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">DATA</span><span style="color:#556633;">&quot; </span><span>=&gt; {
+</span><span>            </span><span style="color:#888888;">// Parse the DATA packet
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> data.len() &lt; </span><span style="color:#cf6a4c;">14 </span><span>{
+</span><span>                </span><span style="color:#8fbfdc;">return </span><span>Err(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Packet too short for DATA</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>            }
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> upload_id = </span><span style="color:#8fbfdc;">u16</span><span>::from_be_bytes([data[</span><span style="color:#cf6a4c;">10</span><span>], data[</span><span style="color:#cf6a4c;">11</span><span>]]);
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> seq_num = </span><span style="color:#8fbfdc;">u16</span><span>::from_be_bytes([data[</span><span style="color:#cf6a4c;">12</span><span>], data[</span><span style="color:#cf6a4c;">13</span><span>]]);
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> data = data[</span><span style="color:#cf6a4c;">14</span><span>..].to_vec();
+</span><span>            Ok(Packet::</span><span style="color:#7697d6;">DATA </span><span>{ upload_id, seq_num, data })
+</span><span>        },
+</span><span>        _ =&gt; Err(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Unknown command</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Ah, the glorious packaging facility. Where the unruly and chaotic come to be crushed and rearranged into flawless order and conformity.</p>
+<p>First, we ensure that the header - that flimy paper tag - actually exists. We check that at least 10 bytes are present, then begin slotting them into their respective categories. &quot;from_be_bytes&quot; is swapping out those pesky hexadecimal tags (C5 05 00 1B 00 01 55 50, ewww!) into a glorious human-readable number.</p>
+<p>We then check that 1. the magic number is present, and that 2. the packet size written in the header actually corresponds to its real weight. If you've played Papers Please, it's just like weighing people at the customs on a scale to make sure they aren't hiding any contraband.</p>
+<p>Should everything appear in order, we then package the contents! The &quot;b&quot; before each match statement is parsing the Packet type as a &quot;byte string&quot; - because the aforementioned incompetent packaging company, of course, just HAD to give us numbers, and not human-readable letters!</p>
+<p>Cracking open what is inside the Packet allows us to fill up each field of the Packet enum (for example, DATA contains upload_id, seq_num and data). This finalized version is what is shipped to &quot;handle_packet&quot;, covered in the next chapter.</p>
+<h2 id="payment-received">Payment Received</h2>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">handle_packet</span><span>(</span><span style="color:#ffb964;">socket</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> TcpStream, </span><span style="color:#ffb964;">packet</span><span>: Packet, </span><span style="color:#ffb964;">mode</span><span>: Mode) -&gt; std::io::Result&lt;()&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">match</span><span> packet {
+</span><span>        Packet::</span><span style="color:#7697d6;">UPLD </span><span>{ crawler_id, file_path } =&gt; {
+</span><span>            </span><span style="color:#888888;">// Acknowledge the upload
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> response = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">UPLOADING\x00</span><span style="color:#7697d6;">{:02X}</span><span style="color:#556633;">&quot;</span><span>, crawler_id);
+</span><span>            socket.write_all(response.as_bytes())?;
+</span><span>            Ok(())
+</span><span>        }
+</span><span>        Packet::</span><span style="color:#7697d6;">MODE </span><span>{ mode } =&gt; {
+</span><span>            </span><span style="color:#888888;">// Acknowledge the MODE packet
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> response = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">METADATAMODE</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>            socket.write_all(response.as_bytes())?;
+</span><span>            Ok(())
+</span><span>        }
+</span><span>        Packet::</span><span style="color:#7697d6;">SEQN </span><span>{ seq_num } =&gt; {
+</span><span>            </span><span style="color:#888888;">// Acknowledge the SEQN packet
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> response = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">METADATASEQN</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>            socket.write_all(response.as_bytes())?;
+</span><span>            Ok(())
+</span><span>        }
+</span><span>        Packet::</span><span style="color:#7697d6;">DATA </span><span>{ upload_id, seq_num, </span><span style="color:#8fbfdc;">mut</span><span> data } =&gt; {
+</span><span>            </span><span style="color:#888888;">// Handle DATA packet
+</span><span>            </span><span style="color:#8fbfdc;">match</span><span> mode {
+</span><span>                Mode::Block =&gt; {
+</span><span>                    </span><span style="color:#888888;">// Handle block mode data
+</span><span>                },
+</span><span>                Mode::Compressed =&gt; {
+</span><span>                    </span><span style="color:#888888;">// Handle compressed mode data
+</span><span>                    data = decompress_rle(&amp;data);
+</span><span>                },
+</span><span>            }
+</span><span>            handle_data_packet(socket, upload_id, seq_num, data)
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Receiving an UPLD, MODE or SEQN packet isn't very complicated. We pretty much only need to scream out that we got it, and it stops there. In the case of MODE packets, we already used its contents to swap the current active mode to Block or Compressed. DATA Packets are much more interesting...</p>
+<p>First, they may or may not face the aforementioned Decompressor 9000. Observe, and be awed:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">decompress_rle</span><span>(</span><span style="color:#ffb964;">data</span><span>: &amp;[</span><span style="color:#8fbfdc;">u8</span><span>]) -&gt; Vec&lt;</span><span style="color:#8fbfdc;">u8</span><span>&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> result = Vec::new();
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> index = </span><span style="color:#cf6a4c;">0</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">while</span><span> index &lt; data.len() {
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> value = data[index];
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> count = data[index + </span><span style="color:#cf6a4c;">1</span><span>];
+</span><span>        result.resize(result.len() + count as </span><span style="color:#8fbfdc;">usize</span><span>, value);
+</span><span>        index += </span><span style="color:#cf6a4c;">2</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    result
+</span><span>}
+</span></code></pre>
+<blockquote>
+<p>&quot;RLE is a form of lossless data compression in which runs (a run is sequence of consecutive values that are the same) of data are stored as a single count and data value.</p>
+</blockquote>
+<p>I'm sorry, dear Mr Gorley - the competition organizer - but my hands were already quite full. I just looked up RLE decompression online, and translated the code into Rust. Forgive me, Linus Torvalds.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/csgamesos/wpvtr5pmskfc1.webp" alt="You copied code without understanding it, as a result your code is trash. AGAIN." class="left" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>Following this process, DATA packets are sent to the final step of their journey:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">handle_data_packet</span><span>(</span><span style="color:#ffb964;">socket</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> TcpStream, </span><span style="color:#ffb964;">upload_id</span><span>: </span><span style="color:#8fbfdc;">u16</span><span>, </span><span style="color:#ffb964;">seq_num</span><span>: </span><span style="color:#8fbfdc;">u16</span><span>, </span><span style="color:#ffb964;">data</span><span>: Vec&lt;</span><span style="color:#8fbfdc;">u8</span><span>&gt;) -&gt; std::io::Result&lt;()&gt; {
+</span><span>    
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> clean_data = remove_redundant_bits(&amp;data);
+</span><span>    
+</span><span>    </span><span style="color:#888888;">// Example: Write data to a file named after the upload_id
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> file_path = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">upload_</span><span style="color:#7697d6;">{}</span><span style="color:#99ad6a;">.bin</span><span style="color:#556633;">&quot;</span><span>, upload_id);
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> file = OpenOptions::new()
+</span><span>        .write(true)
+</span><span>        .append(true)
+</span><span>        .create(true)
+</span><span>        .open(file_path)?;
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> writer = BufWriter::new(file);
+</span><span>    writer.write_all(&amp;clean_data)?;
+</span><span>
+</span><span>    </span><span style="color:#888888;">// If the data is empty, this is the end of the file transfer
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> file_path = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">upload_</span><span style="color:#7697d6;">{}</span><span style="color:#99ad6a;">.bin</span><span style="color:#556633;">&quot;</span><span>, upload_id);
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> data.is_empty() {
+</span><span>        </span><span style="color:#888888;">// Send a response indicating the upload is complete
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> response = format!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">UPLOAD END\x00</span><span style="color:#7697d6;">{}</span><span style="color:#556633;">&quot;</span><span>, file_path);
+</span><span>        socket.write_all(response.as_bytes())?;
+</span><span>    }
+</span><span>
+</span><span>    Ok(())
+</span><span>}
+</span></code></pre>
+<p>That &quot;clean_data&quot; step is a real brain liquefier. I'll come back to it later, I still do not fully understand it.</p>
+<p>In order to capture that sweet intel, we need a place to store it. That is a file - possibly the most &quot;Operating Systems&quot; part of this challenge... As far as I am aware, most of the work done so far is more in the realm of Networking. And not the &quot;talking to ambitious entrepreneurs at a fancy cocktail&quot; type, I had my fair share of that one too at the CS Games ending banquet.</p>
+<p>This file has full permissions, and has the entire contents of the data field of the DATA packet dumped into it. The end of this task is announced with the glorious victory chant of &quot;UPLOAD END&quot;. Such celebrations must not last long - the next packet awaiting processing is already on the way...</p>
+<h2 id="the-part-where-it-sucked">The Part Where It Sucked</h2>
+<p>Alright, so:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">remove_redundant_bits</span><span>(</span><span style="color:#ffb964;">data</span><span>: &amp;[</span><span style="color:#8fbfdc;">u8</span><span>]) -&gt; Vec&lt;</span><span style="color:#8fbfdc;">u8</span><span>&gt; {
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> result = Vec::new();
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> buffer = </span><span style="color:#cf6a4c;">0</span><span style="color:#8fbfdc;">u16</span><span>; </span><span style="color:#888888;">// Temporary buffer to hold 2 bytes of data
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> bit_count = </span><span style="color:#cf6a4c;">0</span><span>; </span><span style="color:#888888;">// Keeps track of the number of bits processed
+</span><span>
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>&amp;byte in data {
+</span><span>        buffer = (buffer &lt;&lt; </span><span style="color:#cf6a4c;">8</span><span>) | (byte as </span><span style="color:#8fbfdc;">u16</span><span>); </span><span style="color:#888888;">// Shift the buffer and add the new byte
+</span><span>        bit_count += </span><span style="color:#cf6a4c;">8</span><span>; </span><span style="color:#888888;">// Increment the bit count
+</span><span>
+</span><span>        </span><span style="color:#888888;">// Process 2 bytes of data at a time
+</span><span>        </span><span style="color:#8fbfdc;">while</span><span> bit_count &gt;= </span><span style="color:#cf6a4c;">9 </span><span>{
+</span><span>            </span><span style="color:#888888;">// Extract 9 bits from the buffer
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> value = (buffer &gt;&gt; (bit_count - </span><span style="color:#cf6a4c;">9</span><span>)) &amp; </span><span style="color:#cf6a4c;">0x1FF</span><span>; </span><span style="color:#888888;">// Mask to keep only the last 9 bits
+</span><span>            result.push(value as </span><span style="color:#8fbfdc;">u8</span><span>); </span><span style="color:#888888;">// Add the value to the result
+</span><span>            bit_count -= </span><span style="color:#cf6a4c;">9</span><span>; </span><span style="color:#888888;">// Update the bit count
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// Handle any remaining bits in the buffer
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> bit_count &gt; </span><span style="color:#cf6a4c;">0 </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> value = buffer &amp; ((</span><span style="color:#cf6a4c;">1 </span><span>&lt;&lt; bit_count) - </span><span style="color:#cf6a4c;">1</span><span>); </span><span style="color:#888888;">// Mask to keep only the last bit_count bits
+</span><span>        result.push(value as </span><span style="color:#8fbfdc;">u8</span><span>); </span><span style="color:#888888;">// Add the value to the result
+</span><span>    }
+</span><span>
+</span><span>    result
+</span><span>}
+</span></code></pre>
+<p>This is my attempt at making SOMETHING that would somewhat resemble the challenge requirement about Hamming codes. That part could have been written in Swahili and I would have probably understood it better.</p>
+<p>I mean, just look at this:</p>
+<blockquote>
+<p>We can see that G<sub>0000</sub>, P<sub>0001</sub>, and P<sub>0010</sub> don't hold. We therefore know that bit 3<sub>0011</sub> was flipped, because <code>0001 | 0010 = 0011</code>. ORing/adding the positions of the parity bits that have an error gives the position of the errorneous bit.</p>
+</blockquote>
+<p>I beg your pardon?</p>
+<p>In the challenge description, there is this tiny line of text: &quot;Redundant bits should be <em>removed</em> from the received data before saving to disk&quot;. I wondered if that had anything to do with &quot;Hamming error correction&quot;. This resulted in hacked-together code in the final 30 minutes of the challenge, knit together from StackOverflow and LLM outputs. I understand what it does - it repeatedly combines the last byte in each buffer with a new byte, preparing for the next 9-bit extraction. This effectively makes little bundles of 9 bits and will drop any overflowing or redundant bits not part of the bundling process.</p>
+<p>I'm pretty sure this has nothing to do with the Hamming-thingimagibob. I would obviously spend time and effort learning it in an actual job, but it wasn't something I could fit within the 3 hour time delay.</p>
+<h3 id="edit-worlds-ender-s-solution">EDIT: Worlds Ender's Solution</h3>
+<p>After posting this blog on <a href="https://www.reddit.com/r/rust/comments/1birmmm/how_rusts_robustness_saved_my_undergraduate/kvoriof/?context=10">Reddit</a>, a highly dedicated user going by the name of <a href="https://github.com/WorldSEnder">WorldsEnder</a> - possibly about 2 or 3 planes of existence above my own level of technowizardry - decided to implement parity checking as a fun challenge. They mentioned how a minimum viable product took 30 minutes, and the polished version, 3 whole hours! If someone on this level of expertise took that long, actually implementing this in the competition would have been a distant dream. I am glad I wasted little time on it.</p>
+<p><a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=c76cddc9a85d3bf79e3197933191eed5">You may find their code here.</a></p>
+<p>If you, Internet wanderer, is currently feeling as confused by this theory as I previously was, please check out <a href="https://www.youtube.com/watch?v=X8jsijhllIA">3Blue1Brown's video on the topic</a>! There is also a follow-up on the implementation itself.</p>
+<h2 id="final-scoring">Final Scoring</h2>
+<p>I was told my final score was 48/58, which <em>really</em> surprised me. I was imagining every other university team flawlessly implementing that Hamming error correction feature and annihilating us.</p>
+<p>There was a Python script provided with the challenge, meant to &quot;test&quot; our server. However, it contained more bugs than my previous internship in entomological research, so I disregarded it entirely. Jaspreet, my teammate, had the brilliant idea to test the connection by simply plugging the IP address in the web browser, which gave us a big confidence boost when we found out the packet input was indeed successful. However, this was <em>not</em> real testing. I pretty much shipped the entire code for review in pure YOLO action.</p>
+<p>It appears other teams DID manage to fix and use the script. They listened to the outgoing connection with Wireshark, and found out the protocol in use was UDP, and <em>not</em> TCP like we chose. I got crushed when I first heard this, as this would basically mean that our entire program would not work at all. At this point, I became convinced of my utmost failure.</p>
+<p>However, the judge, in his magnanimity, only deducted a few points for this. After all, as far as I'm aware, changing the protocol wouldn't be so hard - just a matter of swapping out a function here and there.</p>
+<p>The Université de Montréal team, who came in second place, visited me after the announcement of victory, saying that they found it quite weird that they did not get first place. They mentioned how they managed to implement every feature, including Hamming correction, and that they tested their code extensively using a modified version of the Python script. In fact, I remember them spending a LOT of time debugging it and showing newfound mistakes to the competition organizer. </p>
+<p>Personally, I preferred to use that time to polish the error handling of my server. Testing isn't as mandatory in Rust - if the compiler accepts it, it has a good chance of working on the first try!</p>
+<p>Anyhow, I invite the UdeM team, who may be reading this, to open source their code like I did. I am intrigued to see how you two managed to implement that mysterious Hamming error correction feature.</p>
+<h1 id="special-thanks">Special Thanks</h1>
+<ul>
+<li><a href="https://github.com/Artypuppet">Jaspreet</a>, my teammate for this challenge. You may not know Rust, but I am glad you agreed to let me use it for our code. Your ideas and discussions really propelled the project forwards, and your idea near the end to use a web browser to test the connection removed so much stress off my shoulders!</li>
+</ul>
+<blockquote>
+<p>&quot;It's actually making me want to learn rust right now.&quot;</p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/eievui5/">Evie</a>, my most highly esteemed mentor and grand Rust arch-sorceress. Working on <a href="https://github.com/ISSOtm/rsgbds/pull/2">RGBFIX</a> - a Game Boy ROM fixing tool - under your guidance before attempting this challenge helped <em>tremendously</em>, from proper error handling, to read/write operations, and, of course, parsing hexadecimal headers. Beyond your knowledge, you are also an amazing friend, and talking to you is one of the things I look the most forward to daily.</li>
+</ul>
+<blockquote>
+<p>&quot;I’m really happy for you. I can’t believe you were convinced you failed and then got first place :3&quot;</p>
+</blockquote>
+<p><em>If you enjoyed this writeup, feel free to contact me! I am currently looking for:</em></p>
+<ul>
+<li><em>Summer internships</em></li>
+<li><em>Full time positions after April 2025</em></li>
+<li><em>People to join my Northsec team - no large proficiency in security required, but the drive to learn about technology is mandatory</em></li>
+</ul>
+<p><em>Discord: oneirical</em></p>
+<p><em>Email: julien-robert@videotron.ca</em></p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/10/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/12/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

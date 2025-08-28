@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-10-27-interplanar-travel-for-all/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-10-27-interplanar-travel-for-all/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-10-27-interplanar-travel-for-all/">Interplanar Travel For All</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-10-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>An endlessly giggling mess of ribbons under which some creature probably exists. Any hope of unveiling their identity is lost in their constant lunges and twirls across the pollen-tainted air.</em></p>
+<p><em>&quot;Ignorance and submission seem so comfortable... If I did not have the far-away beacon of enlightenment to guide me, I would have been lost long ago.&quot;</em></p>
+<ul>
+<li>Ecstatic Ribbondancer flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>It has been a little harder cranking out code this week, but the forges of creation still blaze with maintained interest.</p>
+<h1 id="dastardly-traps">Dastardly Traps</h1>
+<p>Some new devious creatures have been added to the world generation pool:</p>
+<ul>
+<li>
+<p>the Arctic Phobist sits alone at the centre of empty rooms. Their constant dread of hypothermia permeates through surrounding minds, inspiring all to huddle and cuddle around it in search of warmth... Which tends to create dangerous piles of stacked foes, unleashed as soon as the Phobist is deactivated by a misfired ability. Its ability also extends to the player, making escape difficult when one is constantly being reeled in...</p>
+</li>
+<li>
+<p>groups of Ecstatic Ribbondancers gather in small and cramped areas, and chaotically bounce all over the place like they are super rubber balls. Getting through these gauntlets without getting trapped requires careful steps... which one may not always afford to take when one is being chased by a horde.</p>
+</li>
+</ul>
+<p><a href="https://yewtu.be/embed/w_4A0JDUIbM?">Demonstration of the latter</a>.</p>
+<h1 id="interplanar-travel-for-all">Interplanar Travel for All</h1>
+<ul>
+<li>
+<p>A non-negligible quantity of techno-wizardry has now allowed me to keep loading and simulating creatures even when they are not located on the same Plane (floor) as the player. The technique used, which I like to call the &quot;yellow pages&quot;, keeps an index of all specific creatures which are allowed to take input even if the player is not on the same Plane as them, and simulates their actions in a way that is accurate, but does not nuke the game's performance.</p>
+<ul>
+<li>This is huge. I can't wait for the applications this new development will have, from banishing foes into pocket dimensions to programming bots to clear far-away Planes for you.</li>
+</ul>
+</li>
+<li>
+<p>A new special teleportation Axiom allows one to &quot;astral project&quot; into a pocket dimension from your current position, which may be extremely dire. It reminds me a little bit of DCSS's Okawaru Arena, but with a little more interdimensional flair. I've been thoroughly enjoying the related animation...</p>
+</li>
+</ul>
+<p><a href="https://yewtu.be/embed/atJRdu511U4">Once again, demonstration. Ignore the minor graphical bug</a>.</p>
+<p>I am currently in the process of rekindling Epsilon, the multi-tile snake boss, with some extra new zaniness. A fearsome foe awaits...</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-10-20-a-droplet-in-an-ocean-of-lives/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">A Droplet In An Ocean of Lives</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/17-11-23-genetic-trials/">
+                            <span class="button__text">Genetic Trials</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-06-02-buzzing-holograms/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-06-02-buzzing-holograms/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-06-02-buzzing-holograms/">Buzzing Holograms</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-06-02
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Some chains are unbreakable. In this case, it is the prisoner that must be broken.&quot;</em></p>
+<ul>
+<li>Tutorial entry on Shattered Souls</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>The toiling in the UI mines continues, scorched by the heat of the miniaturized sun that is my laptop CPU every time I cause an infinite loop, and pestered by the buzzing of the feature ideas sparking up while I am stuck in graphical work. Not to mention the fatigue of coming home from the modern aberration known as the 40 Hour Work Week...</p>
+<p>It's particularly annoying that so many of these features <em>used</em> to be completed, but have to be remade from scratch due to the rendering code working in a completely different way after my rewrite.</p>
+<p>I am now pretty much exclusively debugging and testing my game with <a href="https://tauri.app/">Tauri</a>. I really love how smooth the performance is, and also how the game automatically refreshes in seconds every time I make changes to my code for me to test it right away. It's so elegant that it has gotten me to start reading the first few chapters of the Rust book. Ironically, I had bounced off Rust when first trying to choose what language to make my game in (thebracket's <a href="https://bfnightly.bracketproductions.com/chapter_1.html">tutorial</a> is amazing but very complex for an absolute beginner). I think I would actually stand a chance now that I have honed my skills - but I don't want to risk getting sucked into a new project, so my interest will remain superficial for now.</p>
+<h1 id="glamour-sparks-respect">Glamour Sparks Respect</h1>
+<p>In the spirit of adding some pizzazz to my otherwise unimpressive minimalist graphics, I added a few extra sparkles. Sorry about the low framerate, still figuring out how to record GIFs on Linux.</p>
+<ul>
+<li>
+<p>This <a href="https://cdn.discordapp.com/attachments/504088568084561930/1114349525260320788/Rc7mDVw.gif">awesome glitch effect</a>, which I <del>shamelessly stole</del> borrowed from the Internet, looks absolutely amazing on all things holographic. It depends on a library that has a &quot;no commercial use&quot; license - not that selling this game was my intention, but honestly, this effect is so cool it might just harden my choice even further.</p>
+</li>
+<li>
+<p>The map, minimap and <a href="https://cdn.discordapp.com/attachments/504088568084561930/1114349889971822602/KAbEoPW.gif">Hypnotic Projectors</a> now use actual tiny tiles instead of boring plain pixels. Next step, making it zoom in when you step into a Hypnotic Projector for that fancy aesthetic?</p>
+</li>
+<li>
+<p>Collecting Souls now makes them faintly bounce around the UI, resulting in a <a href="https://cdn.discordapp.com/attachments/504088568084561930/1114347662054014997/F1DCCVE.gif">dazzling show</a> when many have been acquired.</p>
+</li>
+<li>
+<p>The &quot;paint cans&quot; used in the Soul Cage now use <a href="https://cdn.discordapp.com/attachments/504088568084561930/1114349526019477586/MmPAAEy.gif">a bouncing effect</a> instead of a rotation effect. Turbulent Souls stuck in the cage also <a href="https://cdn.discordapp.com/attachments/504088568084561930/1114349525621014608/pRDhX2Z.gif">vibrate</a> in a neater way, though I am not sure if I'll keep the latter.</p>
+</li>
+</ul>
+<p>This week, I have also encountered (and patched) one of the most devious bugs I have ever seen. <em>Every time I passed a door, the frame rate was reduced by approximately 1.</em> This was utterly unnoticeable in short playtests, but after a while, I started to get suspicious, mashed my keyboard on top of a door tile, and reduced my game to a slideshow presentation. I frantically looked around for the cause for 2 and a half hours, commenting out and trying tons of deranged fixes, until I finally realized it was all because some backwater function drawing a tiny button in the sidebar was getting called over and over again and drawing thousands of mini-buttons on top of each other. </p>
+<p>Fun.</p>
+<h1 id="trees-of-knowledge-covered-in-webs">Trees Of Knowledge Covered In Webs</h1>
+<p>The research screen is slowly being re-introduced, with a new sprawling design! I didn't like the cramped and claustrophobic previous iteration, so now, I am going for something truly <a href="https://cdn.discordapp.com/attachments/504088568084561930/1114350048311005184/X841LsW.png">expansive</a>. I have mapped out a very unique (to my knowledge) game mechanic idea related to this screen, and I am <em>so</em> hyped to begin working on it. If only all that pesky UI work could stop getting in the way...</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-05-26-tail-between-my-legs/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Tail Between My Legs</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-06-09-ignorance-turned-thin-mist/">
+                            <span class="button__text">Ignorance Turned Thin Mist</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-10-13-endless-cyan-rivers/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-10-13-endless-cyan-rivers/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-10-13-endless-cyan-rivers/">Endless Cyan Rivers</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-10-13
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Gaze into my cyan eyes. See an ocean: your identity, a droplet drowned in endless lives.&quot;</em></p>
+<ul>
+<li>Saintly Hologram, advertising its choice of starting Soul to new players</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io! (very old)</a>)</em></p>
+<p>I've done too much this week. I'm nearly at 1000 Git commits. Let's jump straight into it.</p>
+<p><a href="https://yewtu.be/embed/-65XzWtu71o">Here is this week's demonstration video.</a></p>
+<ul>
+<li>
+<p>Tiles have been removed. There are only creatures now.</p>
+<ul>
+<li>There are now intangible creatures. They can move anywhere, completely unimpeded.
+<ul>
+<li>Yes, things such as the Well (stairs) or floor features are creatures. They have a Soul and everything. And you can become them. You can turn yourself into a walking door.</li>
+</ul>
+</li>
+<li>Properties can be applied to pretty much anything. Those airlocks that slide open when you touch them? You can put that on an enemy. You can open your enemies. Literally.</li>
+</ul>
+</li>
+<li>
+<p>The new Axiom &quot;Droplets Drowned In Endless Lives&quot; turns other creatures into perfect copies of the caster in both body and Soul. You can have 10 clones of yourself walking around in perfect synchrony and copying all your Souls (&quot;spells&quot;). This is balanced, because each action also makes 10 turns pass due to the way Souls work (1 turn per clone).</p>
+</li>
+<li>
+<p>The new Axiom &quot;Reality Torn Asunder&quot; removes all safeguards and restrictions from all Souls. For example, combining that with the previous Axiom lets you turn the walls and stairwells into clones of yourself.</p>
+</li>
+<li>
+<p>The new Axiom &quot;Timelines Snapped Like Twigs&quot; makes associated Souls trigger every second. Not every turn. Every second.</p>
+</li>
+<li>
+<p>Merging all those 3 alongside some other fun Axioms has return an old enemy type I had retired months ago. The new Serene Harmonizer gradually consumes <strong>the entire level with everything in it</strong> by turning every piece of matter into a clone of itself.</p>
+<ul>
+<li>This is actually the nerfed version. The initial prototype would literally conquer the entire game in seconds due to a hilarious chain reaction and drop my frames per second to 1.</li>
+</ul>
+</li>
+<li>
+<p>A new starter area presents the player with a choice of 1 out of 6 starter Souls. Which Caste will you pledge yourself to? Since this is practically one of the first things a new player will see, I am making sure to bring out the cool stuff right away. This is no choosing if you want to be a wizard or a warrior, this is choosing if you want identity takeover, soul swapping or gravity manipulation in your starting kit.</p>
+<ul>
+<li>Actually making those 6 Souls is a work in progress. I have the Ordered one (knockback and teleports) finished. The Feral one (gravity swap) is coming along, but has a few bugs. The Saintly one (assimilation and clones) will be extremely easy to make. Artistic (soul swap) shouldn't take too long. Unhinged and Vile are the ones I'm not too sure about. Their themes are respectively &quot;greed and desire&quot; (probably something about stealing abilities) and &quot;distancing oneself from direct conflict&quot; (probably something about summons or making a little pokémon team).</li>
+</ul>
+</li>
+<li>
+<p>Save and load system completely reworked.</p>
+<ul>
+<li>Every time a creature changes either its Position, Species (and some other minor things), this gets tracked.</li>
+<li>When the game is saved, the RNG seed is noted, as well as all the modified Positions and such of every creature in the game.</li>
+<li>To reload the game, simply build the world using the same RNG seed, then move everything back into place.</li>
+<li>Making it so Soul changes are tracked too is a work-in-progress, but should not be too hard.</li>
+</ul>
+</li>
+<li>
+<p>Complete rework of the rendering logic, which significantly improved performance and made movement animations much more satisfying.</p>
+</li>
+<li>
+<p>Tons of new lore and text for many different things.</p>
+</li>
+</ul>
+<p>I had the week off from any responsibility which allowed me to go full no-life and implement all this stuff. I expect the coming week to be <em>very</em> different. Nonetheless, I am still aiming for my objective of a new playable - and winnable - demo before the end of the year!</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-10-06-all-is-soul/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">ALL IS SOUL</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-10-20-a-droplet-in-an-ocean-of-lives/">
+                            <span class="button__text">A Droplet In An Ocean of Lives</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

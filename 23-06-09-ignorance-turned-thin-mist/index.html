@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-06-09-ignorance-turned-thin-mist/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-06-09-ignorance-turned-thin-mist/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-06-09-ignorance-turned-thin-mist/">Ignorance Turned Thin Mist</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-06-09
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;A ruin is the final state of an idea - the data has crystallized into matter, latched itself into the material like a tick - and once all the praise has been drained out, it leaves itself at the mercy of passing hours.&quot;</em></p>
+<ul>
+<li>flavour text of Souvenirs Hauled from Bygone Eras, tutorial node</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>I have cloned my source code to Codeberg, because as they say, when it comes to backups - one is zero and two is one. Learned that the hard way recently after I casually deleted the backup of my giga-huge DCSS Felid guide a week before the DCSS wiki went splat. It's <a href="http://crawl.chaosforge.org/Onei%27s_3-rune_Interdimensional_Feline_Kidnapping_Walkthrough_-_FeSu%5EGozag/Jiyva">back</a> now, but that was a bit too close for comfort.</p>
+<h1 id="dissipate-the-mists-of-ignorance">Dissipate the Mists of Ignorance</h1>
+<p>The research screen remake continues, and now looks <a href="https://webmshare.com/play/GeVZa">snazzier than it ever was before</a>. Animated tab selectors, removal of annoying scrolling, and sprawling skill trees!</p>
+<p>In the original version, the code determining the unlock order and prerequisites was a simple database: </p>
+<pre data-lang="prerequisites" style="background-color:#151515;color:#e8e8d3;" class="language-prerequisites "><code class="language-prerequisites" data-lang="prerequisites"><span>    &quot;Vision&quot; : [&quot;Seed&quot;,&quot;Cage&quot;],
+</span><span>    &quot;Seed&quot; : [&quot;Herald&quot;], ..etc..
+</span><span>}
+</span></code></pre>
+<p>However, writing all of these connections was becoming extremely tedious with the sheer amount of nodes available. Instead, there is now a simple algorithm to make an imaginary liquid &quot;flow&quot; through the connectors and unlock everything it touches!</p>
+<p>On the sidebar, the dynamic description and flavour text box has also been reworked. Just making the colored text work again took <em>over 10 hours</em>. It is bewildering to me how hard such a simple feature is - and the only library I found online is rather unpopular, has a trillion dependencies and is also only available for a deprecated version of my rendering library (PIXI.js). This is the kind of thing that makes me salivate at Rust programmers - when they have a crate, it rarely goes out of date, because it is simply finished. And also, they don't have to deal with the 200 IQ feature that is:</p>
+<ul>
+<li>measureText(&quot;rogue&quot;) = 24 pixels</li>
+<li>measureText(&quot;rogue &quot;) = 24 pixels</li>
+<li>measureText(&quot; rogue&quot;) = 28 pixels</li>
+</ul>
+<p>I have a question. For the JS gods. <em>Why?</em></p>
+<p>In the end, my final implementation is very sad. It literally writes the text normally all in a single color, then locates all words from a &quot;special words list&quot; and places new Text elements on top with a different color. This basically means that I can't ever have bold text without messing everything up. Oh well.</p>
+<p>There is also a mysterious cyan variant of the &quot;liquid flow&quot; unlocking algorithm, which <a href="https://webmshare.com/play/Y7rGG">spreads very rapidly</a> across the entire network and unveils truths as if they had been obvious since the very beginning of our protagonist's journey. I hope to build an entire core mechanic around this peculiar infection - and I believe the moment where it finally gets translated from my design document into code will be the big turning point between an amateurish experiment and an actually promising potential game. Over a year later, about time.</p>
+<h1 id="arcane-researchers-toil-alone">Arcane Researchers Toil Alone</h1>
+<p>I've come to find out that solo game development is very much based on intrinsic motivation. People can give you a thumbs up after you show off a neat screenshot, but there's never really an ear that's willing to hear you unload your entire thought-stream for obvious reasons (this is not a complaint, I certaintly do not want to hear any unregulated thought-streams myself). The process of making the thing in itself requires one to be <em>obsessed</em> with the subject matter to avoid giving up. If I wasn't so attached to the concept and to the characters of this little glyphic imaginary universe, these posts would have dried out long ago. I understand why duo-development projects are quite often more successful... Though the more minds go into the creation of a product, the more diluted it risks becoming. &quot;Dans les petits pots, les meilleurs onguents&quot; (In the smallest jars come the best ointments), as they say in my homeland.</p>
+<p>I generally try to read the other posts in this thread every Saturday, though I tend to have trouble parsing the tech-tongued incantations some users here particularly enjoy. I'm just glad to have an anchor to tie myself to every week, even though it might just be a kind of placebo.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-06-02-buzzing-holograms/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Buzzing Holograms</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-06-16-foundations-of-truth-reassembled/">
+                            <span class="button__text">Foundations of Truth Reassembled</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

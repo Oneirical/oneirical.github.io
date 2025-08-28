@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/rustconf1/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/rustconf1/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/rustconf1/">My Day at the Rust Conference - because let&#x27;s grab all the most hardcore introverts in the world and put them in the same room, why not</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-09-11
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rustconf/">#rustconf</a></span>
+    
+
+        <div class="post-content">
+            <p>Being a part of the technology community means developing relationships with wizards thousands of kilometres away. It is a simultaneously lonely and connected feeling.</p>
+<p>And then, sometimes, all those threads converge in a single point. One becomes able to look in the eye and smile at all those distant mentors, friends and co-collaborators we shared our work with.</p>
+<p>That place, for me, today, is RustConf.</p>
+<p>I'm looking forward to tomorrow, another full day of learning and sharing. But for the souls who couldn't make it, here is a diary of the day's experiences - and, for those who <em>did</em> make it, well, a different perspective from their own may be appreciated.</p>
+<h1 id="artificial-incompetence">Artificial Incompetence</h1>
+<p>No, to Hell with &quot;chronological order&quot;. This is the penultimate talk I listened to today, about the crate <a href="https://mutants.rs/"><code>cargo-mutants</code></a>. I'm bringing it up first because I thought the technology was really cool. Plus, it's something readers of the blog can probably play with right now!</p>
+<p><a href="https://en.wikipedia.org/wiki/Mutation_testing">This is not a new concept.</a> However, this Rust-specific implementation matches harmoniously with the language's robustness.</p>
+<p>Running <code>cargo mutants</code> in your command line will immediately summon an imaginary software developer intern who will proceed to butcher your testing suite code and implement horrible bugs. This is expressed by:</p>
+<ul>
+<li>Replacing operators (such as <code>&amp;&amp;</code> with <code>||</code>, or <code>+=</code> with <code>-=</code>)</li>
+<li>Replacing functions with a return type with an arbitrary variation of that return type.</li>
+</ul>
+<p>Example of the latter: <code>get_cute_otters()</code> returns a <code>-&gt; Option&lt;usize&gt;</code>. <code>cargo-mutants</code> will transform calls of this function like this:</p>
+<pre data-lang="diff" style="background-color:#151515;color:#e8e8d3;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#a1000d;">- assert_eq!(get_cute_otters(), Some(3));
+</span><span style="color:#558f1f;">+ assert_eq!(Some(0), Some(3));
+</span><span style="color:#558f1f;">+ // or
+</span><span style="color:#558f1f;">+ assert_eq!(None, Some(3));
+</span></code></pre>
+<p><code>cargo-mutants</code> will then raise a warning for any mutation attempt that did not break tests and cause them to fail. After all, if randomly slamming the keyboard on your test suite is labeled as &quot;perfectly fine&quot; by <code>cargo test</code>, it may be time for some detective work.</p>
+<p>In my opinion, this does not seem like <code>cargo clippy</code> where one should aim for absolutely 0 warnings. After all, replacing <code>make_sure_this_returns_true_otherwise_existence_will_be_erased()</code> with <code>true</code> should keep the tests passing. Rather, it's an invitation to review potential sources of error and look at your implementation with fresh eyes.</p>
+<p>Remember, the developer who wrote the code is usually the one also writing the tests. That means absolutely nothing is stopping them from having a blind spot and making the same mistake twice.</p>
+<h1 id="between-sky-and-sea">Between Sky And Sea</h1>
+<p>There is this notion in the technology world that user interface designers are the tip of the iceberg - and the part of development the uninitiated are most acquainted with - while the Atlantean civilization beyond mortal understanding at the bottom of the sea (also known as &quot;kernel and compiler developers&quot;) stays hidden from view.</p>
+<p>There is another world, one which seems to grow year after year. The network architects, the database connectors, the cloud computing specialists - the ones who recite eldritch formulas like &quot;Mongo&quot;, &quot;Postgres&quot; or &quot;Kubernetes&quot; and cast the Summon Money spell. (Unfortunately, Summon Greater Money requires making a pact with an archfiend, such as Microgle or Goosoft).</p>
+<p>Two of the talks I attended today were about the connection between a massive database and a user-facing customer application:</p>
+<ul>
+<li>A MongoDB driver to asynchronously carry data from client to server</li>
+<li>A web interactive map that tracks public transit, called <a href="https://maps.catenarymaps.org/">Catenary</a> and which needs to communicate with city APIs that potentially all use conflicting data formats</li>
+</ul>
+<p>I was quite awed by what I witnessed. However:</p>
+<ul>
+<li>Interestingly, while most talks were &quot;here is how you can use this Rust tool/feature in your own project&quot;, these two stood out from the lot by being &quot;here is this cool thing we built using Rust&quot;. Because the audience of RustConf was composed of Rust developers (I hope), I imagine presenting a project like this would require fighting a little harder to keep the audience's interest.</li>
+<li>The talks had a &quot;walk me through your call stack&quot; feel, especially the MongoDB one. This is a really deep dive - and therefore technically interesting to anyone with specialized experience wishing to do something like this on their own. But, for those more familiar with different realms of computing, I felt a bit like constantly journeying deeper in a thick forest, and asking &quot;Where did I come from&quot;?</li>
+</ul>
+<p>A word of appreciation to the Catenary panelist for having bilingual (English/French) slides in his presentation - I felt honoured by this nod to the culture of my home city (Montréal).</p>
+<h1 id="interlude">Interlude</h1>
+<p>Dear people who code during a coding conference: please show mercy. Please indicate which sacrifices are required to satiate your eldritch thirst. Your zeal is beyond human comprehension.</p>
+<h1 id="all-that-work-because-i-m-too-lazy-to-press-one-key">All That Work Because I'm Too Lazy To Press One Key</h1>
+<p>I truly got to appreciate <code>rustfmt</code> last summer when contributing to the Rust central repository for my <a href="https://oneirical.github.io/gsocfinal/">Makefile rewrite project</a>. The CI job known as <code>tidy</code> isn't too enthusiastic about my lines of code spanning the entire circumference of Earth in their length.</p>
+<p>Today, I got to witness just how many cogs start turning when I mindlessly type &quot;:w&quot; (yes, not Ctrl-S, I know, I'm so <a href="https://en.wikipedia.org/wiki/Leet">1337</a>) and see all the little words satisfyingly snap into place.
+First, the talk mentioned that mere strings are not sufficient to direct proper formatting. <code>rustfmt</code> needs to generate its own IR (intermediate representation) - a concept normally reserved to compilers - and have a rough understanding of the code's logic to then output back a fully formatted string sequence corresponding exactly to the parsed, messy string.</p>
+<p>There is zero room for error - a formatter changing the way code is interpreted by the compiler, even in an extremely subtle way, would be a sad way to crash the latest Blazingly Fast™ NASA satellite written by an excited Rustacean intern.</p>
+<p>Because of this parity requirement, some dilemmas arise:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">struct </span><span style="color:#ffb964;">Otter </span><span>{
+</span><span>  </span><span style="color:#ffb964;">eyes</span><span>: Vec&lt;Eye&gt;,
+</span><span>  </span><span style="color:#ffb964;">tail</span><span>: Tail, </span><span style="color:#888888;">// Don&#39;t worry, the Tail field can be removed later.
+</span><span>  </span><span style="color:#ffb964;">cute</span><span>: </span><span style="color:#8fbfdc;">bool</span><span>,
+</span><span>}
+</span></code></pre>
+<p>Let's say that this comment is too long and must be moved to the line under or above. But how can you choose? The formatter doesn't understand English. (<a href="https://plang.is/">Unless your compiler is simultaneously a chatbot</a> - opinions on the genius and/or lunacy of such a technology will not be the subject of this post). Compilers don't have to take comments into account, formatters do.</p>
+<p>Next, there are macros. They appear in their non-extended state to the formatter, while the compiler sees them in their fully unrolled state. With this mismatch, formatting in such a way that won't cause a difference in the way the compiler parses your code is another challenge.</p>
+<p>I really appreciated this talk. It shed light on how complex some of the quality-of-life tools we use can be.</p>
+<h1 id="interlude-1">Interlude</h1>
+<p>Yes. Let's have two conference rooms. One larger than the Sun with hundreds of chairs, and the other requiring a microscope to properly see. And let's put all the more technical panels in the small room. It will fill right up in milliseconds and the nerds will be sent to listen to the other talk.</p>
+<p>Hmph. Sorry. Venting over.</p>
+<h1 id="merge-and-release-on-stage">Merge And Release, On Stage</h1>
+<p>I used to think there was an inverse correlation between technical skill and the ability to teach it. <a href="https://slatestarcodex.com/2017/11/09/ars-longa-vita-brevis/">All seconds spent learning how to teach are spent not learning the material, are they not?</a></p>
+<p>After the presentation on <code>rkyv</code>, I acknowledge there may be exceptions to this rule.</p>
+<p>First, I must admit it took me an unreasonable amount of time until I realized it's called <code>rkyv</code> because it sounds like &quot;archive&quot; when you pronounce it. Before this revelation came unto me, I constantly mispelled it as &quot;rykv&quot; or &quot;rkvy&quot;.</p>
+<p>Now that this is out of the way, I loved this presentation. I simply must honour the charisma in running <code>cargo publish</code> to ship 0.8 to crates.io live on stage, a version that the panelist worked on for the last 2.5 years.</p>
+<p><code>rkyv</code> is a zero-copy deserialization framework for Rust. A deserialization crate without the deserialization part. A rawer, more performant version of Serde, if you will. Not that the archives it outputs are human-readable, unlike the latter.</p>
+<p>The concept itself is extremely simple at its core. Take data (like a struct), shove it in a <code>[u8]</code> (slice of bytes), and unpack later. This sounds so simple I wondered why it wasn't more widespread, until I was presented how uncanny some of the edge cases can get:</p>
+<ul>
+<li>Absolute pointers like <code>*const</code> cannot be arbitrarily shoved in a slice, as they contain a memory address. Wrap them up nicely in a <code>Box</code>, perhaps? Now, you must deal with machine-specific endianness, because some computers read left-to-right and others right-to-left.</li>
+</ul>
+<p>Small tangent: grabbing Arabic numbers from the Arabs and not keeping the right-to-left reading direction (specifically for numbers) was a mistake. Let's say I present to you the number 5XXX(an <code>n</code> number of further X digits). What's that? Can't see the last digits? I'm hiding them with the palm of my metaphorical hand, tough luck. With big-endian (left-to-right), all you know is that it starts with 5, but you're not even sure if that's a 5000 or a 500 000. With little-endian (right-to-left), you know that the number <em>ends with 5</em> and is therefore divisible by 5. More data collected per digit!</p>
+<p>Anyhow. The live-published on stage version, 0.8, fixes this irregularity by enforcing endianness and wrapping of absolute pointers automatically. Go try it in your projects! Perhaps you'll be happy with the performance gains.</p>
+<p>I loved the final optimistic note of this talk. The developer promised to release in one year... back in 2022. Then, he was reminded of the often forgotten truth in software development that &quot;80% done is actually 20% done&quot; and got stuck for a while.</p>
+<p>But. During all that time, <code>rkyv</code> stayed. It didn't regress, it didn't rot. It just waited for the right time. And that time came, today.</p>
+<p>That makes me feel a lot better about my own <del>abandoned</del> on-hiatus projects.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>It's not over. I'll be back tomorrow for more fun, more networking, more crab pinching with the hand to fire up the audience. I'll be giving a small &quot;community talk&quot; about my <a href="https://oneirical.github.io/gsocfinal/">Rustc test suite rewrite project</a> at 14:45 (2:45 PM) in the tiny room connected to the main ballroom. I'd be delighted to see familiar (or new!) faces.</p>
+<p>This has been an amazing day.</p>
+<p><em>Reddit: u/oneirical</em></p>
+<p><em>Discord: oneirical</em></p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/gsocfinal/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Unmaking the Makefiles - exorcising the Rust compiler test suite one file at a time</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/1-drawing-the-player/">
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 1. Drawing the Player Character</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/05-01-24-advent-of-great-trials/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/05-01-24-advent-of-great-trials/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/05-01-24-advent-of-great-trials/">Advent of Great Trials</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-01-05
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>The head of a gigantic mechanical snake, its blazing red eyes burning away the retinas of organics whom would dare stare too long. Its gold and chrome frills act as an attestation of the superiority of metal over muscle.</em></p>
+<h1 id="the-games-foxes-play">The Games Foxes Play</h1>
+<p><em>(<a href="https://github.com/Oneirical/rust_tgfp">complete source code</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>Happy 500th Sharing Saturday everyone!</p>
+<p>My DCSS addiction had a small resurgence this week, with the completion of my unhinged 32k word guide. I hope that was all I needed to move onto something else. Despite this:</p>
+<p>An &quot;Inspect&quot; mode with a cursor has been added. You can drag it to any creature on the screen to see their Souls, species passive, flavour text and status effects.</p>
+<p>Epsilon has been given one such species passive. First, he no longer starts with his signature tail - and looks really funny without it. Instead, he has a Magnetize passive that makes him self-attach tail segments he comes into contact with.</p>
+<p>Second, should he ever be adjacent to 4 solid Creatures of any type, he gains a stack of Meltdown. This represents his actuators forcing and whirring as he is stuck. Reaching 10 Meltdown will instantly defeat him, so he will naturally try to avoid this by casting his new emergency Axiom - &quot;Exile Those Who Dared Touch&quot; - which blinks away all surrounding <strong>non-robotic</strong> creatures in an attempt to free himself.</p>
+<p>Keyword: non-robotic. The tail segments are robotic, so getting him to coil himself in a spiral would mark his instant downfall. But how to get him into such a disavantageous position?</p>
+<p>The different Castes (think &quot;magic schools&quot;) and their Virtues have different ideas:</p>
+<ul>
+<li><strong>Glamour</strong> (&quot;trickery&quot;): Use the enemy's strength against themselves. Bait Epsilon into attaching lots of tail segments, then possess him, play as him and move into a spiral position, then return to your original body right before reaching critical Meltdown.</li>
+<li><strong>Discipline</strong> (&quot;honour&quot;): No cowardly tactics, copy Epsilon's tail-segment magnetization, and try to suffocate him with your own tail. May the best snake win.</li>
+<li><strong>Grace</strong> (&quot;motion&quot;): What was that about an emergency ability? Animate the walls to synchronize their motions with you, and suffocate Epsilon as he spams his emergency spell desperately.</li>
+<li><strong>Pride</strong> (&quot;disdain&quot;): Forget about these childish games. Forcefully inject Epsilon with a Serene Soul - a terrible identity-wiping poison - and survive his attacks until he finally succumbs.</li>
+</ul>
+<p>All of these are currently implemented, and just need a little polish to handle edge cases (like Discipline occasionally causing one to steal the other's tail). <strong>Note: I am away from home right now, in 1-3 hours I'll add a video/image showcase</strong>.</p>
+<p>I'll have the player choose one Virtue to start off with and give them the ability to specialize or generalize as the game gets more challenges. This should get interesting.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-12-29-glamour-pride-grace-and-discipline/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Glamour, Pride, Grace and Discipline</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/csgamesos/">
+                            <span class="button__text">Proper Work-Life Balance In The Packet Factory - First Place in Operating Systems at CS Games</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

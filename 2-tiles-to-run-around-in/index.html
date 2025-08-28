@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/2-tiles-to-run-around-in/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/2-tiles-to-run-around-in/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/2-tiles-to-run-around-in/">Bevy Traditional Roguelike Quick-Start - 2. Tiles to Frolic Around In</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-09-18
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/bevy/">#bevy</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tutorial/">#tutorial</a></span>
+    
+
+        <div class="post-content">
+            <p>Motionless floating in the void is getting old. Let's remedy this.</p>
+<p>Our player might have a <code>Transform</code> translation of 0, making it appear in the centre of the screen, but that is merely a visual position. Roguelikes take place on a grid, and if a spell starts summoning magical rainbow clouds, it will need to know where to place those pretty vapours. This is where a new component, <code>Position</code>, comes in.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/// A position on the map.
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component, PartialEq, Eq, Hash, Copy, Clone, Debug)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Position </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">x</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">y</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span style="color:#ffb964;">Position </span><span>{
+</span><span>    </span><span style="color:#888888;">/// Create a new Position instance.
+</span><span>    </span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">new</span><span>(</span><span style="color:#ffb964;">x</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>, </span><span style="color:#ffb964;">y</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>) -&gt; </span><span style="color:#8fbfdc;">Self </span><span>{
+</span><span>        </span><span style="color:#8fbfdc;">Self </span><span>{ x, y }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">/// Edit an existing Position with new coordinates.
+</span><span>    </span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">update</span><span>(&amp;</span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">x</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>, </span><span style="color:#ffb964;">y</span><span>: </span><span style="color:#8fbfdc;">i32</span><span>) {
+</span><span>        (</span><span style="color:#ffb964;">self</span><span>.x, </span><span style="color:#ffb964;">self</span><span>.y) = (x, y);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This is, quite literally, a glorified <code>(i32, i32)</code> tuple with some functions to help manage its fields. The vast list of <code>#[derive]</code> macros is mostly self-explanatory, aside from the <code>Hash</code> which will be relevant later.</p>
+<p>Not only do <code>Creature</code>s have a visual apperance, they also have a place where they exist on that grid. That is why they now obtain this new <code>Position</code> Component:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#ffb964;">derive</span><span>(Bundle)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Creature </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">position</span><span>: Position, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">sprite</span><span>: Sprite,
+</span><span>}
+</span><span>
+</span><span style="color:#888888;">// SNIP
+</span><span>
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_player</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>    commands.spawn(Creature {
+</span><span>        Creature {
+</span><span>            position: Position { x: </span><span style="color:#cf6a4c;">4</span><span>, y: </span><span style="color:#cf6a4c;">4 </span><span>}, </span><span style="color:#888888;">// NEW!
+</span><span>            sprite: Sprite {
+</span><span>                image: asset_server.load(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">spritesheet.png</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                custom_size: Some(Vec2::new(</span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">64.</span><span>)),
+</span><span>                texture_atlas: Some(TextureAtlas {
+</span><span>                    layout: atlas_layout.handle.clone(),
+</span><span>                    index: </span><span style="color:#cf6a4c;">0</span><span>,
+</span><span>                }),
+</span><span>                ..default()
+</span><span>            },
+</span><span>        },
+</span><span>    );
+</span><span>}
+</span></code></pre>
+<p>The choice of (4, 4) as the player's starting coordinates is arbitrary, but will be useful imminently to show off the visual effect of this offset from (0, 0).</p>
+<p>Right now, <code>Position</code> does absolutely nothing. Even if it did do something, it would be quite difficult to tell, as there is only a single creature in this entire gray plane of nothingness and no other reference points. Let us fix that by placing the player into a 9x9 white cage of walls:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_cage</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> cage = </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">#########\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #.......#\
+</span><span style="color:#99ad6a;">                #########</span><span style="color:#556633;">&quot;</span><span>;
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(idx, tile_char) in cage.char_indices() {
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> position = Position::new(idx as </span><span style="color:#8fbfdc;">i32 </span><span>% </span><span style="color:#cf6a4c;">9</span><span>, idx as </span><span style="color:#8fbfdc;">i32 </span><span>/ </span><span style="color:#cf6a4c;">9</span><span>);
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> index = </span><span style="color:#8fbfdc;">match</span><span> tile_char {
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">#</span><span style="color:#556633;">&#39; </span><span>=&gt; </span><span style="color:#cf6a4c;">3</span><span>,
+</span><span>            _ =&gt; </span><span style="color:#8fbfdc;">continue</span><span>,
+</span><span>        };
+</span><span>        commands.spawn(Creature {
+</span><span>            position,
+</span><span>            sprite: Sprite {
+</span><span>                image: asset_server.load(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">spritesheet.png</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                custom_size: Some(Vec2::new(</span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">64.</span><span>)),
+</span><span>                texture_atlas: Some(TextureAtlas {
+</span><span>                    layout: atlas_layout.handle.clone(),
+</span><span>                    index,
+</span><span>                }),
+</span><span>                ..default()
+</span><span>            },
+</span><span>        });
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>For each character within the <code>cage</code> string, the (x, y) <code>Position</code> is derived using modulo and division, respectively (every 9 tiles, the y coordinate increments by 1, and the remainder of that division is the x coordinate). Note that this will cause a mirror flip (as this code starts counting from the top, whereas Bevy's coordinate system starts counting from the bottom). This will not be an issue when the map generator is refactored in a future chapter.</p>
+<p>As for the <code>#</code> being proper walls, we simply abort the loop for any character that is not a <code>#</code>, and assign sprite index &quot;3&quot; for those that are. This will go fetch the third sprite in our spritesheet!</p>
+<p>Finally, the walls can be spawned one by one. Note the <code>Transform::from_scale(Vec3::new(4., 4., 0.))̀</code>, which is the exact same as the player - currently, every creature is drawn in the centre of the screen with a size of 64x64 (4 times 16 x 4 times 16).</p>
+<p>Yes, the walls are <code>Creature</code>s. You can imagine them as really big, lazy snails if that floats your boat.</p>
+<p>Don't forget to add this new system:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        .init_resource::&lt;SpriteSheetAtlas&gt;()
+</span><span>        .add_systems(Startup, setup_camera)
+</span><span>        .add_systems(Startup, spawn_player)
+</span><span>        .add_systems(Startup, spawn_cage) </span><span style="color:#888888;">// NEW!
+</span><span>        .run();
+</span><span>}
+</span></code></pre>
+<p>Running <code>cargo run</code> will prove unimpressive.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/2-tiles-to-run-around-in/stack.png" alt="A Bevy app with a single wall tile in the centre." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>The player is still there, drawn under a pile of 32 walls. <code>Position</code> is still completely ineffectual. Disappointing! It is time to remedy this. First, we'll need a way to quickly tell Bevy which of these 33 creatures is the <code>Player</code>:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/// Marker for the player
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Player</span><span>;
+</span></code></pre>
+<p>And, of course, to assign this new component to said player:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_player</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>    commands.spawn(( </span><span style="color:#888888;">// CHANGED - Note the added parentheses.
+</span><span>        Creature {
+</span><span>            position: Position { x: </span><span style="color:#cf6a4c;">4</span><span>, y: </span><span style="color:#cf6a4c;">4 </span><span>},
+</span><span>            sprite: Sprite {
+</span><span>                image: asset_server.load(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">spritesheet.png</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                custom_size: Some(Vec2::new(</span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">64.</span><span>)),
+</span><span>                texture_atlas: Some(TextureAtlas {
+</span><span>                    layout: atlas_layout.handle.clone(),
+</span><span>                    index: </span><span style="color:#cf6a4c;">0</span><span>,
+</span><span>                }),
+</span><span>                ..default()
+</span><span>            },
+</span><span>        },
+</span><span>        Player, </span><span style="color:#888888;">// NEW!
+</span><span>    )); </span><span style="color:#888888;">// CHANGED - Note the added parentheses.
+</span><span>}
+</span></code></pre>
+<p>Indeed, <code>commands.spawn()</code> doesn't only accept a single <code>Bundle</code> (<code>Creature</code>), but rather any set of <code>Component</code>s and <code>Bundle</code>s, arranged in a tuple. This <code>(Creature, Player)</code> tuple is therefore a valid argument!</p>
+<p>Just like <code>Position</code>, <code>Player</code> also currently does nothing. However, it's time to unify everything with our very first <code>Update</code> system:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/// Each frame, adjust every entity&#39;s display location to match
+</span><span style="color:#888888;">/// their position on the grid, and make the camera follow the player.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">adjust_transforms</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creatures</span><span>: Query&lt;(&amp;Position, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform, Has&lt;Player&gt;)&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">camera</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform, (With&lt;Camera&gt;, Without&lt;Position&gt;)&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(pos, </span><span style="color:#8fbfdc;">mut</span><span> trans, is_player) in creatures.iter_mut() {
+</span><span>        </span><span style="color:#888888;">// Multiplied by the graphical size of a tile, which is 64x64.
+</span><span>        trans.translation.x = pos.x as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>;
+</span><span>        trans.translation.y = pos.y as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>;
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> is_player {
+</span><span>            </span><span style="color:#888888;">// The camera follows the player.
+</span><span>            </span><span style="color:#8fbfdc;">let mut</span><span> camera_trans = camera.get_single_mut().unwrap();
+</span><span>            (camera_trans.translation.x, camera_trans.translation.y) =
+</span><span>                (trans.translation.x, trans.translation.y);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This introduces a major Bevy feature: <code>Query</code>. A query will go fetch <em>all</em> Entities in the game that match their Component list and added filters.</p>
+<p>Queries are always structured <code>Query&lt;QueryData, QueryFilter&gt;</code> where both of these are either a single parameter or multiple ones bundled in a tuple. Each one is also optional - you can have zero filters or only filters, should you desire that.</p>
+<ul>
+<li><code>Query&lt;(&amp;Position, &amp;mut Transform, Has&lt;Player&gt;)&gt;</code> is trying to fetch every creature in the grid, checking if it's the player or not, see where it is located and edit its visual position.</li>
+</ul>
+<p>It grants us access to all Entities with <em>both</em> <code>Position</code> and <code>Transform</code>. The <code>Position</code> component is exposed for read-only access, while <code>Transform</code> is allowed to be modified. There is also an optional <code>Has&lt;Player&gt;</code>, which is a boolean determining if the current Entity being accessed has the <code>Player</code> component or not.</p>
+<p>Note that this first query only has a tuple of these 3 elements. If we wanted, we could have added additional <code>QueryFilter</code> after a comma, which is the case of the second ̀<code>Query</code>:</p>
+<ul>
+<li><code>Query&lt;&amp;mut Transform, (With&lt;Camera&gt;, Without&lt;Position&gt;)&gt;</code> is trying to fetch the camera viewing the scene, and to move it around.</li>
+</ul>
+<p>It grants us access to all Entities with <code>Transform</code> exposed for modification, with the added condition that <code>Camera</code> must be possessed by the Entity. There is, however, something peculiar here: <code>Without&lt;Position&gt;</code>.</p>
+<p>Bevy doesn't know that a Camera and a Creature are two different things - it only sees the components. As far as it's concerned, nothing stops us from spawning in a creature that also has a <code>Camera</code> installed. In this case, this poor mutated chimera Creature would be caught by both queries at the same time, and have its <code>Transform</code> component mutably accessed twice in a row.</p>
+<p>Those familiar with Rust's holy commandments will know that this is <strong>unacceptable</strong>. Try it without the <code>Without&lt;Position&gt;</code> filter, and the game will panic on startup.</p>
+<p>The first loop fetches the player, as well as every wall. We loop through all of the matched entities with <code>iter_mut()</code>, then multiply their <code>Position</code> x and y coordinates by 64.0. This is the size of one tile (64 pixels x 64 pixels), letting this value become a graphical offset once it is assigned to their <code>Transform</code> component's <code>translation</code> field, moving them across the screen!</p>
+<p>Then, if that Entity was the player, the camera should be displaced to follow it. As the ̀<code>Query&lt;&amp;mut Transform, (With&lt;Camera&gt;, Without&lt;Position&gt;)&gt;</code> only fetches a single Entity, we can use the risky <code>get_single_mut</code> which will panic should there ever be more than one <code>Entity</code> fetched by the ̀<code>Querỳ</code>. Match the Camera's translation with the Player's translation, and the system is complete!</p>
+<p>Don't forget to register this new system.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        .init_resource::&lt;SpriteSheetAtlas&gt;()
+</span><span>        .add_systems(Startup, setup_camera)
+</span><span>        .add_systems(Startup, spawn_player)
+</span><span>        .add_systems(Startup, spawn_cage)
+</span><span>        .add_systems(Update, adjust_transforms) </span><span style="color:#888888;">// NEW!
+</span><span>        .run();
+</span><span>}
+</span></code></pre>
+<p>Compile once more with <code>cargo run</code>. It will reveal the player in its little cage, with no more visual superposition of entities!</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/2-tiles-to-run-around-in/walls.png" alt="A Bevy app with the player in the centre, surrounded by 9x9 walls." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>Since this new system is <code>Update</code>, it runs every frame and readjusts all <code>Creature</code>s where they need to be relative to the player. This isn't very useful as everyone here is cursed with eternal paralysis... Let's fix that.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/// Each frame, if a button is pressed, move the player 1 tile.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">keyboard_input</span><span>(
+</span><span>    </span><span style="color:#ffb964;">input</span><span>: Res&lt;ButtonInput&lt;KeyCode&gt;&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">player</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Position, With&lt;Player&gt;&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> player = player.get_single_mut().expect(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">0 or 2+ players</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>    </span><span style="color:#888888;">// WASD keys are used here. If your keyboard uses a different layout
+</span><span>    </span><span style="color:#888888;">// (such as AZERTY), change the KeyCodes.
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.pressed(KeyCode::KeyW) {
+</span><span>        player.y += </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.pressed(KeyCode::KeyD) {
+</span><span>        player.x += </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.pressed(KeyCode::KeyA) {
+</span><span>        player.x -= </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.pressed(KeyCode::KeyS) {
+</span><span>        player.y -= </span><span style="color:#cf6a4c;">1</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><code>Res&lt;ButtonInput&lt;KeyCode&gt;&gt;</code> is a Bevy resource to manage all flavours of button mashing, from gentle taps to bulldozing over the keyboard. It contains some subtly different functions - for example, <code>pressed</code> triggers every frame throughout a maintained press, whereas <code>just_pressed</code> only triggers once on the initial press.</p>
+<p>The player is once again fetched - mutably, this time around - and its coordinates are changed, which will result in the walls visually moving to represent this new arrangement!</p>
+<p>Register the new system.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        .init_resource::&lt;SpriteSheetAtlas&gt;()
+</span><span>        .add_systems(Startup, setup_camera)
+</span><span>        .add_systems(Startup, spawn_player)
+</span><span>        .add_systems(Startup, spawn_cage)
+</span><span>        .add_systems(Update, adjust_transforms)
+</span><span>        .add_systems(Update, keyboard_input) </span><span style="color:#888888;">// NEW!
+</span><span>        .run();
+</span><span>}
+</span></code></pre>
+<p><code>cargo run</code>. You can now move around the cage... and escape it with zero difficulty by phasing through the walls, running at the speed of light into the far reaches of reality itself. Note that despite the ludicrous speed, it is impossible to stop &quot;clipping&quot; to the grid - you will never be in between two walls!</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/2-tiles-to-run-around-in/moving.gif" alt="A Bevy app with the player moving frantically, ignoring all walls." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>Enforcing basic physical principles will be the topic of the next tutorial!</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/1-drawing-the-player/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 1. Drawing the Player Character</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/3-getting-chased-around/">
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 3. Establishing the Hunting Grounds</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

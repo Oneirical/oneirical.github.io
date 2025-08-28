@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/bevyrage/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/bevyrage/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/bevyrage/">Bashing Bevy To Bait Internet Strangers Into Improving My Code</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-03-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/bevy/">#bevy</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/writeups/">#writeups</a></span>
+    
+
+        <div class="post-content">
+            <blockquote>
+<p>&quot;Online, the best way to obtain information is not to ask a question, but to state incorrect information and wait for someone to correct you.&quot; - Common Internet Wisdom</p>
+</blockquote>
+<p>It is said that one can judge the nerdiness level of a programming language based off the ratio of games-to-game-engines it has.</p>
+<p>Considering that - without looking anything off and purely off the top of my head - I am incapable of naming a single published Rust game, but can name at least 4 Rust game engines, (Bevy, Macroquad, ggez, Fyrox) I'd say we're dealing with a particularly severe case Terminal Technowizardry Syndrome.</p>
+<p>Like many brave dungeoneers before me, I have ventured off into the damp caves of Rust game development in a quest to right these wrongs. And just like all those aforementioned adventurers, I am failing epically.</p>
+<p>However, instead of being reasonable and recognizing my personal shortcomings, I will now proceed to become the protagonist of the adage &quot;The shoddy craftsman blames their tools.&quot;</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/bevyrage/z32HfPw.png" alt="Saint the slugcat, very frustrated over some puzzle pieces" class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<h1 id="background">Background</h1>
+<p><a href="https://bevyengine.org/">Bevy</a> is currently the most popular Rust game engine out there. In fact, it is so popular that non-Rust programmers might have actually heard of it, which is a feat of its own. As it is designed by Rust programmers, it is sculpted in the image of the substance which composes it - that means, it is extremely opinionated and devoid of any user interface.</p>
+<p>Based on the ECS (Entity, Component, Systems) design style, it adopts a philosophy that banishes feeble concepts such as &quot;node trees&quot; or &quot;inheritance&quot; back into the OOP abyss where they belong.</p>
+<blockquote>
+<p>&quot;I don't think ECS is a new concept... like a lot of current trends it's making the old ways of doing things sound new again. It does do some exciting stuff... but it's ultimately just structs and composition, like how we used to do things - but adapted for the modern Unity Node Tree palette.&quot; - Evie, my most highly esteemed and very opinionated mentor</p>
+</blockquote>
+<p>Because looking at the people currently raking in boatloads of money and deciding to do things completely differently is cool, Bevy stretches ECS to the extreme, making even UI elements be ECS entities and forcing all code to run inside Systems.</p>
+<p>I have completed 2 small projects with Bevy, both open source:</p>
+<ul>
+<li><a href="https://oneirical.itch.io/plerokeno">Pleroma &amp; Kenoma</a>, a 48 hour game jam submission</li>
+<li><a href="https://github.com/Oneirical/tango-problem">The Tango Problem</a>, an experiment with neuroevolutive genetic algorithms (holy buzzwords!)</li>
+</ul>
+<p>And, I am currently working on my larger scale forever-project:</p>
+<ul>
+<li><a href="https://oneirical.github.io/tags/tgfp/">The Games Foxes Play</a>, don't ask me what it's about, even I do not know, but you can see <a href="https://www.youtube.com/watch?v=yhfpTkU6osk">what it looks like</a>.</li>
+</ul>
+<p>I will now proceed to bash what I believe are currently Bevy's greatest shortcomings, with the highly devious plan of getting Internet strangers to go &quot;<em>You absolute buffoon! How can you forget to use [HIGHLY ESSENTIAL BEVY FEATURE I NEVER HEARD OF] to save yourself hours of time? You dunce! You fluff-bloated addlepated simpleton!&quot;</em> Because finding those things myself can be... actually, that just brings me to my first main point.</p>
+<h1 id="bevy-contributors-are-way-too-productive">Bevy Contributors Are Way Too Productive</h1>
+<p>I was only just finishing up updating my game to match Bevy 0.12's new conventions (December 2023) when they released Bevy 0.13 (February 2024). I must now once again comb through my code to knock out all now-obsolete conventions, such as the <code>TextureAtlasSprite</code>s liberally scattered throughout my code.</p>
+<p>Bevy needs to be hyped up to get people working on it, I fully understand that. But it is not a complete project by any means. Working with it feels like constantly reaching for a tool in your toolbox which you expect to be there, but instead, your hand simply passes through the case and enters a wormhole reaching into a Draft pull request on their GitHub. Tutorials become full of incorrect and outdated information in a matter of months - and as a result, people are not very motivated to actually make them. A significant portion of Bevy-related knowledge is found on YouTube, which is, in my opinion, NOT a good resource when it comes to fetching a quick answer like &quot;how do I schedule this System to only run in this specific GameState&quot;.</p>
+<p>Bevy programmers probably already know this, but beyond the official docs.rs Bevy documentation, these two resources are highly valuable and tend to be updated... occasionally.</p>
+<ul>
+<li><a href="https://taintedcoders.com/">Tainted Coders</a></li>
+<li><a href="https://bevy-cheatbook.github.io/">Bevy Cheatbook</a></li>
+</ul>
+<p>In addition to this, a large portion of Bevy development is fetching third-party crates to complement your Bevy development experience. For instance, I make extensive use of the <a href="https://github.com/djeedai/bevy_tweening">Bevy Tweening</a> crate in my own projects. I am fully dependent on their maintainers to keep up the pace with new Bevy releases - if a cosmic ray vaporizes every atom of their bodies in an unfortunate astral accident, I will be forced to update their libraries myself to keep my game running with the latest Bevy version. Bevy Tweening maintainers are very active right now, but that might not be the case for the dozen of external Bevy crates a game developer might see themselves using for a larger scale project.</p>
+<h1 id="bevy-types-expand-in-mass-until-they-blot-out-the-sun">Bevy Types Expand In Mass Until They Blot Out The Sun</h1>
+<p>Hmm, yes, dear waiter, I believe I'll be getting a <code>ParamSet&lt;(Query&lt;(&amp;Transform, &amp;mut Species, &amp;mut SoulBreath, &amp;mut AxiomEffects, &amp;mut Animator&lt;Transform&gt;, &amp;mut Position, Has&lt;RealityAnchor&gt;)&gt;, Query&lt;&amp;Position&gt;, Query&lt;&amp;Species&gt;, Query&lt;&amp;SoulBreath&gt;, Query&lt;(&amp;Position, &amp;Transform), With&lt;RealityAnchor&gt;&gt;)&gt;</code> for breakfast, <em>por favor</em>. Keep the change.</p>
+<p>Bevy Queries are black magic. Given thousands of entities with multiple components, they will somehow fetch every single one that possess only the ones you want in record time, once every frame. This somehow does not turn my 8 GB of RAM computer into a localized micro-Sun, and is quite efficient. I probably should devote some time to understanding at least 10% of the process of how this is done.</p>
+<p>However, this is still Rust, and as the commandments go, <em>Thou shall not access a mutable and an immutable reference to the same object simultaneously</em>. This causes issues.</p>
+<p>One of the Systems in The Games Foxes Play is tracking the spells cast by creatures and executing their effects. It looks roughly like this:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">/*
+</span><span style="color:#888888;"> We obtain the entity on which the spell is getting cast, 
+</span><span style="color:#888888;"> what the function of the spell is, 
+</span><span style="color:#888888;"> and what info we can get from the creature that casted it.
+</span><span style="color:#888888;">*/
+</span><span style="color:#8fbfdc;">let </span><span>(entity, function, </span><span style="color:#8fbfdc;">mut</span><span> info) = world_map.targeted_axioms.pop().unwrap(); 
+</span><span style="color:#888888;">/* 
+</span><span style="color:#888888;"> We grab a bunch of mutable fields and
+</span><span style="color:#888888;"> get ready to modify the targeted creature&#39;s data. 
+</span><span style="color:#888888;">*/
+</span><span style="color:#8fbfdc;">if let </span><span>Ok((transform_source, </span><span style="color:#8fbfdc;">mut</span><span> species, </span><span style="color:#8fbfdc;">mut</span><span> breath, 
+</span><span>	</span><span style="color:#8fbfdc;">mut</span><span> effects, </span><span style="color:#8fbfdc;">mut</span><span> anim, </span><span style="color:#8fbfdc;">mut</span><span> pos, is_player)) = creatures.p0().get_mut(entity.to_owned()) { 
+</span><span>	</span><span style="color:#8fbfdc;">match</span><span> function {
+</span><span>	    Function::Teleport { x, y } =&gt; {
+</span><span>	    	</span><span style="color:#888888;">//SNIP
+</span><span>	    	</span><span style="color:#888888;">// The creature has been teleported, 
+</span><span>	    	</span><span style="color:#888888;">// edit the &quot;x&quot; and &quot;y&quot; fields on its Position component.
+</span><span>	    	(pos.x, pos.y) = (x, y); 
+</span><span>	    	</span><span style="color:#888888;">//SNIP
+</span><span>	    }
+</span><span>    	Function::ApplyEffect { effect } =&gt; {
+</span><span>    		</span><span style="color:#888888;">//SNIP
+</span><span>    		 </span><span style="color:#888888;">// The creature has received a status effect, 
+</span><span>    		 </span><span style="color:#888888;">// edit the &quot;status&quot; field on its AxiomEffects component.
+</span><span>		    effects.status.push(effect);
+</span><span>		    </span><span style="color:#888888;">//SNIP
+</span><span>		},
+</span><span>	</span><span style="color:#888888;">// LOTS, and I mean LOTS, of other spell effects
+</span></code></pre>
+<p>As you can see, I require accessing all those fields to manage all these possible spell effects. That is the <code>Query&lt;(&amp;Transform, &amp;mut Species, &amp;mut SoulBreath, &amp;mut AxiomEffects, &amp;mut Animator&lt;Transform&gt;, &amp;mut Position, Has&lt;RealityAnchor&gt;)&gt;</code> part of the giga-type I posted at the summit of this chapter. That is <code>creature.p0()</code>.</p>
+<p>But, let's say that we want to only grab an entity's Position or Species component. No modifications, no mutability, we simply want to know where a creature is currently located in terms of &quot;x&quot; and &quot;y&quot; coordinates, or what species it belongs to.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span>Function::Collide { with } =&gt; { </span><span style="color:#888888;">// &quot;with&quot; is the entity being collided with.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> coll_species = creatures.p2().get(with).unwrap().clone();
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> coll_pos = creatures.p1().get(with).map(|</span><span style="color:#ffb964;">e</span><span>| (e.x, e.y)).unwrap();
+</span></code></pre>
+<p>We <em>cannot</em> reuse <code>creatures.p0()</code> as it is currently in use by <code>get_mut</code>. Its ownership is unavailable, and creating a new immutable reference to Position while it is currently mutably borrowed by <code>creatures.p0()</code> (in order to mutate coordinates to fulfill Teleport) is impossible. We must use Bevy's ParamSet type, designed to handle these conflicts.</p>
+<p>Even in a situation where I could re-use <code>creatures</code>, I wouldn't necessarily need all those fields but would still need to call every single one, resulting in tons of unused variables:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">let</span><span> stem_block = </span><span style="color:#8fbfdc;">if let </span><span>Ok((entity, _queue, _species, _effects,
+</span><span>	_breath, pos, _is_player)) = creatures.get(*segment) {
+</span></code></pre>
+<p>And that is the source of this extreme bloat. This entire spell handling system thus has the following function fields:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">dispense_functions</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creatures</span><span>: ParamSet&lt;(
+</span><span>        Query&lt;(&amp;Transform, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Species, &amp;</span><span style="color:#8fbfdc;">mut</span><span> SoulBreath, &amp;</span><span style="color:#8fbfdc;">mut</span><span> AxiomEffects, 
+</span><span>        	&amp;</span><span style="color:#8fbfdc;">mut </span><span>Animator&lt;Transform&gt;, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Position, Has&lt;RealityAnchor&gt;)&gt;,
+</span><span>        Query&lt;&amp;Position&gt;,
+</span><span>        Query&lt;&amp;Species&gt;,
+</span><span>        Query&lt;&amp;SoulBreath&gt;,
+</span><span>        Query&lt;(&amp;Position, &amp;Transform), With&lt;RealityAnchor&gt;&gt;,
+</span><span>    )&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">plant</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Plant&gt;,
+</span><span>    </span><span style="color:#ffb964;">faction</span><span>: Query&lt;&amp;Faction&gt;,
+</span><span>    </span><span style="color:#ffb964;">check_wound</span><span>: Query&lt;Entity, With&lt;Wounded&gt;&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">next_state</span><span>: ResMut&lt;NextState&lt;TurnState&gt;&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">world_map</span><span>: ResMut&lt;WorldMap&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">souls</span><span>: Query&lt;(&amp;</span><span style="color:#8fbfdc;">mut </span><span>Animator&lt;Transform&gt;, &amp;Transform, 
+</span><span>    	&amp;</span><span style="color:#8fbfdc;">mut</span><span> TextureAtlasSprite, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Soul), Without&lt;Position&gt;&gt;,
+</span><span>    </span><span style="color:#ffb964;">ui_center</span><span>: Res&lt;CenterOfWheel&gt;,
+</span><span>    </span><span style="color:#ffb964;">time</span><span>: Res&lt;SoulRotationTimer&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventWriter&lt;LogMessage&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">zoom</span><span>: ResMut&lt;ZoomInEffect&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">current_crea_display</span><span>: ResMut&lt;CurrentEntityInUI&gt;,
+</span><span>    </span><span style="color:#ffb964;">texture_atlas_handle</span><span>: Res&lt;SpriteSheetHandle&gt;,
+</span><span>
+</span><span>){
+</span></code></pre>
+<p>Rust's Clippy (an assistant that tries to improve your code) is NOT a fan. Not only is this massively bulky, this forces me to keep my code contained inside this single system. It is very hard to outsource work to other functions, because passing around data is a nightmare. I need to unpack components into relevant fields, call the function, get an output, and <em>then</em> mutate the fields with that output, back inside the giga-system.</p>
+<p>For example, if I want to pass around Position to do some calculations and mutate it, I can't just have a function that accepts <code>&amp;mut Position.</code> The actual Bevy type is <code>Mut&lt;'_, Position&gt;</code>. It needs to be turned into fields &quot;x&quot; and &quot;y&quot;. Only then can I pass those numbers to a &quot;calculate_pathfinding&quot; function, which returns numbers, and allows me to edit Bevy Components back inside the System.</p>
+<p>As a result, that <code>dispense_functions</code> System is currently at 594 lines of code, and will keep growing until it swallows the universe.</p>
+<p>I find it quite peculiar how Bevy demos focus very highly on presentation and little on gameplay. Art is obviously a huge part of game development, but reading changelogs show there is a bias towards talking about the latest shader and high performance wgpu computing improvements.</p>
+<p>Spawning a transparent 3D glass sphere in Bevy that distorts your vision when you gaze through is now well-supported. But games in the vein of &quot;Dwarf Fortress&quot; or &quot;Zachtronics&quot; with a large quantity of interactions feel much, much harder to do in Bevy due to how much data needs to be passed around.</p>
+<h1 id="bevy-is-not-rusteic">Bevy Is Not &quot;Rusteic&quot;</h1>
+<blockquote>
+<p>&quot;Getting it to compile will be difficult. But when it does compile, it will usually do everything you expected it to.&quot; - Rust Cultists</p>
+</blockquote>
+<p>I am proud to say I have never once used a classical runtime debugger with breakpoints in Rust. I never felt like I needed one. The compiler (and its trusty watchman Rust-Analyzer) judge my every move, like they are a team of senior engineers with decades of experience hovering over my shoulders and slowly drooling on the floor, waiting for the moment I make a mistake to bark out at me.</p>
+<p>&quot;THAT VARIABLE DOESN'T LIVE LONG ENOUGH!!&quot;</p>
+<p>As a former JavaScript plebeian who has only been semi-recently illuminated by the suspiciously pastel pink, white and blue radiance of Rust developers, NOT having to sit in my web console debugger for hours pushing some lovingly crafted <code>[object Object]</code> or <code>undefined</code> is a blessing.</p>
+<p>But Bevy, despite being built in Rust, does not offer such guarantees, and I find myself constantly reaching for those <code>dbg!</code> macros I thought I could mostly forget.</p>
+<ol>
+<li>
+<p>There is the lack of warnings. In the previous chapter, I presented some particularly bloated Queries - well, I occasionally find one with some unneeded Without filters. The compiler, of course, is blind to such things.</p>
+</li>
+<li>
+<p>There is also the grave matter of System Scheduling. You see, without a precise order being given to them, <strong>Bevy systems run in complete chaos, and there is no guarantee that they will always continue their execution in the same order</strong>. It took me a little while to figure this out, and I now carefully specify game states to ensure Systems are running when they should:</p>
+</li>
+</ol>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">TurnPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_systems(Update, calculate_actions
+</span><span>        	.run_if(in_state(TurnState::CalculatingResponse)));
+</span><span>        app.add_systems(Update, execute_turn
+</span><span>        	.run_if(in_state(TurnState::ExecutingTurn)));
+</span><span>        app.add_systems(Update, dispense_functions
+</span><span>        	.run_if(in_state(TurnState::DispensingFunctions)));
+</span><span>        app.add_systems(Update, unpack_animations
+</span><span>        	.run_if(in_state(TurnState::UnpackingAnimation)));
+</span><span>        app.add_systems(Update, fade_effects);
+</span><span>        app.insert_resource(TurnCount{turns: </span><span style="color:#cf6a4c;">0</span><span>});
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>However, unscheduled systems can be <em>very</em> stealthy in how they induce bugs. A single oversight can mean your game works correctly 99% of the time, then suddenly has unexpected behaviour in a very specific situation because a System outsped another when it was least predictable.</p>
+<ol start="3">
+<li>Another feature is the extremely bloated standard &quot;Bevy library&quot;. Yes, Bevy is divided into multiple sub-crates (like &quot;bevy-ui&quot;), but most developers will simply import the whole thing. This makes compilation times quite severe (my 2016 glorified calculator laptop is incapable of even finishing the compilation process). It is possible to activate &quot;dynamic linking&quot; for a mild speedup:</li>
+</ol>
+<p><code>bevy = { version = &quot;0.13&quot;, features = [&quot;dynamic_linking&quot;]}</code></p>
+<p>but, you'll need to REMEMBER to remove this when releasing your game, or you'll need to bundle some obscure module <code>libbevy_dylib</code> alongside your game to ensure it works at all. Fun.</p>
+<p>Yes, it's just 8-12 seconds, but when trying to design an UI and reloading every so often to see how it looks, it adds up. My Rust mentor is developing her own Rust game in SDL, and compiling that is more in the realm of a single second.</p>
+<p>There is an ocean of features, structs and functions in Bevy you won't ever use if you are merely making a 2D game. It is meant to be a general purpose game engine and a competitor to the likes of Unity, and it shows.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Bevy is an amazing piece of technology that isn't ready yet. </p>
+<p>I often end up feeling like I don't actually &quot;own&quot; every part of my game when using Bevy, which is what makes Rust so fun for me. When using Generic JavaScript Framework #28375, I don't feel like a programmer, I feel like a clueless child who has found black boxes of ancient alien technology and a tube of superglue to stitch them together. This is naturally a requirement in some giga-enterprise codebase - you can't understand the whole thing top to bottom - but when it comes to a personal gamedev project, I'd prefer having at least an idea of what is going on behind the scenes.</p>
+<p>When reading Bevy changelogs, I constantly think &quot;if only that feature was around when I was developing THAT system in my game!&quot;</p>
+<p>Bevy will be a great thing eventually that will challenge the status quo of the gamedev sphere.</p>
+<p>But, in my opinion, that time has not yet come.</p>
+<p><em>If you enjoyed this writeup, feel free to contact me! I am currently looking for:</em></p>
+<ul>
+<li><em>Summer internships</em></li>
+<li><em>Full time positions after April 2025</em></li>
+<li><em>People to join my Northsec team - no large proficiency in security required, but the drive to learn about technology is mandatory</em></li>
+</ul>
+<p><em>Discord: oneirical</em></p>
+<p><em>Email: julien-robert@videotron.ca</em></p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/csgamesos/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Proper Work-Life Balance In The Packet Factory - First Place in Operating Systems at CS Games</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/git-hell/">
+                            <span class="button__text">It Works, And I Will Touch It</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

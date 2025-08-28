@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-01-20-monolithic/">Monolithic</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-01-20
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;A legendary parasite attracted to hosts thinking of it. As the cure to this strange disease was simply to find a way to entertain one's mind away from the worm's presence, patients reported greatly increased moods after being cleansed of its influence. Ezezza eventually became aware of its own existence, perishing instantly.&quot;</em></p>
+<ul>
+<li>Flavour text of <strong>Ezezza, the Unthinkable</strong>, a Legendary Feral Soul</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.2 online in browser on itch.io!</a>)</em></p>
+<p><em>0.3 (including everything related to map generation from last week and this week) will release on itch.io soon after I've fixed some weird interactions with the reincarnation mechanic.</em></p>
+<p>My neurons are fuming and my grey matter has been crushed into a viscous slimy paste. But at last, it is done.</p>
+<p><a href="https://cdn.discordapp.com/attachments/504088568084561930/1066029723160956969/Capture_decran_le_2023-01-20_a_11.21.00.png">BEHOLD.</a> My brand new, 100% organic, GMO-free random dungeon generator. <a href="https://cdn.discordapp.com/attachments/504088568084561930/1066029723395829851/Capture_decran_le_2023-01-20_a_11.20.45.png">WITNESS.</a> Fully featured with 2x2 rooms, corridors, dynamic paths that never create isolated areas and prefab vaults. <a href="https://cdn.discordapp.com/attachments/504088568084561930/1066029723681038416/Capture_decran_le_2023-01-20_a_11.20.29.png">ADMIRE.</a></p>
+<p>If I took a time machine and showed this to myself from May 2022, he would ask, bewildered, &quot;Wow, Onei, how did you become so good at programming?&quot; My esteemed clone, it is all artifice and illusion. For starters, the function that decides where rooms are allowed to spawn in the first place is the <em>exact same</em> as the one that used to choose where to build walls in a given square room. In fact, when I generate a new dungeon, I am <em>generating a room that does not exist</em> with assorted walls and floors. Then, I replace all the floor tiles with rooms, each one containing walls and floors. A dungeon is basically a room built out of rooms. Meta.</p>
+<p>Then, with the assistance of a couple of <a href="https://cdn.discordapp.com/attachments/504088568084561930/1066030166456926218/Capture_decran_le_2023-01-20_a_11.22.27.png">capital crimes against the very concept of programming</a>, I look for sets of 4 1x1 small rooms and replace them with a single 2x2 big room, I turn rooms with exactly 2 neighbours into corridors, and I sprinkle in some pre-defined structures here and there that I talked about more in my last Sharing Saturday. Finally, I place exits on every single possible connection and call it a day.</p>
+<p>It is unholy. It is abject. It is vile.</p>
+<p>But it <em>works</em>.</p>
+<h2 id="rooms-within-rooms-within-rooms">Rooms Within Rooms Within Rooms</h2>
+<p>Naturally, after completing this atrocity, I had the thought any sane man should have in my place: <a href="https://cdn.discordapp.com/attachments/504088568084561930/1066030433747341343/Capture_decran_le_2023-01-20_a_11.24.07.png">&quot;Why stop there?&quot;</a> Each and every single white pixel of this twisted maze contains <em>one entire</em> dungeon. Considering that the previously demonstrated dungeon map is composed of 9x9 rooms and that the maze is composed of 72x72 pixels, that makes for a grand total of 648x648 rooms' worth of space, or approximately 420 000 rooms. The universe is therefore a room, made out of rooms, which are also made out of rooms. The glorified calculator that serves as my computer would not be very happy at the thought of generating each and every single dust speck of this complex, so dungeons are only generated if the player visits them by exiting from the extremity of a previous white pixel. Notice the red exits leading out of the current dungeon at the eastern and southern extremes of the <a href="https://cdn.discordapp.com/attachments/504088568084561930/1066029723681038416/Capture_decran_le_2023-01-20_a_11.20.29.png">third screenshot</a>. Northern and southern exits would lead into a black pixel of the maze, so they remain blocked.</p>
+<p>Yes, the maze is procedurally generated. No, I didn't make the algorithm for it. I checked the license, don't worry.</p>
+<h2 id="the-rivers-will-run-cyan">The Rivers Will Run Cyan</h2>
+<p>As an experimental feature, I added a quick <a href="https://cdn.discordapp.com/attachments/504088568084561930/1066031424102219806/itspreads.gif">pandemic simulator</a> to my maze-world map. Starting from a single room, the Harmonic song flows across the Faith's End complex like a plague, assimilating everything it touches. I've been tossing ideas around for an equivalent to the dreaded hunger clock, with the aim to incite the player to hurry up a little during their exploration. Instead of having the <em>player</em> character growing weaker as their belly empties (which is lame), why not instead have the <em>dungeon</em> itself gradually lose turf to an indiscriminate, all-conquering force and its very strong Collectivist enemies? This concept is still in the design phase, but it would fit extremely well with the game's themes.</p>
+<p>Otherwise, I am having some doubts on how I will actually manage enemy encounters. This week, I overhauled the terribly outdated &quot;spawn X enemies where X is the number of cleared rooms+1&quot; function and replaced it with a neat squad system that picks themed assortments of enemies to team up against the player. However, I'm still hesitant on the specifics. Once the rooms hit the 12+ enemies mark, things start to get quite crowded, but I want to continue scaling the difficulty (and the player power level)! Due to TGFP's design, it's really hard to just make things hit harder or tank more hits and call it a day (which is lazy design, anyhow!)</p>
+<p>I'm also honestly not so sure about the title of my game. I picked it <em>very</em> early because I was listening to <a href="https://www.youtube.com/watch?v=cw56kZ5I8-4">this excellent dark ambient track</a> on that day and thought the name was beautiful and mystical-sounding (especially given the context of the song). In my game's flavour, the Harmony's air elementals enjoy taking the vague shape of fox spirits as they go about their plots of conquest (which are non-violent and full of tricks and traps), so it felt fitting. I am however not a fan of the fact that an (admittedly unpopular) finance self-help book is the first result when looking this title up on a search engine. In truth, none of the candidates I've thrown around have proven as poetic...</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-01-13-possibly-euclidean-mazes/">Possibly Euclidean Mazes</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-01-13
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;A pocket of unreality, void of the concept of void itself. Your gaze fills it with your flawed preconceptions of what nonexistence must be like - to you, it is a sparkling expanse of starry lights, dancing among the nothingness. To try to step within this space would be just like trying to rewind time before the birth of time: impossible.&quot;</em></p>
+<ul>
+<li>Nonexistent Nullspace description</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play online in browser on itch.io! - does not feature this week's additions</a>)</em></p>
+<p><strong>TGFP</strong>'s narrative takes place in a gargantuan, but very monotonous complex of concrete and fluorescent tubes known as Faith's End. Built by no living soul, it is only the product of a primordial force that constantly strives to turn anything basic into complex systems. Left alone, grains of sand turn to pebble, which turn to factories producing deranged, overly complex pieces of engineering that serve zero purpose.</p>
+<p>Given this setting, it made quite little sense to build it from a chaotic dungeon generator! I wanted the game's environment to be built out of designed, symetrical and orderly parts, but that coalesce together to form deranged, nonsensical twists and turns where opening a door that leads into a gaping void is just an average day.</p>
+<p>To this end, I had to implement a mechanic which many other aspiring roguelike developers have no doubt wrestled with - prefabricated rooms and vaults.</p>
+<h2 id="designed-for-maximum-violence">Designed for Maximum Violence</h2>
+<p>Is it not <a href="https://cdn.discordapp.com/attachments/504088568084561930/1063554864157839520/Capture_decran_le_2023-01-13_a_15.26.58.png">sumptuous</a>? With this new mechanic (which took surprisingly little time to develop), making new rooms has never been easier. There are now 10 different configurations which the player can find themselves challenged by on their way to face Epsilon, from the very cramped FaithBridge (and its associated Nullspace abyss) to the expansive GrandHall (and its zoomed out view). Some of these, with the &quot;randomflip&quot; tag, will even receive random rotations to vary things up! I could - and will - make many more, but I had something else taking up all my development time.</p>
+<p>Making an <em>actual</em> room matrix, and an associated minimap. I know I had this whole cool thing going on about non-euclidean spaces, but at some point, one has to accept that no, it's not a feature - it's a <em>bug</em>.</p>
+<p>After paying the considerably high price of reducing all my neurons into a formless grey sludge, I finally achieved <a href="https://cdn.discordapp.com/attachments/504088568084561930/1063556294285471825/Capture_decran_le_2023-01-13_a_15.08.54.png">this buggy mess</a> that can be brought up by pressing &quot;M&quot;. The little purple dot is me. While it certainly works, there are some significant flaws:</p>
+<ul>
+<li>
+<p>At the very right of the map, one of the rooms spawned <em>on top</em> of a 2x2 room.</p>
+</li>
+<li>
+<p>2x2 rooms never fail to overlap on top of adjacent rooms for one extra pixel column/row, as is seen with the top left room. EDIT: Just fixed this! Turns out the drawing size was incorrect the whole time. Only had to change a single number.</p>
+</li>
+</ul>
+<p>Honestly, I'm very confused. I thought 18x18 was just the double of a 9x9 square, but maybe I am completely clueless.</p>
+<p>I am rather proud of making 1x1 rooms work perfectly - these mesh seamlessly, never allowing reality-breaking phasing through walls or overlapping exits. Making 2x2s work alongside them is, however, an unspeakable nightmare.</p>
+<p>I'm not one hundred percent sure what I'll do yet. I could find a workaround and review my vision, or I could sit down and try to untangle this mess. I know what the right choice is, but I dread it.</p>
+<p>Besides this main project, I also delivered some bugfixes here and there (including a hilarious softlock where the &quot;reanimate enemies on death&quot; Soul mixed with the &quot;reincarnates on death until it is the last foe in the room&quot; enemy caused a... spectacular chain reaction). My &quot;minor nitpicks to polish&quot; document is growing so large it will one day devour the galaxy, so I try to sneak in some quick tweaks when I'm not feeling very motivated to tackle a major implementation. I am also testing out the <a href="https://cdn.discordapp.com/attachments/504088568084561930/1063562879837671434/Capture_decran_le_2023-01-13_a_15.58.04.png">&quot;Play&quot; font</a> kindly suggested by AleatoricConsonance in the last Sharing Saturday. Not completely sold on it yet, but I quite like it and will be giving it a spin as I continue development.</p>
+<p>I am a bit tired, but hopeful for the future. I know my objectives are within my ability. I just need to unsheathe my fork and declare war against the spaghetti code monster which unexperienced-past-me has unwittingly constructed.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/30/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/32/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

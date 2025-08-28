@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-07-14-architect-of-strife/">Architect of Strife</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-07-14
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;In truth, my artificial axioms are an anomaly. Most natural ideologies are more reactive than active, responding with hatred and love at the sight of harmless symbols.&quot;</em></p>
+<ul>
+<li>flavour text of the tutorial node explaining Contingencies</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>The overscope is real. I keep having these utterly insane, giga-mass-redesign everything visions of epic proportions, and then come up to the computer only to hit a wall of design problems or programming difficulties. Last Thursday, I quite literally stared into the void for 4 continuous hours, phased out of reality, thinking about all kinds of things I could do.</p>
+<p>I hope I have learned my lesson now. I need humility, and the comfort that I'll always be able to build onto what I already have.</p>
+<h1 id="architect-of-strife">Architect of Strife</h1>
+<p>I welcome yet another JavaScript library to my pile of &quot;things that would have taken weeks to do myself&quot; - Pixi Viewpoint. Following an excruciating implementation process, it has allowed me to transform my zoom animation code (which used to be roughly the coding equivalent to rotting roadkill on an unpaved road after a nuclear apocalypse) into something <em>much</em>, <a href="https://vid.puffyan.us/embed/3ZHK8QAOUa8">much more presentable</a>, and with a seamlessness I find quite charming. In the future, it will also open up opportunities for drag-and-drop camera panning, mouse zooming, and much more...</p>
+<p>Aside from that, it was not a great week. I have undone multiple commits that were going pretty much nowhere, such as letting the player place enemies as they want before initiating combat, a background visual effect for the zoom animation that turned out horribly glitchy, and overall struggled with inconsistent, overly ambitious design. </p>
+<p>One of my most &quot;cool on paper, now actually make it&quot; concepts was letting the player design their own enemies using the spell &quot;programming&quot; system already in the game (for example, create an entity with &quot;when taking a step, shoot lasers&quot;). Then, I'd have the player be challenged to defeat their own creations. To prevent players from crafting &quot;when this exists, die instantly&quot;-type pushovers, a squad of NPCs would come afterwards and try to also defeat the artificial enemies. You'd have to make the entities strong enough to beat the NPCs, but weak enough so that you could triumph where they failed.</p>
+<p>This has so many problems.</p>
+<ul>
+<li>
+<p>What stops the player from crafting &quot;trap&quot; enemies like &quot;this enemy cannot attack, but when it moves, it leaves behind traps that oneshot you&quot;? The player will be intelligent enough to avoid the traps when <em>they</em> play through the challenge, but my NPC squad will get nuked the moment their AI steps where it shouldn't.</p>
+</li>
+<li>
+<p>This implies that a portion of gameplay will be spent watching the NPCs battle it out, how can this part be made interesting and not completely passive?</p>
+</li>
+<li>
+<p>The NPC squad will also get programmable spells of their own, do I just come up with contraptions in a weird arms race against the player to make increasingly broken combos?</p>
+</li>
+</ul>
+<p>I don't think the idea to be irredeemable. This concept of a &quot;sandbox&quot; roguelike - not in the Qud/CDDA sense where &quot;you can do anything&quot; but in the sense of &quot;you can have a part in the world's creation&quot; is not only very thematic with my game's lore, but also lets me secretly distribute some of the design work to the player so they &quot;make my game for me while playing it&quot;, so to speak. Tongue in cheek, but I think there is potential here. It's <em>fun</em> to outwit a design and coming up with the &quot;trap&quot; mentioned earlier might be interesting... assuming it isn't some &quot;meta&quot; that should be made every single time.</p>
+<p>I am at a turning point. There are so many directions I could go in. I have so many ideas, but many are bad and in the end, only a few can remain. Development might slow a little while I work this out.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-07-07-fields-of-steel-stretch-forever/">Fields of Steel Stretch Forever</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-07-07
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;And yet. I know so much, and care so little. Defeaned by chatter, weighed down by revelations - I am all, but wish to be none.&quot;</em></p>
+<ul>
+<li>Terminal getting pensive about their quest</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>Hiding behind a crevice to escape a passing-by patrol of robots in Cogmind, taking two steps forward and one step backwards to clear the Elven Halls in DCSS... There's a lot to like about sprawling roguelike maps, with their many twists and turns presenting opportunity for crafty adventurers.</p>
+<p>So, when I looked at my own game, and considered the loop of &quot;clear square room of all enemies&quot; -&gt; &quot;move to next room&quot; -&gt; &quot;repeat&quot;, I couldn't help but feel something was wasted. Due to the structure of <a href="https://nluqo.github.io/broughlike-tutorial/">the tutorial</a> I initially built my game from, when a room was left, it ceased to exist and entered a state of stasis until the player visited it again. </p>
+<p>I couldn't tolerate this any longer.</p>
+<h1 id="fields-of-steel-stretch-forever">Fields of Steel Stretch Forever</h1>
+<p>This has been quite the neuron-frying rework, but TGFP now has <a href="https://vid.puffyan.us/embed/X0H_527_edQ">full-floor, interconnected maps</a>! The layout is still based off square rooms linked with each other, but the most important feature is that <strong>entities other than the player can now move wherever they please</strong>.</p>
+<p>The implementation proved quite challenging. First, to properly generate a unified map, I randomly generate a 9x9 grid of &quot;walls&quot; and &quot;floors&quot; with no isolated floors, then pave each &quot;floor&quot; with a prefabricated vault, chosen at random among multiple possibilities. Finally, I scrape the data from each &quot;vault&quot; and build a single giga-room (&gt;6000 tiles!) from the extracted data. I was expecting this process to turn my 128 MB VRAM, 8 GB RAM laptop into a miniaturized sun, but everything somehow remained perfectly fluid!</p>
+<p>Then, to actually display the giga-map, I thought &quot;let us just render every single tile and move the whole map around when the player moves&quot;. Bad idea. There was the miniaturized sun I was after.</p>
+<p>Finally, I settled for a 30x30 grid of &quot;projectors&quot; which dynamically update every turn to reflect all tiles in range 15 of the player. It's just like DCSS - the player always remains at the centre, fully enabling any narcissistic tendencies the user may have!</p>
+<p>Following this implementation, I struggled very hard to bring back the zooming animation from last week. Initially, it was skewed and caused an annoying lag spike at the end. I worked 5 hours to fix it, butchered my game completely beyond repair and had to undo all changes. Fun. </p>
+<p>In the end, some performance testing revealed that the big memory-hog was the function assigning sprites to every single tile, <em>including the black space between the rooms</em>. All it took to fix the lag was a single line of code in the graphics engine: &quot;if tile is not in play area, return&quot;.</p>
+<h1 id="cyan-suns-burn-the-horizon">Cyan Suns Burn the Horizon</h1>
+<p>The scope for the coming months is... a little imposing. I have a significant addition I wish to add to the core gameplay loop, and I also want to overhaul the pathfinding algorithms from basic-baby Greedy Manhattan Distance to something a little more appropriate for a 81x81 map. So far, the <em>only</em> things tanking my performance have been graphical issues - the back end has never caused any problems. From what I've read about the nightmare A* &amp; friends can be, I expect this may change soon.</p>
+<p>I sometimes regret a little choosing JavaScript to get started (but I think harder languages would have demotivated April 2022 me, even though I would be able to handle them now). I am getting frequently trolled by &quot;undefined&quot; types parasiting my data and coming out 5 minutes later to break everything. But, on the other hand, I am massively benefiting from the lack of compile times (offset a little UI element by 3 pixels and instantly see the difference!).</p>
+<p>These next weeks will either be glorious or a train wreck. No in between.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/20/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/22/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

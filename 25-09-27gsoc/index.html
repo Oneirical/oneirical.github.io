@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/25-09-27gsoc/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/25-09-27gsoc/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/25-09-27gsoc/">Mapping the Maze of the UI Test Suite: lessons learned on contributing to open source without a single line of code</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2025-09-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+        <div class="post-content">
+            <h1 id="mapping-the-maze-of-the-ui-test-suite-lessons-learned-on-contributing-to-open-source-without-a-single-line-of-code">Mapping the Maze of the UI Test Suite: lessons learned on contributing to open source without a single line of code</h1>
+<p>At the end of May, Jieyou Xu (my mentor), outlined four main tasks required for project completion.</p>
+<ol>
+<li>A massive README.md to document every single directory in tests/ui/, of which there were roughly 329 at the time I was working on it. <a href="https://github.com/rust-lang/rust/blob/master/tests/ui/README.md">It has been completed, you can read it here.</a></li>
+<li>Try to rewrite UI tests that play around with \r\n carriage returns directly in their files. Since these are invisible in most editors, it is a trap for the unwary contributor, as they could delete a single new line, then re-add it, and break the test (as it would change \r\n into \n). <a href="https://github.com/rust-lang/rust/pull/142925">A PR was started to get this to work</a>, and it almost passed CI until it hit the wall that is Windows path normalization. After looking at it more, it was determined that getting this conversion to work required such ludicrous Regex patterns to normalize the standard error files that the original test was probably worth keeping around. Nothing was merged, but the experiment was worth it.</li>
+<li>Trying to understand what some of the more confusingly similar compiletest directives do. <a href="https://github.com/rust-lang/rust/pull/143537">Initially, in this PR, I wanted to update the seemingly &quot;bad&quot; <code>error-pattern</code> into the seemingly &quot;better&quot; <code>check-run-results</code>.</a>. After a bit of running around and trying to swap them out, only to be met with compiletest not being very happy, we realized why they had been put there in the first place - to check the very niche output of specifically runtime-panicking tests, out of reach for normal compiletest annotations such as <code>//~?</code>. The final decision was not to actually change any of the tests, but rather to <a href="https://github.com/rust-lang/rust/pull/144340">change the documentation in another PR</a>, as the previous wording made <code>error-pattern</code> sound more like a &quot;hack meant to be replaced&quot; than a &quot;last resort for niche cases&quot;.</li>
+</ol>
+<p>You'll notice that not a single line of code has been merged into the master branch yet. At this point, the midterm evaluation was creeping in, and I was starting to grow quite anxious. It's called &quot;Google Summer of Code&quot;, and no &quot;code&quot; has been merged, therefore, failure is guaranteed, no?</p>
+<p>It was decided that the README was quite valuable for contributors, and that the experiments were worth doing, and so, I continued my project successfully, into the realm of Sisyphus.</p>
+<p>The fourth task mentioned by my mentor was to &quot;rehome stray files&quot; in tests/ui. There were almost 2000 of these, all unique in their own special way. Here is an example.</p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span>use std::ptr;
+</span><span style="color:#8fbfdc;">pub unsafe fn </span><span style="color:#fad07a;">g</span><span>() {
+</span><span>    </span><span style="color:#8fbfdc;">return</span><span>;
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>*ptr::null() {}; </span><span style="color:#888888;">//~ ERROR unreachable
+</span><span>    </span><span style="color:#888888;">//~| WARNING dereferencing a null pointer
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">main</span><span>() {}
+</span></code></pre>
+<p>What are we even testing here? That the unreachable code is successfully reported? Sure, but why is there a null pointer dereference? Is it testing both at once? Why in the same file?</p>
+<p>Then, you do some archaeology, find <a href="https://github.com/rust-lang/rust/issues/7246">the issue that spawned it</a>, and realize that, in the highly specific case where you try to read a <code>*bool</code> that happens to be unreachable, this used to cause an internal compiler error. And so, I rename the test <code>unreachable-bool-read-7246</code>. This also requires updating (blessing) the test <code>.stderr</code> files, as well as linking the corresponding issue.</p>
+<p>This is a stereotypical example of an easy case, but sometimes, wrenches are thrown into the works. Some tests have their main functions in auxiliary files loading modules, some tests have very uninformative issues and require more archaeology, and sometimes, trying to change the names and files in seemingly trivial ways breaks the tests in a fashion which must then be diagnosed with the error logs.</p>
+<p>I have been dwelling in the test mines for</p>
+<p><a href="https://github.com/rust-lang/rust/pull/144548">multiple</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/144089">hundreds</a></p>
+<p>of test files. They are</p>
+<p><a href="https://github.com/rust-lang/rust/pull/144552">seemingly</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/144553">endless</a></p>
+<p>and</p>
+<p><a href="https://github.com/rust-lang/rust/pull/144983">defy</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145675">the</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145676">concept</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145896">of</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145897">patience</a>.</p>
+<p>Not to mention I have more where that came from, currently sitting on my branch repository and waiting for a time that won't clog Jieyou Xu's increasingly insane review queue. A huge word of appreciation to you, for combing through these and finding my typos and miscategorizations which occasionally slip themselves into the cracks.</p>
+<p>There was another contender on this Sisyphean mountain: <a href="https://github.com/rust-lang/rust/pull/143303">Kivooeo</a>. They were producing these with remarkable efficiency. So much, in fact, that one of my first PRs collided with much of their work, and got closed. It was fully my fault for not checking who else was working on this, and got quite frustrated at myself.</p>
+<p>This added component of checking for overlaps, with the potential issue of sometimes some still sneaking through, made this already tedious task even more of an ordeal. I almost wanted to quit at this point, but ended up entering communication with Kivooeo and dividing the directories in a more predictable fashion. There were no collisions after that.</p>
+<p>There are no zero files directly under tests/ui/ at the time of writing, and there will be under 1100 files in tests/ui/issues after my currently open PRs get merged. Overall, Kivooeo and me cut down over 500 tests. Not bad. But there is much left to do. I wrote quite a few automated tools for this task, and they can still be put to good use.</p>
+<p>However, even with them, this is tedium incarnate. The thing is, I made a grave mistake, at the start of all this.</p>
+<p>I was initially going to apply for one of the more glamorous GSoC projects, and had even started writing my proposal. It was for the &quot;make rustup concurrent&quot; project, which Francisco Gouveia ended up being assigned to, and seems to be doing quite well in. Maybe I would have failed to get accepted. But, I think I should have tried. I stopped myself out of the idea that I &quot;wasn't good enough&quot; for an &quot;actually difficult and architectural project&quot; and that my place was in the test mines, just like last year.</p>
+<p>I can't say I am devoured by regret, because this project apparently really will be useful to contributors. But, I do feel like I missed out on a valuable learning opportunity, and could have made this summer better.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/7-peace-was-never-an-option/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 7. Peace Was Never An Option</span>
+                        </a>
+                    </span>
+                
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

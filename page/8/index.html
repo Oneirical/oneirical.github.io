@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc5/">Hauling The Kraken Out Of The Sea</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-06-02
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <p>It's official - this week, 25% of all <code>run-make</code> tests are now successfully ported. Not exactly the most robust metric, considering certain tests are trivial and completed with a flick of the hand, while others make use of dark arcane secrets beyond the comprehension of any soul wishing to keep its sanity intact.</p>
+<p>It's <em>really</em> satisfying how all I must do to search for new tests is searching &quot;Makefile&quot; in my text editor - as these <code>run-make</code> tests really are the last remaining traces of this cursed file format.</p>
+<p>The infection might be beyond saving at my internship workplace (it is a tentacular, multi-decade-old C++ giga-codebase with tons of dependencies scattered across directories with <code>cp</code> commands in Makefiles to move them across the place). Basically the technological rendition of an ancient kraken with its circulatory system made out of cursed Bash syntax.</p>
+<p>But, at least, the One True Programming Language is on a rightful path of healing.</p>
+<h2 id="merged-this-week">Merged this week</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125638">lto-smoke, simple-rlib, mixing-deps</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125662">fpic, simple-dylib, proc-macro-init-order</a></li>
+</ul>
+<h2 id="previously-open">Previously Open</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a> - I found a rather glaring mistake where the <code>input</code> and <code>output</code> functions had their function bodies swapped. However, after fixing this, there is still a test failure on <code>aarch64</code>... with no error message beyond &quot;has been running for too long&quot;. Fun. Did I... put some infinite loop somewhere??</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125383">emit, mixing-formats, bare-outfile</a> - Windows OS thinks it can be a special snowflake and have its own file permission rules. <a href="https://github.com/rust-lang/rust/pull/125827">A fix was pushed by courtesy of my mentor</a>, which should patch this pesky test once and for all.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125500">link-arg, link-dedup, no-panic-blank-output</a> - frozen down by the fact that they need to be converted to UI tests with <code>.stderr</code> files, but I haven't managed yet to print the exact error message that should be received. Not that I spent much time on this one.</li>
+</ul>
+<h2 id="newly-open">Newly Open</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125674">symlinked-extern, symlinked-rlib, symlinked-library</a> - was approved, then failed the basic CI over 10 times. The current error mentions something about being incapable of finding an external crate.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125683">suspicious-library, resolve-rename, incr-prev-body-beyond-eof</a> - was in the merge queue, then failed the <code>armhf-gnu</code> test for an obscure reason linked to a object file &quot;not in the right format&quot;.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125736">Helper functions for <code>tmp_dir().join()</code> and filesystem operations</a> - simply needs a couple patches to pass the CI.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125787">Implementation of <code>nm</code> utility and bin-emit-no-symbols test</a> - I tried my hand at making something with the <a href="https://crates.io/crates/goblin">Goblin</a> crate, which is not currently allow-listed in the Rust repository. I will likely need to try an implementation based on the <a href="https://crates.io/crates/object">object</a> crate instead.</li>
+</ul>
+<h1 id=""></h1>
+<p>Working a very &quot;traditional&quot; software <del>engineering</del> programming (I can't call myself an engineer, it's a legally protected title in my country) in conjunction with the Google Summer of Code is making me realize a really relevant dichotomy - the concept of who imposes the working schedule.</p>
+<p>There is a <em>huge</em> appeal when it comes to choosing one's own schedule. I am given a contract with an expected result, and I just need to go for it, when it seems most right, sprinting intensely one day and taking the next one off. I don't need to carefully log in a virtual notebook how many hours it will take, how many I have used up, and be accountable for what I did day to day (only on a weekly basis).</p>
+<p>I know there is a canyon of difference between these two worlds, but I feel really <em>trusted</em> with this latter system. The rigid, 9-to-5 planning stucture feels less like organization and more like supervision after this one-month compare-and-contrast endeavour.</p>
+<p>That trust, I find, makes the work so much more enjoyable, because it makes me feel confident that I really can do this. I would be getting caged down much more if there were doubts!</p>
+<p>It's a really great thing to realize now, because I am learning what I want - and what I do not want - from the years of life to come in my path.</p>
+<p>Having these two commitments at the same time is tough, but I'd take the same decision all over again, as the juxtaposition truly is enlightening. My GSoC project has been extended to 18 weeks, so I can focus on keeping the medium and steady pace I have cultivated so far, and still enjoy the wonderful spring and summer days outside. c:</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc4/">Mecha Crabs Going Rogue</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-26
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <blockquote>
+<p>// A very specific set of circumstances (mainly, implementing Deref, and having a procedural macro and a Debug derivation in external crates) caused an internal compiler error (ICE) when trying to use rustdoc. This test reproduces the exact circumstances which caused the bug and checks that it does not happen again.</p>
+</blockquote>
+<p><a href="https://github.com/rust-lang/rust/pull/125165">Source</a></p>
+<p>One gets dizzy imagining the contributors back then, like masterful chemists, isolating and purifying the united causes of this obscure error, until at last illumination strikes, resulting in the deletion of a single line of code, and the creation of a <code>run-make</code> test easily 10 times larger than the fix itself.</p>
+<p>This week, running through review comments and implementing requested suggestions and patches proved steady and rhythmic. Another fresh batch was on its way to getting shipped to the Rust compiler - packaged, wrapped up, with a nice <code>r+</code> sticker on it. We just needed a quick test on the Microsoft Visual C++ compiler for compatibility...</p>
+<p>Which caused the Bors bot to go rogue and... seemingly try to merge without running the compatibility test. I mean, really now? The bot's profile picture on Github is literally <a href="https://github.com/bors">HAL 9000's eye</a>. What could possibly go wrong giving the bot managing a programming language designed for robustness (excellent for tasks critical to humanity, such as space exploration, the creation of drones to save orphans from blazing buildings, and the blockchain generation for non-fungible tokens) the physical appearance of a fictional robot not known for its valuing of human life?</p>
+<p>The runaway machine was subdued, and the pull request is safe... for now.</p>
+<h2 id="merged-this-week">Merged this week</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125218">no-intermediate-extras</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125227">reset-codegen-1</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125224">external-crate-panic-handle-no-lint</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125222">noalias-freeze</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125421">core-no-oom-handling, non-pie-thread-local, deref-impl-rustdoc-ice</a> (I am bundling these up in the same pull request now, as the frontpage spam was getting a <em>little</em> intense, which was noticed.)</li>
+</ul>
+<h2 id="open">Open</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a>, where a peculiar error happened on <code>aarch64</code> about failure to create a <code>profdata</code> file. I'll go over this in my weekly check-in meeting tomorrow.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125383">emit, mixing-formats, bare-outfile</a>, where the bot went rogue. A strange error still remains - as I am typing this, the test is being restarted.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125500">link-arg, link-dedup, no-panic-blank-output</a>, which should probably be UI tests instead?</li>
+</ul>
+<h1 id="oxidizing-my-toolkit">Oxidizing My Toolkit</h1>
+<p>So, I've been a <a href="https://vscodium.com/">VSCodium</a> (the no-telemetry version of VSCode) plebeian for a long time, but my techiest friend insisted on how COOL and PRODUCTIVE it is to have a modal editor. But not ANY modal editor. It had to be <a href="https://helix-editor.com/">Helix</a>. Which is like Neovim, but written in Rust (this is the only argument I needed to be convinced).</p>
+<p>I also found for myself a terminal multiplexer, <a href="https://zellij.dev/">Zellij</a>, which is like Tmux but written in Rust (this is also the only argument I needed to be convinced).</p>
+<p>Before someone posts me on <a href="https://old.reddit.com/r/programmingcirclejerk/">r/programmingcirclejerk</a>, I am jesting and I found myself enjoying Helix not because of &quot;blazing speed&quot; or any other crab-related meme, but really just because:</p>
+<ul>
+<li>It shows me a lot of keybinds when I press space or g, and what they do</li>
+<li>It doesn't require me to install any extensions</li>
+</ul>
+<p>I quickly learned the basics - i to insert, e and b to move through words, I and A to move to the start and end of a line, and most amusingly, pressing C to duplicate my cursor. I always feel like a masterful illusionist when doing it.</p>
+<p>I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.</p>
+<p>After just one week, I really do feel more productive in it than I was in VSCodium. I think the most useful part is easily the file picker, as it gives previews of each file while browsing, unlike VSCodium's Ctrl-P. It's great for run-make tests, as I simply write &quot;Makefile&quot; and start browsing tests quickly and isolating which ones are doable with the current state of the support library with little effort.</p>
+<p>Another neat touch to make programming even more fun :3</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/7/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/9/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc7/">The Schrödinger&#x27;s Contributor</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-06-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <h3 id="merged-this-week">Merged This Week</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125736">wrapper for <code>fs</code> operations</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125036">short-ice</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125674">symlinked-extern, symlinked-rlib and symlinked-libraries</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a>, finally!</li>
+</ul>
+<h3 id="opened-this-week">Opened This Week</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/126279">inaccessible-temp-dir, output-with-hyphens and issue-10971-temps-dir</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/126427">intrinsic-unreachable, sepcomp-cci-copies, sepcomp-inlining and sepcomp-separate</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/126437">issue-64153, invalid-staticlib and no-builtins-lto</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/126484">std-core-cycle, obey-crate-type-flag, mixing-libs and issue-18943</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/126490">extern-flag-fun, incremental-debugger-visualiser and incremental-session-fail</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/126500">error-found-staticlib-instead-crate, output-filename-conflicts-with-directory, output-filename-overwrites-input, native-link-modifier-verbatim-rustc and native-link-verbatim-linker</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/126607">separate-link, separate-link-fail and allocator-shim-circular-deps</a></li>
+</ul>
+<h3 id="still-open">Still Open</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125500">link-arg, link-dedup and clear-error-blank-output</a>, which is currently in the merge queue.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/126787">nm implementation + bin-emit-no-symbols</a>, which I have barely touched. Maybe there's an opportunity to use <code>llvm_readobj</code> as seen in <a href="https://github.com/rust-lang/rust/pull/126534">#126534</a>.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/126095">link-args-order, ls-metadata and lto-readonly-lib</a>, which needs <a href="https://github.com/rust-lang/rust/pull/126279">#126279</a>'s <code>test_while_readonly</code> implementation.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/126208">compiler-lookup-paths, dump-mono-stats and prune-link-args</a>, whose original Makefile's ability to succeed on Windows despite its complete disregard for OS-specific library filenames is beyond science.</li>
+</ul>
+<p><code>run-make</code> Makefiles remaining in master repository: 246/349 - <strong>29.5% complete</strong></p>
+<p>Just who are these open source contributors? What drives them forwards?</p>
+<p>I can comprehend coming home after a day of chasing around bugs and patching pipelines to knit a sweater or build 18th century miniature sailboat replicas. First, neither of those things require a screen, and second, the skills they require, while difficult to acquire, are not as specialized as compiler development.</p>
+<p>So, how does one come home after doing a lot of a thing to do more of that thing? What is the grand conspiracy? Unemployed college students? Sneaking in some PRs during the workday? Lucid dreaming brain-chip coding? The <code>run-make</code> CI will get <em>really</em> fun when I start having to adapt to the <code>x86-neuralink</code> architecture.</p>
+<p>What are the demographics? Is it a &quot;young person&quot; or an &quot;old person&quot; thing? When you ask me to imagine an &quot;open source coder&quot;, I have this Schrödinger's vision of a superposed 80 year old ancient lich polishing their phylactery full of homebrewed pure-C data structures and algorithms, and a 20 year old wearing the traditional cultist robes of one of the many Internet subculture conclaves available to them.</p>
+<p>Wretched thing - I am the former. The perfect recruit. Even though this test-porting business is quite repetitive... I'm quite enjoying it. It's honestly just the digital version of using a vacuum cleaner in a suffocatingly dusty room. Some of these Makefiles truly have formulas inscribed upon them which would shatter any sane mind...</p>
+<p>But, I am immune, for I have already excluded myself from sanity in the first place by volunteering to embark on this project.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc6/">Keeping The Torch Burning</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-06-10
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <h3 id="merged-this-week">Merged This Week</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125683">suspicious-library, resolve-rename and incr-prev-body-beyond-eof</a></li>
+</ul>
+<h3 id="opened-this-week">Opened This Week</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/126036">short-ice</a>, which should be pretty much ready to wrap up and ship.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/126095">link-args-order, ls-metadata and lto-readonly-lib</a>, which has a very strange error where it crushes the entire wall of text that is <code>stderr</code> into nothing else but a single double-quote <code>&quot;</code>.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/126208">compiler-lookup-paths, dump-mono-stats and prune-link-args</a>, which makes me run into the exact same issue the test author did 11 years ago - the ui test directory not understanding what a double-quote is.</li>
+</ul>
+<h3 id="still-open">Still Open</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a>, which has now been open for 25 days. At least, with this big rebase on top of the new API, maybe something will actually happen for once.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125787">nm implementation</a>, which has been completely reworked to use the <code>object</code> crate instead... and is now crushing me under a truckload of lifetime errors. There must be a better way to do this.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125736">fs wrappers</a>, which only need to wait for the intimidatingly-named <a href="https://github.com/rust-lang/rust/pull/125752">drop bombs</a> to exit the merge queue.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125674">symlinked-extern, symlinked-rlib and symlinked-libraries</a>, which simply needs fs wrappers merged before it can proceed.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125500">link-arg, link-dedup and clear-error-blank-output</a>, which hilariously previously failed because the final test was previously named <code>no-panic-blank-output</code>, and it includes <code>output.assert_stderr_not_contains(&quot;panic&quot;)</code>, which was tripped by the name of the test. Right now, the test is failing because I am fighting the borrow checker for the last 2 statements:</li>
+</ul>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span>out.assert_stdout_contains(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">lfoo</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>out.assert_stdout_contains(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">lbar</span><span style="color:#556633;">&quot;</span><span>);
+</span></code></pre>
+<p>And it feels wrong to just <code>derive(Clone)</code> and call it a day.</p>
+<p>The set of PRs merged and open this week is less bountiful this time - yes, I spent a lot of time debugging and patching some of the cursed tests clogging up the queue, but there has also been some interesting discussions and progress on improvements to <code>run_make_support</code>: tightening up the various utilities like <code>rustc</code> so their output <em>must</em> be handled, and making said output be much more controlled with designated functions to process <code>stdout</code> and <code>stderr</code>.</p>
+<p>I've noticed that there's been some interest from experienced contributors in helping out the <code>run-make-support</code> efforts. In a way, I am glad - it shows that maintainers think this project has value and that it's not some &quot;intern oubliette&quot; where you assign beginners to an insignificant part of the codebase and breathe a sigh of relief as you realize there is no way they will break anything important.</p>
+<p>But, it also makes it really motivating to do more, seeing all these metaphorical pickaxes striking the rock in unison, and mine not being as used as it could be. Don't get me wrong, the team seems happy with my progress thus far - a sustainable pace to match the extended 18 weeks duration - but had I not balanced this commitment with a full time internship, there could have been a little more pep to it.</p>
+<p>Example: other Summer of Code contributors are relentlessly posting about what <strong>they</strong> do on their side in the Zulip thread, and I harbour some curiosity to understand more what they are doing - as just reading the words quickly without research is roughly equivalent to reading ancient Babylonian scripture. But, I am so <em>drenched</em> in technology weekly that it wouldn't be a good idea. I <em>could</em>, but I'm doing everything to keep the torch burning and try not to go to too many &quot;extra miles&quot; until I fall off the cliff.</p>
+<p>My fear was making the foolish choice of mediocrity in two commitments over excellence in one. And, it doesn't seem like that is currently happening, but it is nonetheless worrying.</p>
+<p>Once this summer passes, I will definitely be thinking things over more in the future when it comes to opportunities. Life isn't some RPG where you can have 12 active quests at the same time. I wonder how the highest octane maintainers do it, since they might be even busier than I am.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/6/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/8/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

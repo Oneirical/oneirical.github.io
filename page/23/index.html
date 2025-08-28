@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-06-16-foundations-of-truth-reassembled/">Foundations of Truth Reassembled</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-06-16
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;When a new thoughtform births, it already prods at the world around it before its first breath, latching onto symbols and patterns. Such primordial ideas are a delicacy among the upper castes.&quot;</em></p>
+<ul>
+<li>flavour text introducing the player to the Feral caste</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>All this mind-numbing UI work was starting to take its toll. Last weekend, I was feeling so, <em>so</em> burnt out from all those pesky dancing pixels all over my screen trolling me and refusing to know their place. </p>
+<p>I even played some Cogmind for, ahem, game development research purposes, yes. I got to Access-1 for the first time! (and promptly got clapped). Above all, I couldn't stop being amazed at all the little touches to make the UI feel more computer-like - all of that must have taken months.</p>
+<h1 id="reassemble-the-foundations-of-truth">Reassemble the Foundations of Truth</h1>
+<p>Something very ironic about my <a href="https://cdn.discordapp.com/attachments/504088568084561930/1119416024106795098/rWBIjpR.png">&quot;research web&quot;</a> is how much it helps me develop my game. Every time I am wondering what to work on next, I just play my game filling it out until I hit a void of incomplete content preventing me from progressing in it. Then, I fill in the gap with Content™ and proceed to the next node. It really makes me feel like I am learning the arts of soul-weaving alongside my protagonist.</p>
+<p>This time, the aforementioned gap required me to redirect my current focus towards a more fun part of programming than UI design: awesome spells. First things first, all of the 6 starter spells offered to the player were still running on the old system - just a big block of code working through arbitrary effects. This is simply unacceptable: I <em>must</em> show new players a glimpse of all the reality-shattering incantations they might be able to build with some creativity.</p>
+<p>I removed all of that chaff. For context, my game revolves around crafting spells out of components like &quot;select all targets near walls&quot;, &quot;on all targets, apply a status effect&quot; or &quot;when a step is taken, automatically cast this spell&quot;. I expected to just slap together some of the components I had already made to give 6 examples of cool combos and call it a day.</p>
+<p>Of course, I ended up remaking a huge chunk of my magic system in the process. It was simply inevitable. Such is the Onei way.</p>
+<p>Before, the 4 categories of spell components (Contingencies, Forms, Mutators and Functions) were tangled in a whole package of obscure, arbitrary and hard-coded rules. To make this system even more <del>chaotic</del> flexible, I have completely done away with all these weird requirements. Each spell is now just an ordered list of components!</p>
+<p>If I make &quot;EGO, CLICK, EGO, PLUSCROSS, HARM&quot;, it will always have the same effect:</p>
+<ul>
+<li>EGO: Select the tile you are standing on.</li>
+<li>CLICK: Set down a trap on all selected tiles (in this case, just one). Push all following components in that trap's mechanism, then stop the spell.</li>
+</ul>
+<p>So, the spell just plops down a trap under your feet with &quot;EGO, PLUSCROSS, HARM&quot; on it, and that's it. But what happens when something actually steps on it?</p>
+<ul>
+<li>EGO: Select the trap tile.</li>
+<li>PLUSCROSS: Also select all tiles in a cross formation, like firing a laser beam in all 4 cardinal directions.</li>
+<li>HARM: Deal damage to all entities in selected tiles.</li>
+</ul>
+<p>So, not only does the trap damage the one who steps on it, it also explodes and deals significant collateral damage! </p>
+<p>What I just described is the Artistic starter spell (or &quot;Axiom&quot;, as they are called in game). I have made 5 others, all with their own themed sequences. Let me show you the Feral one:</p>
+<p><em>deep breath</em> - &quot;EGO&quot;, &quot;TRAIL&quot;, &quot;BLINK&quot;, &quot;SPREAD&quot;, &quot;IGNORECASTER&quot;, &quot;HARM&quot;.</p>
+<p>Let's work this through step by step. </p>
+<ul>
+<li>EGO: Select the tile you are standing on.</li>
+<li>TRAIL: From now on, all entities on selected tiles will leave behind a &quot;trail&quot; that selects tiles as they move.</li>
+<li>BLINK: On all selected tiles (in this case, just you), the entity there dashes in the direction of its last move.</li>
+<li>The player dashes, and TRAIL is triggered, selecting all tiles they pass through.</li>
+<li>SPREAD: All selected tiles spread out to all adjacent tiles, selecting them as well.</li>
+<li>IGNORECASTER: From now on, the caster of this Axiom will not be affected by any effects of this Axiom.</li>
+<li>HARM: All entities on selected tiles take damage (except the caster, due to IGNORECASTER).</li>
+</ul>
+<p>Simply put, dash, then strike all creatures near the dash!</p>
+<p>Here's how <a href="https://vid.puffyan.us/embed/M-IFFOaRxxo">both of these spells look</a> in game!</p>
+<p>There are now 30 different Axiom components (named &quot;Praxes&quot; in game) available for mix-and-matching, with many more already designed and coming along. So many exciting contraptions await...! I've already started reworking the spell crafting room with a whole new algorithm, but that is unfinished and will be featured in next week's post.</p>
+<h1 id="thick-smoke-shrouds-understanding">Thick Smoke Shrouds Understanding</h1>
+<p>I'm aware that all of this is pretty dense. I don't expect everyone to enjoy this type of gameplay, but I personally like it and I am making this game for myself first and foremost. However, I do understand that 3 trillion Axioms constantly firing over the place could become a clarity problem. The enemies have them too, after all.</p>
+<p>I've noticed that many roguelikes operate with an &quot;animation queue&quot; - on your screen, you see the player fire their spell, then the spell travelling across the screen, then things exploding, then very unpleased archers firing back a volley at the player. In TGFP, right now, everything happens simultaneously, which does not aid comprehension in the slightest. </p>
+<p>However, Rift Wizard has an animation queue and its turns can last upwards of 15 seconds just because of it. I always played it on &quot;XtraSpeed&quot; mode where everything was instant.</p>
+<p>For a compromise, I think I might add an option like this in my game, but also make it so entering a keypress while the animations are executing would instantly skip them and proceed to the next turn. I would show the tiles getting selected one-by-one by each component, then the effects occuring, and so on...</p>
+<p>Well. Later. I don't want to touch the front-end code for a little while. In a perfect world, my game would be beamed directly into the player's consciousness without petty needs for &quot;graphics&quot; or &quot;interface&quot;, but as I am shackled by my frail corporeal form, I suppose I must make do with making shiny buttons.</p>
+<p>What an unfortunate fate.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-06-09-ignorance-turned-thin-mist/">Ignorance Turned Thin Mist</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-06-09
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;A ruin is the final state of an idea - the data has crystallized into matter, latched itself into the material like a tick - and once all the praise has been drained out, it leaves itself at the mercy of passing hours.&quot;</em></p>
+<ul>
+<li>flavour text of Souvenirs Hauled from Bygone Eras, tutorial node</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>I have cloned my source code to Codeberg, because as they say, when it comes to backups - one is zero and two is one. Learned that the hard way recently after I casually deleted the backup of my giga-huge DCSS Felid guide a week before the DCSS wiki went splat. It's <a href="http://crawl.chaosforge.org/Onei%27s_3-rune_Interdimensional_Feline_Kidnapping_Walkthrough_-_FeSu%5EGozag/Jiyva">back</a> now, but that was a bit too close for comfort.</p>
+<h1 id="dissipate-the-mists-of-ignorance">Dissipate the Mists of Ignorance</h1>
+<p>The research screen remake continues, and now looks <a href="https://webmshare.com/play/GeVZa">snazzier than it ever was before</a>. Animated tab selectors, removal of annoying scrolling, and sprawling skill trees!</p>
+<p>In the original version, the code determining the unlock order and prerequisites was a simple database: </p>
+<pre data-lang="prerequisites" style="background-color:#151515;color:#e8e8d3;" class="language-prerequisites "><code class="language-prerequisites" data-lang="prerequisites"><span>    &quot;Vision&quot; : [&quot;Seed&quot;,&quot;Cage&quot;],
+</span><span>    &quot;Seed&quot; : [&quot;Herald&quot;], ..etc..
+</span><span>}
+</span></code></pre>
+<p>However, writing all of these connections was becoming extremely tedious with the sheer amount of nodes available. Instead, there is now a simple algorithm to make an imaginary liquid &quot;flow&quot; through the connectors and unlock everything it touches!</p>
+<p>On the sidebar, the dynamic description and flavour text box has also been reworked. Just making the colored text work again took <em>over 10 hours</em>. It is bewildering to me how hard such a simple feature is - and the only library I found online is rather unpopular, has a trillion dependencies and is also only available for a deprecated version of my rendering library (PIXI.js). This is the kind of thing that makes me salivate at Rust programmers - when they have a crate, it rarely goes out of date, because it is simply finished. And also, they don't have to deal with the 200 IQ feature that is:</p>
+<ul>
+<li>measureText(&quot;rogue&quot;) = 24 pixels</li>
+<li>measureText(&quot;rogue &quot;) = 24 pixels</li>
+<li>measureText(&quot; rogue&quot;) = 28 pixels</li>
+</ul>
+<p>I have a question. For the JS gods. <em>Why?</em></p>
+<p>In the end, my final implementation is very sad. It literally writes the text normally all in a single color, then locates all words from a &quot;special words list&quot; and places new Text elements on top with a different color. This basically means that I can't ever have bold text without messing everything up. Oh well.</p>
+<p>There is also a mysterious cyan variant of the &quot;liquid flow&quot; unlocking algorithm, which <a href="https://webmshare.com/play/Y7rGG">spreads very rapidly</a> across the entire network and unveils truths as if they had been obvious since the very beginning of our protagonist's journey. I hope to build an entire core mechanic around this peculiar infection - and I believe the moment where it finally gets translated from my design document into code will be the big turning point between an amateurish experiment and an actually promising potential game. Over a year later, about time.</p>
+<h1 id="arcane-researchers-toil-alone">Arcane Researchers Toil Alone</h1>
+<p>I've come to find out that solo game development is very much based on intrinsic motivation. People can give you a thumbs up after you show off a neat screenshot, but there's never really an ear that's willing to hear you unload your entire thought-stream for obvious reasons (this is not a complaint, I certaintly do not want to hear any unregulated thought-streams myself). The process of making the thing in itself requires one to be <em>obsessed</em> with the subject matter to avoid giving up. If I wasn't so attached to the concept and to the characters of this little glyphic imaginary universe, these posts would have dried out long ago. I understand why duo-development projects are quite often more successful... Though the more minds go into the creation of a product, the more diluted it risks becoming. &quot;Dans les petits pots, les meilleurs onguents&quot; (In the smallest jars come the best ointments), as they say in my homeland.</p>
+<p>I generally try to read the other posts in this thread every Saturday, though I tend to have trouble parsing the tech-tongued incantations some users here particularly enjoy. I'm just glad to have an anchor to tie myself to every week, even though it might just be a kind of placebo.</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/22/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/24/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

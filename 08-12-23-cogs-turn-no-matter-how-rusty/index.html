@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/08-12-23-cogs-turn-no-matter-how-rusty/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/08-12-23-cogs-turn-no-matter-how-rusty/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/08-12-23-cogs-turn-no-matter-how-rusty/">Cogs Turn, No Matter How Rusty</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-12-08
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Its bindings are not forged of steel, iron or even rope - but rather its own dramatically lengthy tongue, pulsating with strength as the creature attempts to suffocate itself.&quot;</em></p>
+<h1 id="the-games-foxes-play">The Games Foxes Play</h1>
+<p><em>(<a href="https://github.com/Oneirical/rust_tgfp">complete source code</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>Hello. How long has it been? 3 weeks? I've been busy with the student's plight that comes with the end of a semester, but still snuck in some progress once in a while. The features showcased today are therefore the product of stray and scattered hours.</p>
+<p>It is time to dial down the dreams and get working on real work that produces real results. I showed my genetic algorithm experiment last time I posted here, but I also did another experiment with peer-to-peer multiplayer with rollback in Rust right afterwards. </p>
+<p>Useful for my game? Very likely not. Interesting? Absolutely, I am glad that I understand better how networking technology in multiplayer games works now. </p>
+<p>But the time for messing around has come to an end.</p>
+<p><a href="https://yewtu.be/embed/Pbc5QyDZJ7Y?">Behold.</a></p>
+<p>I have redone my entire basic game logic and UI in Rust and the Bevy engine (it used to be in pure JavaScript with the PIXI.js library). I'm a big fan of the minimap and the sidebars!</p>
+<p>Pros:</p>
+<ul>
+<li>The performance has received unfathomable improvements.</li>
+<li>I no longer have to bang my head against the brick wall that is scaling the screen to every possible resolution.</li>
+<li>The Entity Component System structure is amazing, I never want to do an object-oriented game ever again.</li>
+<li>I just write things and they work. I still have not used the debugger once.</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>UI support is quite sad. Don't tell anyone, but the &quot;UI&quot; in my game is actually just more game entities, except they follow the player around as it moves.</li>
+<li>I have a feeling implementing mouse support will be a terrible experience.</li>
+</ul>
+<p>As for the game's design - I have once again drawn out my butcher's knife and have been cutting out the chaff. I've been so obsessed with being creative - to the point where I forgot to be reasonable.</p>
+<p>As an example, even <strong>the controls</strong> had been turned into a game mechanic. You literally started with a spell which was composed of the editable blocks &quot;When pressing 'W', on the tile north of the caster, move towards the targeted tile, a turn passes'&quot;. Let's list the problems with that:</p>
+<ul>
+<li>Removing the &quot;a turn passes&quot; component causes the player to freeze time forever, which is unfathomably OP</li>
+<li>Removing any of the other components basically induces a softlock</li>
+<li>Rebinding keys, a fundamental part of game design, was tied with a game mechanic (can't just do it in a quick menu, you need to use controls to rebind the controls)</li>
+<li>Quality-of-life like &quot;click on a tile to move towards it&quot; like in most modern roguelikes was simply impossible</li>
+</ul>
+<p>I am dialing it down, keeping the spirit of &quot;build your own abilities&quot; but in such a way that can coexist with the accessibility standards of modern gaming. I have a rather tight concept - a spin on <em>the oldest ideas I ever had for this game</em>, which I'll talk about when it is actually getting implemented.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/tango-problem/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">The Tango Problem</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/15-12-23-bleeding-cyan/">
+                            <span class="button__text">Bleeding Cyan</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

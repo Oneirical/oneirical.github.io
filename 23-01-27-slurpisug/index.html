@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-01-27-slurpisug/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-01-27-slurpisug/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-01-27-slurpisug/">Slurpisug</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-01-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;All contenders of the Saints' Arena feared Gyvji's mythical tail slap, supposedly so strong it could knock your soul out of your body and into the crowd, leaving the body untouched. Thankfully, it wasn't long until reality caught up, causing the victim's flesh to charge into the hopefully empty seats of the stadium, where it would be rejoined with its distraught spirit.&quot;</em></p>
+<ul>
+<li>Flavour text of <strong>Gyvji, Soul-Severer</strong>, a Legendary Artistic Soul</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.3 online in browser on itch.io!</a>)</em></p>
+<p>This week, I removed health, damage and killing from my game.</p>
+<p>Yes.</p>
+<h2 id="slurpi-souls-now-available-in-6-flavours">Slurpi-Souls, Now Available in 6 Flavours!</h2>
+<p>The fact that living beings were able to slay each other didn't make sense in the game's lore. And besides, suffering, agony and death are overdone tropes. I trust this new system should deepen strategic options significantly, and make even basic bump combat much more interesting...</p>
+<p>It is inspired from the Serene Spire mechanic I showed off exactly a month ago, but applied to the entire game because it was just so fun. As I don't expect anyone to remember, here is how it works in a nutshell:</p>
+<ul>
+<li>All damage points are converted to knockback points.</li>
+<li>When striking a foe, they are knocked back for a number of tiles equal to the number of accumulated knockback points.</li>
+<li>If the foe is knocked back for more than 2 tiles, their Soul is severed from their body, stunning them.</li>
+<li>The Soul rejoins their body one turn later.</li>
+<li>If the foe is knocked into a wall, the hit crits, and the stun duration is much longer.</li>
+<li>In this case, the Soul remains vulnerable for a couple of extra turns.</li>
+<li>The player can take this opportunity to slurp up the Soul, and permanently disable the enemy it is attached to. The newly acquired Soul can immediately be used to cast spells.</li>
+<li>The soulless husk left behind becomes a simple obstacle, and can be pushed and pulled around.</li>
+</ul>
+<p>Of course, a <a href="https://youtu.be/52Dhgk8Rky4">demonstration</a> is worth much more than a mere bullet point explanation.</p>
+<p>As there is so much more to take into account, even slaying 3 basic enemies in one room is now much harder. This is exactly what I wanted - I don't have to spam enemy spawns absolutely everywhere to challenge the player anymore, and the power growth curve can afford to be stretched out for much longer.</p>
+<p>Not the most productive week ever, but it is temporary. Those who know where my Reddit/Github profile picture is from will understand.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-01-20-monolithic/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Monolithic</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-02-03-blank-canvas/">
+                            <span class="button__text">Blank Canvas</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

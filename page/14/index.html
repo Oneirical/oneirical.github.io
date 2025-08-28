@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/tango-problem/">The Tango Problem</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-11-20
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/genetic-algorithm/">#genetic algorithm</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <h1 id="the-tango-problem">The Tango Problem</h1>
+<p><em>Personal experiments with genetic algorithms and neuroevolution, in Rust, with the Bevy engine.</em></p>
+<p>A number of &quot;Psychics&quot; are placed inside a 45x45 play area, and submitted to one of the following two challenges:</p>
+<ol>
+<li>Get as close as possible to a &quot;Beacon of Light&quot; randomly placed in the space before the 100 turn limit is elapsed. Walls are disabled in this experiment.</li>
+<li>Paint as many walls in pink as possible within the space before the 100 turn limit is elapsed. Walls are enabled in this experiment.</li>
+</ol>
+<p>The Psychics do not &quot;know&quot; these objectives. All they are given is a series of inputs representing their senses, such as:</p>
+<ul>
+<li>
+<p>The angle between themselves and the Beacon of Light</p>
+</li>
+<li>
+<p>The North-West-East-South direction in which the Beacon of Light is located</p>
+</li>
+<li>
+<p>Which adjacent tiles are solid</p>
+</li>
+<li>
+<p>Which tiles in range 2 of themselves are solid</p>
+</li>
+<li>
+<p>Which adjacent tiles are painted walls</p>
+</li>
+<li>
+<p>Which adjacent tiles are unpainted walls</p>
+</li>
+</ul>
+<p>A neural network receives these inputs as a vector of floating-point numbers (for example, &quot;the Beacon is North of you&quot; could look like [1.0, 0.0, 0.0, 0.0], &quot;the Beacon is East of you&quot; would be [0.0, 0.0, 1.0, 0.0]).</p>
+<p>Then, snazzy things happen inside one or more hidden layer(s), and a vector of floating-point numbers comes out (such as [0.32, 0.55, 0.38, 0.85, 0.11]). These correspond to actions, such as [Move North, Move West, Move East, Move South, Paint Nearby Walls]. The highest number is the chosen action.</p>
+<p>After each 100-turn sequence, each Psychic has their fitness calculated - how well they performed. Initially, this was only based on the objective, such as &quot;the number of tiles separating a Psychic from the Beacon&quot; or &quot;the number of tiles painted.&quot; The best Psychics are selected through &quot;roulette pick&quot; (everyone has a chance to be chosen, that chance increases with the fitness score), some mutations are applied to the neural network's weights, and a new generation is born, which will hopefully fare better than the last.</p>
+<p>But, this proved insufficient. I first observed the &quot;Tango Problem&quot; in the Beacon experiment - large numbers of Psychics would simply move down until they were on the same Y coordinate as the Beacon, <a href="https://yewtu.be/embed/hB14TX1fW4w">then simply move up and down over and over</a>.</p>
+<p>Why was this happening? After some struggling, I figured it out.</p>
+<p>A lucky Psychic would occasionally spawn on the same X level as the Beacon. Then, they &quot;figured out&quot; that they could just move down until the Beacon was reached, and start moving up and down over and over again. This was gloriously rewarded by the system - after all, they perfectly completed the task of reaching the Beacon and staying on it!</p>
+<p>Other Psychics would start copying this behaviour - except these are not actually on the same X level of the Beacon, and as such would fail the test, forming a line passing through the Beacon across the entire level. Naturally, there would always be at least one lucky Psychic succeeding through this strategy and making this behaviour repeat itself.</p>
+<p>My answer was to add, in the fitness function, a HUGE reward for Psychics who would dare to use more than just 2 different actions. This immediately solved the issue, as the &quot;bob up and down and hope to be lucky&quot; strategy could no longer result in the maximum possible fitness a Psychic could reach. <a href="https://yewtu.be/embed/DCK_dFT3g3Q">Here is the result!</a></p>
+<p>The painting experiment followed. It, too, experienced struggled related to the Tango Problem (which, I believe, is known as &quot;getting stuck in a local maximum&quot; in the literature): some Psychics would occasionally be very lucky and spawn next to many walls, which means they can just stay there, paint their surroundings, never move and still score 3-7 points without effort. Psychics that actually see an unpainted wall, move towards it and paint it are not rewarded as well.</p>
+<p>Once again, I added extra objectives:</p>
+<ul>
+<li>Do not stay in the same place for too long. (this resulted in Psychics bobbing up and down just like in the original Tango Problem and not doing anything else)</li>
+<li>Receive a penalty for re-painting already painted walls (this resulted in Psychics being terrified of ever painting anything)</li>
+<li>Receive a bonus for moving far away from the spawn location (this result in Psychics all rushing the bottom of the screen and painting it, leaving the rest of the level unpainted)</li>
+</ul>
+<p>Significant tweaking may eventually produce even more performant results, but for now, a balance of all these objectives does succeed in achieving a <a href="https://yewtu.be/embed/UDU3e50UbQo">&quot;trickle down&quot; strategy where all Psychics move towards the bottom of the screen, painting walls as they fall down.</a> (Creatures being in walls at the bottom is purely a visual glitch - I am not quite sure how to handle getting just the right amount of Bevy entities in each simulation without causing major performance issues).</p>
+<hr />
+<p>Overall, I am happy with how much I have learned from this mini-project. Studying genetic algorithms initially made it seem like they could handle anything with brute force and sufficient time, but I see now that the objectives, &quot;sense&quot; inputs and possible action outputs change everything. It is very easy for these algorithms to find something judged to be &quot;good enough&quot; and stick to it without much of an attempt to improve or innovate. I am aware a good algorithm should balance between exploitation and exploration, but the amount of tweaking required to reach this fine balance is truly a work of absolute precision and patience.</p>
+<p>Rust is an interesting piece of technology. Its &quot;fearless concurrency&quot; was very useful in making this program able to BOTH display the results of a completed simulation and train more simulations in the background <strong>at the same time</strong>. As someone coming from dynamic, untyped languages like JavaScript and Python, it is truly astounding how many errors are prevented just through rust-analyzer's watchful eye. I am however disappointed by the constant long recompilation times at each added library, the rather poor step-by-step debugging support, and how rust-analyzer loves turning my CPU into a localized micro-sun.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/17-11-23-genetic-trials/">Genetic Trials</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-11-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Evolution is war. The prey wishes to escape, the predator wishes to catch - one will inevitably suffer, from hunger or fang.&quot;</em></p>
+<p><em>&quot;When you step in a flowery meadow and frolick in joy through the bushes and butterflies... You are blind to the agonizing battlefield raging all around you. Each blade of grass strives to choke its neighbour, each insect would love to devour you whole had you been a hundredth of your size.&quot;</em></p>
+<p><em>&quot;Fu! And you say nature and its diversity is beautiful. With affection, you lick the hand which chokes you by the throat. We would laugh, had we not been feeling infinite pity for you in this moment.&quot;</em></p>
+<h1 id="the-games-foxes-play">The Games Foxes Play</h1>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://github.com/Oneirical/rust_tgfp">rust source code</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>The advancements of this week are highly experimental and possibly insane. Given repeated troubles related to the player constantly breaking the smooth flow and design of the game, I am attempting the obvious: removing the player.</p>
+<p>A grid of tiles contains a certain number of creatures. Each one operates as follows:</p>
+<ul>
+<li>It receives some Senses, defined by the player, like the distance between itself and the yellow X Beacon, or the angle between itself and the Beacon.</li>
+<li>The Senses pass through a simple neural network (only 1 hidden layer as to not turn my computer into a miniaturized sun)</li>
+<li>The neural network chooses one among a list of Axioms, also defined by the player, and casts it. This could be moving one tile, or doing some cool ability.</li>
+</ul>
+<p>These creatures are then tortured over and over again in my test chamber. Every 100 turns, each one is judged according to an efficiency score. The player defines the criteria, like &quot;get as close to the Beacon as possible&quot;.</p>
+<p>Through some genetic algorithm technomagic, all the creatures are returned to their start position, and their neural networks are tweaked to look more like those of the best performers, with some random mutations thrown in there for science.</p>
+<p>Eventually, the creatures &quot;learn&quot; how to complete the objective defined by the player! I believe the buzzword for this technique is &quot;neuroevolution&quot;.</p>
+<p>In order for things to remain smooth, the game window actually makes you watch a re-enactment of a simulation that already happened while the game is simulating hundreds of 100-turn sequences in the background. This means that even if the CPU is choking through the neural networks, there is no visible FPS drop, only a mild slowdown of the training speed. Thank you, Rust, for this so-called &quot;fearless concurrency&quot;.</p>
+<p>While I find this educational and entertaining, the complexity of this design is ramping up very fast. I am currently trying to set up a paintball minigame of sorts where two factions of creatures compete to paint the map in their colour. I may fail and give up, or I may succeed and be inspired. We will see.</p>
+<p>Videos:</p>
+<p><a href="https://yewtu.be/embed/0k9tPXNCEv4?">An oddly satisfying anthill.</a></p>
+<p><a href="https://yewtu.be/embed/hB14TX1fW4w">A tango line caused by a poorly thought out efficiency score formula.</a> (walls disabled)</p>
+<p><a href="https://yewtu.be/embed/DCK_dFT3g3Q">A well-trained population.</a> (walls disabled)</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/13/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/15/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

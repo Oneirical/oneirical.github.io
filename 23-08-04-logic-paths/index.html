@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-08-04-logic-paths/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-08-04-logic-paths/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-08-04-logic-paths/">Logic Paths</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-08-04
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p>&quot;A monolithic mass of pink glass, its monotony broken by a complex maze-like pattern spreading within. Its alluring colours and patterns invite you to find an exit to this impossible, titanic puzzle - an offer to be denied, should you wish to remain fully in control of your destiny.&quot;</p>
+<ul>
+<li>Roseic Blowglass flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://codeberg.org/Oneirical/The-Games-Foxes-Play">mirror</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>I have hauled myself back from confusion into fanatic creation. And with this state of mind comes insane reworks and reimaginings...</p>
+<p>For a quick showcase, <strong><a href="https://vid.puffyan.us/embed/990epP62SbU">here is a video showing off pretty much everything in this post.</a></strong></p>
+<h1 id="sparks-of-logic-surge-through-synapses">Sparks of Logic Surge Through Synapses</h1>
+<p><em>Yet</em> again, the game's core &quot;Axiom&quot; mechanic has been rebuilt from the ground up. Each Soul now contains a Logic Map, which is basically a little electrical circuit. Current begins at certain nodes when something happens, and travels through the network, causing various effects, until there is nothing left to trigger.</p>
+<p>In simple terms, it's basically showing a simplified version of the game's source code to the player and letting them edit it while playing.</p>
+<p>The Player's Soul, for example, contains the circuit:</p>
+<ul>
+<li>Trigger Node: When the &quot;W&quot; key is pressed...</li>
+<li>Locate the tile north of the Player...</li>
+<li>Move towards it, or break circuit if impossible...</li>
+<li>Then transmit to all entities the radio broadcast code &quot;EON&quot;. (This basically means, &quot;a turn has ended&quot;).</li>
+</ul>
+<p>This is a fairly simple rendition of &quot;when pressing W, go up&quot;, but it's fully malleable. Potential ways to &quot;hack&quot; this include:</p>
+<ul>
+<li>Add a &quot;Harm&quot; component right after locating a tile, to get the classic roguelike ability to bump-attack.</li>
+<li>Remove the &quot;EON&quot; transmitter, to stop time and walk around with infinite turns.</li>
+<li>Locate the furthest accessible tile north instead of an adjacent one, replace &quot;move towards&quot; with &quot;teleport to&quot;, and get a rocket-boosted dash.</li>
+</ul>
+<p>Epsilon the robotic giga-snake is back, now running with this new system. It's a multi-tile enemy with squiggly, slithering fashion. The &quot;Logic Map&quot; is fairly complex - but roughly, every other turn, the head moves in the direction of the player. However, Epsilon also &quot;paints&quot; the floor in red underneath him, which lets the tail segments know where to move to retain the snake formation.</p>
+<ul>
+<li>Trigger Node: When code &quot;EON&quot; is received...</li>
+<li>Flip all adjacent Boolean Gates from true to false or vice versa</li>
+<li>Boolean Gate: true - if this value is &quot;false&quot;, interrupt circuit here</li>
+<li>Locate the tile on which this entity (Epsilon) stands...</li>
+<li>Paint that tile red...</li>
+<li>Remove all located tiles from memory...</li>
+<li>Locate the player's tile...</li>
+<li>Move towards it...</li>
+<li>Then transmit to all entities the radio broadcast code &quot;SLITHER1&quot;.</li>
+</ul>
+<p>Potential ways to &quot;hack&quot; this include:</p>
+<ul>
+<li>Remove the Boolean Flip, making Epsilon permanently deactivated</li>
+<li>Paint a ton of tiles in red with a Soul of your own, to throw off the pathfinding</li>
+<li>Replace the target (you, the player) with the &quot;nearest creature&quot; to have Epsilon eat his own tail (the segments are considered to be independent creatures)</li>
+<li>...or do that, but also filter out Epsilon himself to make him go rage mode and attack everything that comes near.</li>
+</ul>
+<p><a href="https://vid.puffyan.us/embed/J-1iqbYr7zw">Here is what happens if I replace the &quot;EON&quot; trigger with triggers that respond to directional keys...</a> I become Epsilon!</p>
+<h1 id="perfectly-timed-steps">Perfectly Timed Steps</h1>
+<ul>
+<li>
+<p>Boring empty doorways have now been replaced by sliding airlocks, as can be seen in the above videos. Pshhhh!</p>
+</li>
+<li>
+<p>There is now a hallway of lasers which occasionally generates in Epsilon's domain. Each of these coils has a Logic Map of its own, like any other entity in the game. Roughly, they tick down a certain counter and zap the other coil across the hallway when it reaches zero. A funny way to hack it would be changing the &quot;laser link&quot; to yourself instead of the other coil, <a href="https://vid.puffyan.us/embed/NF93UE7s-yg">causing absolute havoc</a>. That's right, every coil on the map is drawing a laser-line between me and itself every time it would fire.</p>
+</li>
+</ul>
+<h1 id="why-do-all-this-and-not-just-hardcode-it-like-a-normal-person">Why Do All This And Not Just Hardcode It Like A Normal Person</h1>
+<p>My vision has endlessly reshaped itself since I started this project, but now, I am pretty adamant that what I really want is a game that requires you to exploit it to win. I think I'll be giving Epsilon some completely broken logic chain (example: on each turn, heal all surrounding entities - since it's a snake it just means the segments will be healing each other ceaselessly). Then, the player will be tasked to engineer something to counteract the problem making Epsilon invincible - to follow up on this example, just separating the segments would be enough!</p>
+<p>To this end, in addition to all the ideas I already presented, they could craft a Soul that knocks segments of the tail out of the way, they could forcefully inject a Soul inside Epsilon that transforms healing into damage...</p>
+<p>To tell you the truth, I have no idea how this will ever be balanced or if this will even make for an interesting game. I will have to make sure enough &quot;hacks&quot; are available to craft fun tools, but that &quot;I win&quot; combos like:</p>
+<ul>
+<li>When damaged, heal that amount</li>
+<li>On each creature except yourself, damage 9999</li>
+</ul>
+<p>will be inaccessible until the end game, or be counteracted in a certain way.</p>
+<p>No matter what, I'm having fun doing these things and it beats splatting FeCKs in Dungeon Crawl Stone Soup, so there's that.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-07-28-scuttling-scarabs/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Scuttling Scarabs</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-08-11-sparks-split-in-trails/">
+                            <span class="button__text">Sparks Split in Trails</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

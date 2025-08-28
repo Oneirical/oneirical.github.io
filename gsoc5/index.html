@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/gsoc5/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/gsoc5/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc5/">Hauling The Kraken Out Of The Sea</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-06-02
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+        <div class="post-content">
+            <p>It's official - this week, 25% of all <code>run-make</code> tests are now successfully ported. Not exactly the most robust metric, considering certain tests are trivial and completed with a flick of the hand, while others make use of dark arcane secrets beyond the comprehension of any soul wishing to keep its sanity intact.</p>
+<p>It's <em>really</em> satisfying how all I must do to search for new tests is searching &quot;Makefile&quot; in my text editor - as these <code>run-make</code> tests really are the last remaining traces of this cursed file format.</p>
+<p>The infection might be beyond saving at my internship workplace (it is a tentacular, multi-decade-old C++ giga-codebase with tons of dependencies scattered across directories with <code>cp</code> commands in Makefiles to move them across the place). Basically the technological rendition of an ancient kraken with its circulatory system made out of cursed Bash syntax.</p>
+<p>But, at least, the One True Programming Language is on a rightful path of healing.</p>
+<h2 id="merged-this-week">Merged this week</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125638">lto-smoke, simple-rlib, mixing-deps</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125662">fpic, simple-dylib, proc-macro-init-order</a></li>
+</ul>
+<h2 id="previously-open">Previously Open</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a> - I found a rather glaring mistake where the <code>input</code> and <code>output</code> functions had their function bodies swapped. However, after fixing this, there is still a test failure on <code>aarch64</code>... with no error message beyond &quot;has been running for too long&quot;. Fun. Did I... put some infinite loop somewhere??</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125383">emit, mixing-formats, bare-outfile</a> - Windows OS thinks it can be a special snowflake and have its own file permission rules. <a href="https://github.com/rust-lang/rust/pull/125827">A fix was pushed by courtesy of my mentor</a>, which should patch this pesky test once and for all.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125500">link-arg, link-dedup, no-panic-blank-output</a> - frozen down by the fact that they need to be converted to UI tests with <code>.stderr</code> files, but I haven't managed yet to print the exact error message that should be received. Not that I spent much time on this one.</li>
+</ul>
+<h2 id="newly-open">Newly Open</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125674">symlinked-extern, symlinked-rlib, symlinked-library</a> - was approved, then failed the basic CI over 10 times. The current error mentions something about being incapable of finding an external crate.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125683">suspicious-library, resolve-rename, incr-prev-body-beyond-eof</a> - was in the merge queue, then failed the <code>armhf-gnu</code> test for an obscure reason linked to a object file &quot;not in the right format&quot;.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125736">Helper functions for <code>tmp_dir().join()</code> and filesystem operations</a> - simply needs a couple patches to pass the CI.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125787">Implementation of <code>nm</code> utility and bin-emit-no-symbols test</a> - I tried my hand at making something with the <a href="https://crates.io/crates/goblin">Goblin</a> crate, which is not currently allow-listed in the Rust repository. I will likely need to try an implementation based on the <a href="https://crates.io/crates/object">object</a> crate instead.</li>
+</ul>
+<h1 id=""></h1>
+<p>Working a very &quot;traditional&quot; software <del>engineering</del> programming (I can't call myself an engineer, it's a legally protected title in my country) in conjunction with the Google Summer of Code is making me realize a really relevant dichotomy - the concept of who imposes the working schedule.</p>
+<p>There is a <em>huge</em> appeal when it comes to choosing one's own schedule. I am given a contract with an expected result, and I just need to go for it, when it seems most right, sprinting intensely one day and taking the next one off. I don't need to carefully log in a virtual notebook how many hours it will take, how many I have used up, and be accountable for what I did day to day (only on a weekly basis).</p>
+<p>I know there is a canyon of difference between these two worlds, but I feel really <em>trusted</em> with this latter system. The rigid, 9-to-5 planning stucture feels less like organization and more like supervision after this one-month compare-and-contrast endeavour.</p>
+<p>That trust, I find, makes the work so much more enjoyable, because it makes me feel confident that I really can do this. I would be getting caged down much more if there were doubts!</p>
+<p>It's a really great thing to realize now, because I am learning what I want - and what I do not want - from the years of life to come in my path.</p>
+<p>Having these two commitments at the same time is tough, but I'd take the same decision all over again, as the juxtaposition truly is enlightening. My GSoC project has been extended to 18 weeks, so I can focus on keeping the medium and steady pace I have cultivated so far, and still enjoy the wonderful spring and summer days outside. c:</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/gsoc4/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Mecha Crabs Going Rogue</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/gsoc6/">
+                            <span class="button__text">Keeping The Torch Burning</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

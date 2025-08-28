@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-04-07-scream-of-a-million-minds/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-04-07-scream-of-a-million-minds/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-04-07-scream-of-a-million-minds/">Scream of a Million Minds</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-04-07
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;A holographic dreamscape, woven from the intertwined daydreams of the Soul Cage's unfortunate denizens. A careless step into this theatre of dancing lights is all it takes to replace your world with their own.&quot;</em></p>
+<ul>
+<li>Hypnotic Projector flavour text</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.2 online in browser on itch.io!</a>)</em></p>
+<p>This week, I have been continuing the complete redesign of my entire game. I feel a little heartsick butchering some huge blocks of code and knowing I am effectively invalidating hours of work, but I try to keep a holistic perspective. I couldn't be where I am now without all these missteps. Every good idea is the sum of many bad ones.</p>
+<h1 id="complete-ui-rework">Complete UI rework</h1>
+<p>The <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093949431348473866/image.png">abundance of numbers</a> in the lower part of the sidebar was starting to irk me by its inelegance. I am not sure yet if the replacement I have cooked up is final, but it is certainly an improvement. <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093949921817788446/image.png">Two receptacles</a> of Souls illustrate the cacophony of minds screeching inside Terminal's psyche, and a <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093951846130917436/tgfp.gif">little spinning wheel</a> contains all Souls used in each room. Zero numbers, pure visual goodness. You can even see the turbulent Souls thrashing around! I hope it isn't too distracting. If it is, such an annoyance is clearly representative of the player character being driven mad by the endless chit-chat of psychic voices.</p>
+<h1 id="the-intangible-path">The Intangible Path</h1>
+<p>Every time I add something new to my game, a question keeps coming up - <em>how in the world will I ever tutorialize this mechanic?</em> I love interactive, text-less tutorials, but at this point I have to make some concessions.</p>
+<p>The new <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093967794325962822/image.png">Research Tree</a> tries to address this problem, slightly inspired from the <a href="https://ftbwiki.org/images/8/85/2012-12-11_09.20.18.png">Thaumonomicon</a> which appreciators of eldritch tentacles and power drills may recognize. Each &quot;Node&quot; contains an entry of <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093967192569155656/image.png">thoughts and reflections</a> from Terminal for those interested in the lore, and a column of condensed information to assist the aspiring soul manipulator. Doing certain things in the game that prove mastery of the previous topic will unlock the next node combined with a discrete notification, pushing the player further on the intangible path.</p>
+<p>I imagine some of these concepts are still a bit nebulous for new players, so I hope to replace the placeholder grid in the lower right corner soon with some helpful GIFs - or perhaps a mini-interactable dungeon showing off the feature.</p>
+<p>I wish to do more things than just tutorializing with this new feature, but that will be the topic of a later Sharing Saturday - with a possible connection to that one <a href="https://www.reddit.com/r/roguelikedev/comments/129a6k8/between_mystery_and_strategy_how_many_secrets_is/">thread</a> I made earlier this week. My gratitude to all kind commenters who pitched in. I already made the pattern finder code - possibly a little inefficient with all those <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093953688688660591/image.png">nested loops</a>? My tests seem to run fine for now. If everything goes according to plan, this should be positively awesome.</p>
+<h1 id="sundered-minds">Sundered Minds</h1>
+<p>&quot;Failure is as valuable as success and both are required for victory&quot; was always a core part of my design philosophy for TGFP, but with the recent cullings, this precept had started to sink away from relevance. No longer! Upon dying inside a pocket dimension, you now respawn in the dimensional layer above, and <em>all</em> Souls contained in the Soul Cage become <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093954824254529657/image.png">Shattered Souls</a>. Lore-wise, I imagine this as a kind of failed surgery - the Souls not recovering from your incursion into the deepest reaches of their identity and breaking apart as a result.</p>
+<p>This is not necessarily a bad thing. Yes, you have scrapped some potential building blocks for creating more pocket dimensions, but as Terminal is himself made out of what is basically spiritual sewage, this resource can be assimilated within your psyche to enhance its abilities. Every 3 Shattered Souls grant an additional free use of a spell in each combat room, which is a welcome boon in especially dangerous areas.</p>
+<h1 id="random-additional-changes">Random additional changes</h1>
+<ul>
+<li>
+<p>I have excised the so-called &quot;accidentally implemented feature&quot; that is <a href="https://cdn.discordapp.com/attachments/504088568084561930/1089395888360796201/Capture_decran_le_2023-03-25_a_23.49.55.png">the grid effect</a> appearing on the minimap. No, Onei, it's not a feature, it's a bug. I have deluded myself for long enough. <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093955240392409250/image.png">Into the trash it goes</a>.</p>
+</li>
+<li>
+<p>Brand-new <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093955646673666108/image.png">Hypnotic Projectors</a>, placed inside a special room, constantly display the pocket dimension <a href="https://cdn.discordapp.com/attachments/504088568084561930/1093955808150175925/image.png">crafted by the Soul Cage</a> in all its glory. They also double as a means of access, as you stare into the dancing holograms, substituting your reality with their own...</p>
+</li>
+<li>
+<p>I have written and rewritten some flavour text and descriptions here and there to be less heavy on purple prose, and to hopefully leave a better lasting effect. Soul manipulation is dark work, we're not in the realm of bunnies and rainbows here! It's a tough balance finding the right point that screams &quot;delusional zealot&quot; without going full Caves of Qud 2: Attack on Thesaurus. </p>
+</li>
+</ul>
+<p>My obsession with development has been rekindled, and my free time is being mercilessly slaughtered on the altar to JavaScript. I pray that the flame will keep on burning for the weeks to come!</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-03-31-staring-into-infinity/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Staring Into Infinity</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-04-14-diy-divinity/">
+                            <span class="button__text">DIY Divinity</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

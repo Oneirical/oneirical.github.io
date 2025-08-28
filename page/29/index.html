@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-02-17-blehh/">Blehh</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-02-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;blehh&quot;</em></p>
+<ul>
+<li>Zaint voicing a profound philosophical argument on the cosmic insignificance of sentient life</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.3 online in browser on itch.io!</a>)</em></p>
+<p>It's about the fifth time now that I heard someone say my game is very unintuitive with its mechanics, so this week, I implemented an infamous, yet essential component of any game - a tutorial.</p>
+<p>I hate tutorials. Walls of text everywhere, immersion-breaking instructions, and infuriating assumptions that this is the first time the player has touched a video game in their lives... it's an utter travesty for any slightly self-respecting fictional world. Except <a href="https://www.youtube.com/watch?v=6ZD1qbd48u8">Just Shapes &amp; Beats's tutorial</a>. I don't hate that one. Not a single word. No disrespect of the player's capabilities. Instantly filters out any players who wouldn't enjoy the rest of the game anyways.</p>
+<p>Now, bullet hells with zero powerups are generally a <em>little</em> less complex than spell-focused traditional roguelikes. But taking <em>some</em> inspiration is absolutely a possibility...</p>
+<h2 id="blehh">blehh</h2>
+<p>The structure is simple: start with the absolute basics. Immobile target, elementary objective: destroy him. Should that be done, the challenge intensifies: the target is now (slowly) moving and trying to attack you back. Have you annihilated that one as well? Good, now you have only one HP and will get 1-shotted every time you try to get close. His name is Zaint, by the way. He only knows how to say &quot;blehh&quot; and isn't really the chatty type. The challenge is impossible.</p>
+<p>Until you use the Saintly Soul you have extracted from the paralyzed husk at the centre of the room, that is. There are infinite attempts available, should you be an enthusiast of getting punched into the wall over and over instead of completing objectives.</p>
+<p>Then, the five other Castes are introduced one by one - as a secondary enemy now accompanies Zaint in his quest to make you close the tab before you can see any further portion of my &quot;interesting&quot; game design choices. Each time, you can only defeat Zaint by using the new power available to you.</p>
+<p>For further assistance, the UI can now have its functions clarified by mousing over each element. Including the Souls required to complete the tutorial. No keyboard support yet for this feature, but it shall come in due time.</p>
+<p><a href="https://www.youtube.com/watch?v=tm2Q85gcr7c">Here is a quick video showing the Unhinged and Artistic parts of the tutorial.</a></p>
+<h1 id="collectivists-take-notes">Collectivists, Take Notes</h1>
+<p>There was already another &quot;tutorial&quot; in my game - a long wall of text blurted out by a Harmony representative to explain one of their unique mechanics. While some have told me that they enjoy the Harmony's sass, one of my game design goals is &quot;have a lot of flavour text but ensure that only ability descriptions are required to beat the game&quot; and I will stand by it. I think a good plan is to implement more of these contained, interactive, puzzle-like experiences to teach my game's more unconventional mechanics, and remove the text-dumps. Of course, I expect the Collectivists have a slightly greater vocabulary than Zaint does, so appreciators of insufferable narcissism should be pleased nonetheless.</p>
+<p>Hmm, at the end of that video I linked at the top, there <em>is</em> a final showdown to test all that you have learned... Perhaps I am not quite done with this initial tutorial just yet.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-02-11-rekindled-hope/">Rekindled Hope</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-02-11
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;After their fangs were done toying with your flesh, they had taken away much more than sinew and bone. Your soul turned Feral, and the last lights of duty and purpose were soon snuffed out like a candle flame, leaving nothing but a ravenous husk.&quot;</em></p>
+<ul>
+<li>Permadeath message upon dying to a random basic enemy</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.3 online in browser on itch.io!</a>)</em></p>
+<p>I'm late, so I'll keep this short.</p>
+<p>So, apparently, it turns out that throwing random stuff into a pile, giving it a good shake and then tasting it is not conducive to good design. Since the start of 2023, I have pretty much butchered an initially fun but simple concept by adding tons upon tons of features that served no further purpose beyond reducing the Fun™ factor:</p>
+<ul>
+<li>A knockback-based combat system that turned out to be a pain to work with in the game's cramped spaces</li>
+<li>Full-blown map generation that accomplished little beyond adding arbitrary down-time and backtracking that serves no purpose</li>
+<li>Putting those maps inside a giga-maze-map which has, again, done nothing except purposelessly make any kind of save &amp; load function a living hell to implement</li>
+<li>A lore rewrite that caused a lot of previous content to stop making sense, and which made it so adding future content that made sense would be horrendously difficult</li>
+</ul>
+<p>I have to return to my roots. I spent literal hours trying to get a JSON save &amp; load system to work, but it's simply hopeless. There is simply no way I can fit literal hundreds of thousands of tiles inside a JSON document, where each one also has a cyclic reference to a creature which also has a tile object... Abhorrent. Maybe some code archmage could make this work, but it doesn't matter if the game isn't even fun.</p>
+<p>I won't give up, though. I already gave up on projects like this way too many times. I don't want to go back to idle daydreaming.</p>
+<p>I have a new plan. A new structure with a narrowed-down scope that should hopefully let a save &amp; load feature happen. Something that just takes what worked in the beginning and allows the player to gain more control over it. I know myself and can expect that I can put this idea into much saner words once I've properly translated it from Onei-Delusions into implementable code, so I will talk about it more next week. I actually thought this through over multiple days, so this hopefully won't be another case of designer-delirium.</p>
+<p>I won't throw that trio of unfortunate features in the trash, though. I'll recycle the knockback-combat in some gimmick enemy, I'll keep the map system as a core part of my new strategy, and as for the maze... Well, it can procedurally generate mazes. Surely that can fit somewhere in a roguelike game!</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/28/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/30/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

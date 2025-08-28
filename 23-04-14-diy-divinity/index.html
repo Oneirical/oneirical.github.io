@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-04-14-diy-divinity/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-04-14-diy-divinity/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-04-14-diy-divinity/">DIY Divinity</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-04-14
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Disassemble a legend, and realize what it is made of - bits and pieces of thoughts from those who shared it. Sew the storytellers back together, and gain power only spoken of in myths.&quot;</em></p>
+<ul>
+<li>flavour text of the &quot;Reforging Legends Past&quot; tutorial node</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.2 online in browser on itch.io!</a>)</em></p>
+<p>First, I had a problem with the map generation system generally making unfun structures. Therefore, I made it so the player can build their own dungeon networks, since they probably know better than I do what is fun for them. When in doubt, outsource the labour.</p>
+<p>Now, I am doing the same for spells.</p>
+<h1 id="diy-divinity">DIY Divinity</h1>
+<p>I am retiring the concept of multiple pre-defined spells from my game - the à la DCSS kind with a massive list to choose from. I have all this lore about souls being malleable and adaptative, and then I forcefeed the player with hardcoded, immutable effects. No can do.</p>
+<p>Instead, I have enabled the player to craft their own tools of destruction (and occasionally, creation)! Right now, there are two possible classes of components:</p>
+<ul>
+<li>
+<p><strong>Form</strong> components target specific tiles. The Ego Form targets the tile you are standing on, the Beam Form targets all tiles in a straight line in front of you, and so on. They also assign their Caste to the Spell - Ego is Saintly, so all Ego- spells are Saintly as well.</p>
+</li>
+<li>
+<p><strong>Function</strong> components trigger an effect at each of the targeted tiles. The Senet Function induces Charm Touch status effects on all targets, the Gyvji Function punches all targets back, and so on.</p>
+</li>
+</ul>
+<p>Each component has a pattern. For example, <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507831370391693/Capture_decran_le_2023-04-14_a_14.35.23.png">this</a> is Senet and <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507831575904339/Capture_decran_le_2023-04-14_a_14.35.38.png">this</a> is Ego. If you imprison souls in the Soul Cage to draw those patterns <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507831915659404/Capture_decran_le_2023-04-14_a_14.38.56.png">like so</a>, the Vision they create becomes special - upon clearing it, you will be awarded with an Ego-Senet spell. It is Saintly, because of the Ego- part. That means that from now on (after equipping the new spell), every single time you'll use a Saintly soul, instead of being healed, you'll enchant yourself with a Charm Touch.</p>
+<p>Lore-wise, you are stitching together bits and pieces of the identities of your hapless prisoners. It's like the psychic equivalent of that &quot;flesh golem&quot; trope assembled from the body parts of many different species, but with minds instead of muscles. </p>
+<p>With every update, this magic is getting darker and darker... Oh well, there are too many heroes in roguelikes anyhow.</p>
+<p>Here is what <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096507480349102221/gyvjitest.gif">Beam-Gyvji</a> looks like - reliant on the Unhinged caste (because of Beam-), it fires out a hyper-knockback laser upon the first encountered unsuspecting fool. Sorry about the low framerate, I have yet to find a good GIF recorder that works on OSX (this is LICECap, suggested in the subreddit sidebar).</p>
+<p>Fun? So far, very much so. Broken? I expect it to be. With free reign over what can be combined together, the player will probably be able to assemble some pretty deranged contraptions. Frankly, that's part of the fun, but I'll have to keep this system in check to ensure things remain interesting.</p>
+<h1 id="the-bottomless-dream-pit">The Bottomless Dream-Pit</h1>
+<p>I made a <a href="https://www.reddit.com/r/roguelikedev/comments/129a6k8/between_mystery_and_strategy_how_many_secrets_is/">thread</a> a little while back wondering how I'd actually present those possible patterns to the player. I think I've made my decision - they are all somewhere in the <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096513051081056387/Capture_decran_le_2023-04-14_a_15.11.05.png">research tree</a>, but their placements are semi-randomized (semi-, because I want simple stuff like Ego- to come up early), and must be unlocked progressively. Each time the player crafts a new spell, all patterns used in the process are &quot;researched&quot; and the next nodes linked to it are unlocked, granting access to more complicated patterns.</p>
+<p>There are also some &quot;tutorial&quot; nodes here and there which teach game mechanics, and are &quot;researched&quot; when the player does an action that shows mastery of the mechanic. For example, the node about <a href="https://cdn.discordapp.com/attachments/504088568084561930/1096513940894265414/Capture_decran_le_2023-04-14_a_15.14.26.png">Turbulent Souls</a> is &quot;researched&quot; (green border) when the player successfully contains one inside the Soul Cage.</p>
+<p>It seems to me like a rather interesting gameplay loop - draw patterns in the Cage, go challenge the Vision, return to claim your new spell, look at unlocked nodes... And craft a new spell, more powerful but requiring the defeat of a more difficult Vision, which your new spell should help you with. Great replayability - you might get the same Form two runs in a row, but that's just an invitation to try combining it with different Functions. I might try to go for a &quot;skill tree&quot; of sorts and make it so researching a certain pattern prevents you from researching another, forcing you to make choices.</p>
+<p>The only small problem is that unlike the old versions of my game, there is kind of... uh, no way to lose. If you fail a Vision, sure, the souls get scrapped into Shattered Souls, but the only way you'd actually be done for would be somehow breaking every single one of your Souls. It can pathetically happen at the very beginning of the game when you only have one, but after that, it gets quite improbable.</p>
+<p>I have ideas for a system that will add a proper loss condition, but that will be the topic of a future post...</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-04-07-scream-of-a-million-minds/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Scream of a Million Minds</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-04-21-the-shapeless-path/">
+                            <span class="button__text">The Shapeless Path</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

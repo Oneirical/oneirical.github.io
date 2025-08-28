@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-12-29-glamour-pride-grace-and-discipline/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-12-29-glamour-pride-grace-and-discipline/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-12-29-glamour-pride-grace-and-discipline/">Glamour, Pride, Grace and Discipline</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-12-29
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;I have been preparing for this battle ever since I learned about your existence. That was 2 milliseconds ago. Such fond memories.&quot;</em></p>
+<h1 id="the-games-foxes-play">The Games Foxes Play</h1>
+<p><em>(<a href="https://github.com/Oneirical/rust_tgfp">complete source code</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>Some nasty virus is giving me a hard time this week. But, there are people in this very thread who work hard, again and again, despite having much worse health problems. If they can do it, so can I. Thank you for the (indirect) motivation!</p>
+<p>A lot of &quot;Axioms&quot; - varied spell effects to mix and match - have been added. Since attention is a limited resource, I'll go straight to the coolest one: Possession. Basically the equivalent of Domination from Caves of Qud, it allows the caster to take control of any creature for a limited time, use all their abilities as one sees fit, and potentially force them to move into dangerous positions.</p>
+<p>This also marks the introduction of status effects. Tracked in the sidebar, there is support for all kinds of possibilities, including the &quot;Cardinal Virtues&quot; - a new experimental gameplay mechanic.</p>
+<p>Here's how it works: all creatures start at 1 stack each of Glamour, Discipline, Grace and Pride. Each one of these is incremented and decremented by complementary events:</p>
+<ul>
+<li><strong>Taking damage</strong> increases Discipline, but lowers Pride.</li>
+<li><strong>Dealing damage</strong> increases Pride, but lowers Glamour.</li>
+<li><strong>Casting Axioms</strong> increases Glamour, but lowers Grace.</li>
+<li><strong>Moving</strong> increases Grace, but lowers Discipline.</li>
+</ul>
+<p>All Axioms scale off one or multiple of these Virtues to define their power level. For example, the aforementioned Possession lasts longer the more Glamour stacks you have. </p>
+<p>Another example is Coil, which scales off Discipline and deals more damage if the target is surrounded by solid entities. Or Pull, which drags targeted creatures closer with distance relative to your Grace. This paves the way to some character archetypes:</p>
+<ul>
+<li>&quot;Trickster/debuffer&quot; for Glamour.</li>
+<li>&quot;Tank&quot; for Discipline.</li>
+<li>&quot;Agile acrobat&quot; for Grace.</li>
+<li>&quot;Blaster caster&quot; for Pride.</li>
+</ul>
+<p>The goal of this mechanic is twofold:</p>
+<p>A) Since every instance of &quot;damage&quot; in the game is basically lifesteal, some battles can go on forever as two powerful foes drain each other over and over. Virtues prevent this, as they (especially Discipline) keep on getting stacked until Axioms have become so powerful that ties will be broken.</p>
+<p>B) Certain Virtues, especially Glamour, open the way to unconventional strategies. How can one defeat foes without being allowed to deal damage? <a href="https://yewtu.be/embed/zwRAGfCumTo?">In the case of Epsilon's challenge, it is possible to bait the snake into attaching to itself the segments scattered around the arena, then Possessing it, and moving Epsilon's body so that it becomes stuck on a wall with no way to exit. But to do this, one has to stack their Glamour first, which involves finding safe spaces to cast Axioms without getting obliterated by Epsilon's attacks.</a> Check out the video for a full demonstration!</p>
+<p>I am mildly suspicious that this mechanic will lead to oneshot fiestas and cheesy mechanics - moving back and forth in a corner over and over to stack Grace, for example. Perhaps it will have to be removed, or more hopefully, it will be able to shine with a few tweaks.</p>
+<p>My next objective is shipping the reworked Epsilon boss battle in playable form soon-ish. It has been too long since the last release.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/15-12-23-bleeding-cyan/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Bleeding Cyan</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/05-01-24-advent-of-great-trials/">
+                            <span class="button__text">Advent of Great Trials</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

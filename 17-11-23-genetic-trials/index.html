@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/17-11-23-genetic-trials/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/17-11-23-genetic-trials/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/17-11-23-genetic-trials/">Genetic Trials</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-11-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Evolution is war. The prey wishes to escape, the predator wishes to catch - one will inevitably suffer, from hunger or fang.&quot;</em></p>
+<p><em>&quot;When you step in a flowery meadow and frolick in joy through the bushes and butterflies... You are blind to the agonizing battlefield raging all around you. Each blade of grass strives to choke its neighbour, each insect would love to devour you whole had you been a hundredth of your size.&quot;</em></p>
+<p><em>&quot;Fu! And you say nature and its diversity is beautiful. With affection, you lick the hand which chokes you by the throat. We would laugh, had we not been feeling infinite pity for you in this moment.&quot;</em></p>
+<h1 id="the-games-foxes-play">The Games Foxes Play</h1>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code</a> - <a href="https://github.com/Oneirical/rust_tgfp">rust source code</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a>)</em></p>
+<p>The advancements of this week are highly experimental and possibly insane. Given repeated troubles related to the player constantly breaking the smooth flow and design of the game, I am attempting the obvious: removing the player.</p>
+<p>A grid of tiles contains a certain number of creatures. Each one operates as follows:</p>
+<ul>
+<li>It receives some Senses, defined by the player, like the distance between itself and the yellow X Beacon, or the angle between itself and the Beacon.</li>
+<li>The Senses pass through a simple neural network (only 1 hidden layer as to not turn my computer into a miniaturized sun)</li>
+<li>The neural network chooses one among a list of Axioms, also defined by the player, and casts it. This could be moving one tile, or doing some cool ability.</li>
+</ul>
+<p>These creatures are then tortured over and over again in my test chamber. Every 100 turns, each one is judged according to an efficiency score. The player defines the criteria, like &quot;get as close to the Beacon as possible&quot;.</p>
+<p>Through some genetic algorithm technomagic, all the creatures are returned to their start position, and their neural networks are tweaked to look more like those of the best performers, with some random mutations thrown in there for science.</p>
+<p>Eventually, the creatures &quot;learn&quot; how to complete the objective defined by the player! I believe the buzzword for this technique is &quot;neuroevolution&quot;.</p>
+<p>In order for things to remain smooth, the game window actually makes you watch a re-enactment of a simulation that already happened while the game is simulating hundreds of 100-turn sequences in the background. This means that even if the CPU is choking through the neural networks, there is no visible FPS drop, only a mild slowdown of the training speed. Thank you, Rust, for this so-called &quot;fearless concurrency&quot;.</p>
+<p>While I find this educational and entertaining, the complexity of this design is ramping up very fast. I am currently trying to set up a paintball minigame of sorts where two factions of creatures compete to paint the map in their colour. I may fail and give up, or I may succeed and be inspired. We will see.</p>
+<p>Videos:</p>
+<p><a href="https://yewtu.be/embed/0k9tPXNCEv4?">An oddly satisfying anthill.</a></p>
+<p><a href="https://yewtu.be/embed/hB14TX1fW4w">A tango line caused by a poorly thought out efficiency score formula.</a> (walls disabled)</p>
+<p><a href="https://yewtu.be/embed/DCK_dFT3g3Q">A well-trained population.</a> (walls disabled)</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-10-27-interplanar-travel-for-all/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Interplanar Travel For All</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/tango-problem/">
+                            <span class="button__text">The Tango Problem</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

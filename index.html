@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/25-09-27gsoc/">Mapping the Maze of the UI Test Suite: lessons learned on contributing to open source without a single line of code</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2025-09-27
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+
+                    <div class="post-content">
+            <h1 id="mapping-the-maze-of-the-ui-test-suite-lessons-learned-on-contributing-to-open-source-without-a-single-line-of-code">Mapping the Maze of the UI Test Suite: lessons learned on contributing to open source without a single line of code</h1>
+<p>At the end of May, Jieyou Xu (my mentor), outlined four main tasks required for project completion.</p>
+<ol>
+<li>A massive README.md to document every single directory in tests/ui/, of which there were roughly 329 at the time I was working on it. <a href="https://github.com/rust-lang/rust/blob/master/tests/ui/README.md">It has been completed, you can read it here.</a></li>
+<li>Try to rewrite UI tests that play around with \r\n carriage returns directly in their files. Since these are invisible in most editors, it is a trap for the unwary contributor, as they could delete a single new line, then re-add it, and break the test (as it would change \r\n into \n). <a href="https://github.com/rust-lang/rust/pull/142925">A PR was started to get this to work</a>, and it almost passed CI until it hit the wall that is Windows path normalization. After looking at it more, it was determined that getting this conversion to work required such ludicrous Regex patterns to normalize the standard error files that the original test was probably worth keeping around. Nothing was merged, but the experiment was worth it.</li>
+<li>Trying to understand what some of the more confusingly similar compiletest directives do. <a href="https://github.com/rust-lang/rust/pull/143537">Initially, in this PR, I wanted to update the seemingly &quot;bad&quot; <code>error-pattern</code> into the seemingly &quot;better&quot; <code>check-run-results</code>.</a>. After a bit of running around and trying to swap them out, only to be met with compiletest not being very happy, we realized why they had been put there in the first place - to check the very niche output of specifically runtime-panicking tests, out of reach for normal compiletest annotations such as <code>//~?</code>. The final decision was not to actually change any of the tests, but rather to <a href="https://github.com/rust-lang/rust/pull/144340">change the documentation in another PR</a>, as the previous wording made <code>error-pattern</code> sound more like a &quot;hack meant to be replaced&quot; than a &quot;last resort for niche cases&quot;.</li>
+</ol>
+<p>You'll notice that not a single line of code has been merged into the master branch yet. At this point, the midterm evaluation was creeping in, and I was starting to grow quite anxious. It's called &quot;Google Summer of Code&quot;, and no &quot;code&quot; has been merged, therefore, failure is guaranteed, no?</p>
+<p>It was decided that the README was quite valuable for contributors, and that the experiments were worth doing, and so, I continued my project successfully, into the realm of Sisyphus.</p>
+<p>The fourth task mentioned by my mentor was to &quot;rehome stray files&quot; in tests/ui. There were almost 2000 of these, all unique in their own special way. Here is an example.</p>
+<pre data-lang="rs" style="background-color:#151515;color:#e8e8d3;" class="language-rs "><code class="language-rs" data-lang="rs"><span>use std::ptr;
+</span><span style="color:#8fbfdc;">pub unsafe fn </span><span style="color:#fad07a;">g</span><span>() {
+</span><span>    </span><span style="color:#8fbfdc;">return</span><span>;
+</span><span>    </span><span style="color:#8fbfdc;">if </span><span>*ptr::null() {}; </span><span style="color:#888888;">//~ ERROR unreachable
+</span><span>    </span><span style="color:#888888;">//~| WARNING dereferencing a null pointer
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">main</span><span>() {}
+</span></code></pre>
+<p>What are we even testing here? That the unreachable code is successfully reported? Sure, but why is there a null pointer dereference? Is it testing both at once? Why in the same file?</p>
+<p>Then, you do some archaeology, find <a href="https://github.com/rust-lang/rust/issues/7246">the issue that spawned it</a>, and realize that, in the highly specific case where you try to read a <code>*bool</code> that happens to be unreachable, this used to cause an internal compiler error. And so, I rename the test <code>unreachable-bool-read-7246</code>. This also requires updating (blessing) the test <code>.stderr</code> files, as well as linking the corresponding issue.</p>
+<p>This is a stereotypical example of an easy case, but sometimes, wrenches are thrown into the works. Some tests have their main functions in auxiliary files loading modules, some tests have very uninformative issues and require more archaeology, and sometimes, trying to change the names and files in seemingly trivial ways breaks the tests in a fashion which must then be diagnosed with the error logs.</p>
+<p>I have been dwelling in the test mines for</p>
+<p><a href="https://github.com/rust-lang/rust/pull/144548">multiple</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/144089">hundreds</a></p>
+<p>of test files. They are</p>
+<p><a href="https://github.com/rust-lang/rust/pull/144552">seemingly</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/144553">endless</a></p>
+<p>and</p>
+<p><a href="https://github.com/rust-lang/rust/pull/144983">defy</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145675">the</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145676">concept</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145896">of</a></p>
+<p><a href="https://github.com/rust-lang/rust/pull/145897">patience</a>.</p>
+<p>Not to mention I have more where that came from, currently sitting on my branch repository and waiting for a time that won't clog Jieyou Xu's increasingly insane review queue. A huge word of appreciation to you, for combing through these and finding my typos and miscategorizations which occasionally slip themselves into the cracks.</p>
+<p>There was another contender on this Sisyphean mountain: <a href="https://github.com/rust-lang/rust/pull/143303">Kivooeo</a>. They were producing these with remarkable efficiency. So much, in fact, that one of my first PRs collided with much of their work, and got closed. It was fully my fault for not checking who else was working on this, and got quite frustrated at myself.</p>
+<p>This added component of checking for overlaps, with the potential issue of sometimes some still sneaking through, made this already tedious task even more of an ordeal. I almost wanted to quit at this point, but ended up entering communication with Kivooeo and dividing the directories in a more predictable fashion. There were no collisions after that.</p>
+<p>There are no zero files directly under tests/ui/ at the time of writing, and there will be under 1100 files in tests/ui/issues after my currently open PRs get merged. Overall, Kivooeo and me cut down over 500 tests. Not bad. But there is much left to do. I wrote quite a few automated tools for this task, and they can still be put to good use.</p>
+<p>However, even with them, this is tedium incarnate. The thing is, I made a grave mistake, at the start of all this.</p>
+<p>I was initially going to apply for one of the more glamorous GSoC projects, and had even started writing my proposal. It was for the &quot;make rustup concurrent&quot; project, which Francisco Gouveia ended up being assigned to, and seems to be doing quite well in. Maybe I would have failed to get accepted. But, I think I should have tried. I stopped myself out of the idea that I &quot;wasn't good enough&quot; for an &quot;actually difficult and architectural project&quot; and that my place was in the test mines, just like last year.</p>
+<p>I can't say I am devoured by regret, because this project apparently really will be useful to contributors. But, I do feel like I missed out on a valuable learning opportunity, and could have made this summer better.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/7-peace-was-never-an-option/">Bevy Traditional Roguelike Quick-Start - 7. Peace Was Never An Option</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-12-11
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/bevy/">#bevy</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tutorial/">#tutorial</a></span>
+    
+
+
+                    <div class="post-content">
+            <p>It is finally possible to engineer something which somewhat resembles a challenge - or a &quot;game&quot;, as the optimists would put it. This lonely little cage has been dreary long enough.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// map.rs
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_cage</span><span>(</span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">summon</span><span>: EventWriter&lt;SummonCreature&gt;) {
+</span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> cage = </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">\
+</span><span style="color:#99ad6a;">##################\
+</span><span style="color:#99ad6a;">#H.H..H.##...HH..#\
+</span><span style="color:#99ad6a;">#.#####.##..###..#\
+</span><span style="color:#99ad6a;">#...#...##.......#\
+</span><span style="color:#99ad6a;">#..H#......#####.#\
+</span><span style="color:#99ad6a;">#...#...##...H...#\
+</span><span style="color:#99ad6a;">#.#####.##..###..#\
+</span><span style="color:#99ad6a;">#..H...H##.......#\
+</span><span style="color:#99ad6a;">####.########.####\
+</span><span style="color:#99ad6a;">####.########.####\
+</span><span style="color:#99ad6a;">#.......##H......#\
+</span><span style="color:#99ad6a;">#.#####.##.......#\
+</span><span style="color:#99ad6a;">#.#H....##..#.#..#\
+</span><span style="color:#99ad6a;">#.#.##.......@...#\
+</span><span style="color:#99ad6a;">#.#H....##..#.#..#\
+</span><span style="color:#99ad6a;">#.#####.##.......#\
+</span><span style="color:#99ad6a;">#.......##......H#\
+</span><span style="color:#99ad6a;">##################\
+</span><span style="color:#99ad6a;">    </span><span style="color:#556633;">&quot;</span><span>;
+</span><span style="color:#888888;">// End NEW.
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(idx, tile_char) in cage.char_indices() {
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> position = Position::new(idx as </span><span style="color:#8fbfdc;">i32 </span><span>% </span><span style="color:#cf6a4c;">18</span><span>, idx as </span><span style="color:#8fbfdc;">i32 </span><span>/ </span><span style="color:#cf6a4c;">18</span><span>); </span><span style="color:#888888;">// CHANGED - 9 -&gt; 18
+</span></code></pre>
+<p>A little maze, full of dastardly foes. There is immediately a problem: spells allow both the player and the Hunters to deconstruct our beautiful architecture.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// creature.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Spellproof</span><span>;
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Attackproof</span><span>;
+</span></code></pre>
+<p>Note the physical/magical duality! Right now, only <code>Spellproof</code> will be implemented, but <code>Attackproof</code> will be next very soon in this chapter.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#888888;">// Add any species-specific components.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">summon_creature</span><span>(</span><span style="color:#888888;">/* SNIP */</span><span>) { </span><span style="color:#888888;">// SNIP
+</span><span style="color:#8fbfdc;">match </span><span>&amp;event.species {
+</span><span>    Species::Player =&gt; {
+</span><span>        new_creature.insert(Player);
+</span><span>    }
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    Species::Wall =&gt; {
+</span><span>        new_creature.insert((Attackproof, Spellproof));
+</span><span>    }
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span></code></pre>
+<p>Now, to ensure that <code>Axiom::Dash</code> has no effect on <code>Spellproof</code> creatures:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// The targeted creatures dash in the direction of the caster&#39;s last move.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_function_dash</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">teleport</span><span>: EventWriter&lt;TeleportEntity&gt;,
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: Res&lt;Map&gt;,
+</span><span>    </span><span style="color:#ffb964;">spell_stack</span><span>: Res&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">momentum</span><span>: Query&lt;&amp;OrdDir&gt;,
+</span><span>    </span><span style="color:#ffb964;">is_spellproof</span><span>: Query&lt;Has&lt;Spellproof&gt;&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> synapse_data = spell_stack.spells.last().unwrap();
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> caster_momentum = momentum.get(synapse_data.caster).unwrap();
+</span><span>    </span><span style="color:#8fbfdc;">if let </span><span>Axiom::Dash { max_distance } = synapse_data.axioms[synapse_data.step] {
+</span><span>        </span><span style="color:#888888;">// For each (Entity, Position) on a targeted tile with a creature on it...
+</span><span>        </span><span style="color:#8fbfdc;">for </span><span>(dasher, dasher_pos) in synapse_data.get_all_targeted_entity_pos_pairs(&amp;map) {
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>            </span><span style="color:#888888;">// Spellproof entities cannot be affected.
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> is_spellproof.get(dasher).unwrap() {
+</span><span>                </span><span style="color:#8fbfdc;">continue</span><span>;
+</span><span>            }
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span></code></pre>
+<p>If you <code>cargo run</code> now, the cage will now be fully inescapable.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/7-peace-was-never-an-option/inescapable.gif" alt="A 18x18 cage with diverse wall patterns, which cannot be altered in any way despite the numerous beams firing inside." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>And, in such a doomed prison, the only thing left to do is fight for entertainment.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// creature.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Health </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">hp</span><span>: </span><span style="color:#8fbfdc;">usize</span><span>,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">max_hp</span><span>: </span><span style="color:#8fbfdc;">usize</span><span>,
+</span><span>}
+</span><span>
+</span><span style="color:#888888;">// The graphical representation of Health: a health bar.
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Bundle)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">HealthIndicator </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">sprite</span><span>: Sprite,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">visibility</span><span>: Visibility,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">transform</span><span>: Transform,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Bundle)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Creature </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">position</span><span>: Position,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">momentum</span><span>: OrdDir,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">sprite</span><span>: Sprite,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">species</span><span>: Species,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">health</span><span>: Health, </span><span style="color:#888888;">// NEW!
+</span><span>}
+</span></code></pre>
+<p>Let's add <code>Health</code> to all creatures, with individual robustness values for each different <code>Species</code>...</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span style="color:#888888;">/// Place a new Creature on the map of Species and at Position.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">summon_creature</span><span>(
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>) {
+</span><span style="color:#8fbfdc;">let mut</span><span> new_creature = commands.spawn((
+</span><span>Creature {
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>    momentum: OrdDir::Up,
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    health: {
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> max_hp = </span><span style="color:#8fbfdc;">match </span><span>&amp;event.species {
+</span><span>            Species::Player =&gt; </span><span style="color:#cf6a4c;">7</span><span>,
+</span><span>            Species::Wall =&gt; </span><span style="color:#cf6a4c;">10</span><span>,
+</span><span>            Species::Hunter =&gt; </span><span style="color:#cf6a4c;">2</span><span>,
+</span><span>            Species::Spawner =&gt; </span><span style="color:#cf6a4c;">3</span><span>,
+</span><span>            _ =&gt; </span><span style="color:#cf6a4c;">2</span><span>,
+</span><span>        };
+</span><span>        </span><span style="color:#888888;">// Start at full health.
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> hp = max_hp;
+</span><span>        Health { max_hp, hp }
+</span><span>    },
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>},
+</span></code></pre>
+<p>...and give them all a <code>HealthIndicator</code> to visually track this.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#888888;">/// Place a new Creature on the map of Species and at Position.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">summon_creature</span><span>(
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// Add any species-specific components.
+</span><span>    </span><span style="color:#8fbfdc;">match </span><span>&amp;event.species {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#888888;">// Free the borrow on Commands.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> new_creature_entity = new_creature.id();
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> hp_bar = commands
+</span><span>        .spawn(HealthIndicator {
+</span><span>            sprite: Sprite {
+</span><span>                image: asset_server.load(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">spritesheet.png</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                custom_size: Some(Vec2::new(</span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">64.</span><span>)),
+</span><span>                texture_atlas: Some(TextureAtlas {
+</span><span>                    layout: atlas_layout.handle.clone(),
+</span><span>                    index: </span><span style="color:#cf6a4c;">178</span><span>,
+</span><span>                }),
+</span><span>                ..default()
+</span><span>            },
+</span><span>            visibility: Visibility::Hidden,
+</span><span>            transform: Transform::from_xyz(</span><span style="color:#cf6a4c;">0.</span><span>, </span><span style="color:#cf6a4c;">0.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>),
+</span><span>        })
+</span><span>        .id();
+</span><span>    commands.entity(new_creature_entity).add_child(hp_bar);
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>}
+</span></code></pre>
+<p>The <code>HealthIndicator</code> will be added as a <strong>child entity</strong> of the creature. While it may seem like blasphemy to have hierarchies like this in an ECS game development environment, they do exist in a limited form. In Bevy, this is useful to have a sprite follow another as if it were &quot;glued&quot; to it, since the children inherit a Transform component from their parent. This is exactly what we want for a creature-specific HP bar! Children can be attached with <code>commands.entity(parent).add_child(child);</code></p>
+<p>Now, for damage to actually exist, it will of course be passed as an ̀<code>Event</code>. Note the <code>&amp;Children</code> in the <code>Query</code>, which allows for easy access of the damaged creature's <code>HealthIndicator</code>!</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">HarmCreature </span><span>{
+</span><span>    </span><span style="color:#ffb964;">entity</span><span>: Entity,
+</span><span>    </span><span style="color:#ffb964;">culprit</span><span>: Entity,
+</span><span>    </span><span style="color:#ffb964;">damage</span><span>: </span><span style="color:#8fbfdc;">usize</span><span>,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">harm_creature</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;HarmCreature&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">remove</span><span>: EventWriter&lt;RemoveCreature&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creature</span><span>: Query&lt;(&amp;</span><span style="color:#8fbfdc;">mut</span><span> Health, &amp;Children)&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">hp_bar</span><span>: Query&lt;(&amp;</span><span style="color:#8fbfdc;">mut</span><span> Visibility, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Sprite)&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(</span><span style="color:#8fbfdc;">mut</span><span> health, children) = creature.get_mut(event.entity).unwrap();
+</span><span>        </span><span style="color:#888888;">// Deduct damage from hp.
+</span><span>        health.hp = health.hp.saturating_sub(event.damage);
+</span><span>        </span><span style="color:#888888;">// Update the healthbar.
+</span><span>        </span><span style="color:#8fbfdc;">for</span><span> child in children.iter() {
+</span><span>            </span><span style="color:#8fbfdc;">let </span><span>(</span><span style="color:#8fbfdc;">mut</span><span> hp_vis, </span><span style="color:#8fbfdc;">mut</span><span> hp_bar) = hp_bar.get_mut(*child).unwrap();
+</span><span>            </span><span style="color:#888888;">// Don&#39;t show the healthbar at full hp.
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> health.max_hp == health.hp {
+</span><span>                *hp_vis = Visibility::Hidden;
+</span><span>            } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>                *hp_vis = Visibility::Inherited;
+</span><span>                </span><span style="color:#8fbfdc;">let</span><span> hp_percent = health.hp as </span><span style="color:#8fbfdc;">f32 </span><span>/ health.max_hp as </span><span style="color:#8fbfdc;">f32</span><span>;
+</span><span>                hp_bar.texture_atlas.as_mut().unwrap().index = </span><span style="color:#8fbfdc;">match</span><span> hp_percent {
+</span><span>                    </span><span style="color:#cf6a4c;">0.86</span><span>..</span><span style="color:#cf6a4c;">1.00 </span><span>=&gt; </span><span style="color:#cf6a4c;">178</span><span>,
+</span><span>                    </span><span style="color:#cf6a4c;">0.72</span><span>..</span><span style="color:#cf6a4c;">0.86 </span><span>=&gt; </span><span style="color:#cf6a4c;">179</span><span>,
+</span><span>                    </span><span style="color:#cf6a4c;">0.58</span><span>..</span><span style="color:#cf6a4c;">0.72 </span><span>=&gt; </span><span style="color:#cf6a4c;">180</span><span>,
+</span><span>                    </span><span style="color:#cf6a4c;">0.44</span><span>..</span><span style="color:#cf6a4c;">0.58 </span><span>=&gt; </span><span style="color:#cf6a4c;">181</span><span>,
+</span><span>                    </span><span style="color:#cf6a4c;">0.30</span><span>..</span><span style="color:#cf6a4c;">0.44 </span><span>=&gt; </span><span style="color:#cf6a4c;">182</span><span>,
+</span><span>                    </span><span style="color:#cf6a4c;">0.16</span><span>..</span><span style="color:#cf6a4c;">0.30 </span><span>=&gt; </span><span style="color:#cf6a4c;">183</span><span>,
+</span><span>                    </span><span style="color:#cf6a4c;">0.00</span><span>..</span><span style="color:#cf6a4c;">0.16 </span><span>=&gt; </span><span style="color:#cf6a4c;">184</span><span>,
+</span><span>                    _ =&gt; panic!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">That is not a possible HP %!</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>        </span><span style="color:#888888;">// 0 hp creatures are removed.
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> health.hp == </span><span style="color:#cf6a4c;">0 </span><span>{
+</span><span>            remove.send(RemoveCreature {
+</span><span>                entity: event.entity,
+</span><span>            });
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><code>saturating_sub</code> prevents integer overflow by stopping subtraction at 0. The healthbar is hidden when it is full, and then gradually deteriorates by shifting its sprite into increasingly dire variations as the HP percentage lowers. <code>Visibility::Inherited</code> means the health bar will also be hidden should the parent (the creature itself) be hidden.</p>
+<p>Note the yet unimplemented event at the end for creatures to remove from the game board - which we will attend to immediately.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">RemoveCreature </span><span>{
+</span><span>    </span><span style="color:#ffb964;">entity</span><span>: Entity,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">remove_creature</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;RemoveCreature&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">map</span><span>: ResMut&lt;Map&gt;,
+</span><span>    </span><span style="color:#ffb964;">creature</span><span>: Query&lt;(&amp;Position, Has&lt;Player&gt;)&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">magic_vfx</span><span>: EventWriter&lt;PlaceMagicVfx&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(position, is_player) = creature.get(event.entity).unwrap();
+</span><span>        </span><span style="color:#888888;">// Visually flash an X where the creature was removed.
+</span><span>        magic_vfx.send(PlaceMagicVfx {
+</span><span>            targets: vec![*position],
+</span><span>            sequence: EffectSequence::Simultaneous,
+</span><span>            effect: EffectType::XCross,
+</span><span>            decay: </span><span style="color:#cf6a4c;">0.5</span><span>,
+</span><span>            appear: </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>        });
+</span><span>        </span><span style="color:#888888;">// For now, avoid removing the player - the game panics without a player.
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>!is_player {
+</span><span>            </span><span style="color:#888888;">// Remove the creature from Map
+</span><span>            map.creatures.remove(position);
+</span><span>            </span><span style="color:#888888;">// Remove the creature AND its children (health bar)
+</span><span>            commands.entity(event.entity).despawn_recursive();
+</span><span>            </span><span style="color:#888888;">// Remove all spells cast by this creature
+</span><span>            </span><span style="color:#888888;">// (this entity doesn&#39;t exist anymore, casting its spells would crash the game)
+</span><span>            spell_stack
+</span><span>                .spells
+</span><span>                .retain(|</span><span style="color:#ffb964;">spell</span><span>| spell.caster != event.entity);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>We do have a little bit of upkeep to make sure the (very involved!) task of removing an Entity goes according to plan. Merely calling <code>despawn</code> instead of <code>despawn_recursive</code> would keep floating health bars that belong to no one! Not to mention the instant panic that would result from a spell still in the <code>SpellStack</code> with the removed creature as a caster, trying to target itself, something which does not exist.</p>
+<p>We still have no way to inflict harm from within the game. But, perhaps you remember this little placeholder?</p>
+<blockquote>
+<p><code>// Nothing here just yet, but this is where collisions between creatures will be handled.̀</code> (events.rs, <code>teleport_entity</code>)</p>
+</blockquote>
+<p>It is time to put it to use.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">teleport_entity</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;TeleportEntity&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creature</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Position&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">map</span><span>: ResMut&lt;Map&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">collision</span><span>: EventWriter&lt;CreatureCollision&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> map.is_passable(event.destination.x, event.destination.y) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>    } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        </span><span style="color:#888888;">// A creature collides with another entity.
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> collided_with = map
+</span><span>            .get_entity_at(event.destination.x, event.destination.y)
+</span><span>            .unwrap();
+</span><span>        collision.send(CreatureCollision {
+</span><span>            culprit: event.entity,
+</span><span>            collided_with: *collided_with,
+</span><span>        });
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>    }
+</span></code></pre>
+<p>A new, unimplemented event... yes, because not all collisions will necessarily be harmful. Some could be interacting with a mechanism, talking to an NPC, or... <strong>opening a door</strong>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">CreatureCollision </span><span>{
+</span><span>    </span><span style="color:#ffb964;">culprit</span><span>: Entity,
+</span><span>    </span><span style="color:#ffb964;">collided_with</span><span>: Entity,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">creature_collision</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;CreatureCollision&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">harm</span><span>: EventWriter&lt;HarmCreature&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">open</span><span>: EventWriter&lt;OpenDoor&gt;,
+</span><span>    </span><span style="color:#ffb964;">flags</span><span>: Query&lt;(Has&lt;Door&gt;, Has&lt;Attackproof&gt;)&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">turn_manager</span><span>: ResMut&lt;TurnManager&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creature</span><span>: Query&lt;(&amp;OrdDir, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform)&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> event.culprit == event.collided_with {
+</span><span>            </span><span style="color:#888888;">// No colliding with yourself.
+</span><span>            </span><span style="color:#8fbfdc;">continue</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(is_door, cannot_be_attacked) = flags.get(event.collided_with).unwrap();
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> is_door {
+</span><span>            </span><span style="color:#888888;">// Open doors.
+</span><span>            open.send(OpenDoor {
+</span><span>                entity: event.collided_with,
+</span><span>            });
+</span><span>        } </span><span style="color:#8fbfdc;">else if </span><span>!cannot_be_attacked {
+</span><span>            </span><span style="color:#888888;">// Melee attack.
+</span><span>            harm.send(HarmCreature {
+</span><span>                entity: event.collided_with,
+</span><span>                culprit: event.culprit,
+</span><span>                damage: </span><span style="color:#cf6a4c;">1</span><span>,
+</span><span>            });
+</span><span>            </span><span style="color:#888888;">// Melee attack animation.
+</span><span>            </span><span style="color:#8fbfdc;">let </span><span>(attacker_orientation, </span><span style="color:#8fbfdc;">mut</span><span> attacker_transform) =
+</span><span>                creature.get_mut(event.culprit).unwrap();
+</span><span>            attacker_transform.translation.x +=
+</span><span>                attacker_orientation.as_offset().</span><span style="color:#cf6a4c;">0 </span><span>as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64. </span><span>/ </span><span style="color:#cf6a4c;">4.</span><span>;
+</span><span>            attacker_transform.translation.y +=
+</span><span>                attacker_orientation.as_offset().</span><span style="color:#cf6a4c;">1 </span><span>as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64. </span><span>/ </span><span style="color:#cf6a4c;">4.</span><span>;
+</span><span>            commands.entity(event.culprit).insert(SlideAnimation);
+</span><span>        } </span><span style="color:#8fbfdc;">else if </span><span>matches!(turn_manager.action_this_turn, PlayerAction::Step) {
+</span><span>            </span><span style="color:#888888;">// The player spent their turn walking into a wall, disallow the turn from ending.
+</span><span>            turn_manager.action_this_turn = PlayerAction::Invalid;
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>There are quite a few things of interest in this new system:</p>
+<ul>
+<li><code>Attackproof</code> is finally checked. This prevents the player from melee-attacking walls to break them, and escape the cage.</li>
+<li>There is a melee attack animation. It shifts the attacking entity 1/4th of a tile closer to their attack direction, and the added <code>SlideAnimation</code> returns them to their original placement, making it look like a &quot;jab&quot; onto the attacked creature.</li>
+<li>There is a yet unimplemented resource, <code>TurnManager</code>, which will be addressed next.</li>
+<li>There is a yet unimplemented event, <code>OpenDoor</code>, which will be showcased later down the chapter, accompanied by a <code>Door</code> component.</li>
+</ul>
+<h1 id="wallhack-anticheat">Wallhack Anticheat</h1>
+<p>Currently, it is possible to wait for enemies to get into melee range by scratching at the walls over and over again. Even though they are indestructible (because of <code>Attackproof</code>), this still skips turns even though nothing is actually happening!</p>
+<p>This is because <code>end_turn</code> triggers no matter what, even if the player performed an invalid action. This must be checked.</p>
+<p><code>TurnCount</code> does a little more than just counting, now, so it has been renamed to <code>TurnManager</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Resource)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">TurnManager </span><span>{ </span><span style="color:#888888;">// CHANGED - rename all instances of the TurnCount symbol to TurnManager.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">turn_count</span><span>: </span><span style="color:#8fbfdc;">usize</span><span>, </span><span style="color:#888888;">// CHANGED to turn_count
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#888888;">/// Whether the player took a step, cast a spell, or did something useless (like step into a wall) this turn.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">action_this_turn</span><span>: PlayerAction,
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>}
+</span><span>
+</span><span style="color:#888888;">// NEW!
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">PlayerAction </span><span>{
+</span><span>    Step,
+</span><span>    Spell,
+</span><span>    Invalid,
+</span><span>}
+</span><span style="color:#888888;">// End NEW.
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">end_turn</span><span>(
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">turn_manager</span><span>: ResMut&lt;TurnManager&gt;, </span><span style="color:#888888;">// CHANGED - renamed to turn_manager
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> _event in events.read() {
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        </span><span style="color:#888888;">// The player shouldn&#39;t be allowed to &quot;wait&quot; turns by stepping into walls.
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>matches!(turn_manager.action_this_turn, PlayerAction::Invalid) {
+</span><span>            </span><span style="color:#8fbfdc;">return</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>        turn_manager.turn_count += </span><span style="color:#cf6a4c;">1</span><span>; </span><span style="color:#888888;">// CHANGED to turn_manager.turn_count
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> player_pos = player.get_single().unwrap();
+</span><span>        </span><span style="color:#8fbfdc;">for </span><span>(hunter_entity, hunter_pos, hunter_species) in hunters.iter() {
+</span><span>            </span><span style="color:#888888;">// Occasionally cast a spell.
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> turn_manager.turn_count % </span><span style="color:#cf6a4c;">5 </span><span>== </span><span style="color:#cf6a4c;">0 </span><span>{ </span><span style="color:#888888;">// CHANGED to turn_manager.turn_count
+</span></code></pre>
+<p>For this to do anything, we'll ensure each possible action is registered the moment the player presses a key:</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// input.rs
+</span><span>
+</span><span style="color:#888888;">/// Each frame, if a button is pressed, move the player 1 tile.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">keyboard_input</span><span>(
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">turn_manager</span><span>: ResMut&lt;TurnManager&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">turn_end</span><span>: EventWriter&lt;EndTurn&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::Space) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        turn_manager.action_this_turn = PlayerAction::Spell; </span><span style="color:#888888;">// NEW!
+</span><span>        turn_end.send(EndTurn); </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyW) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        turn_manager.action_this_turn = PlayerAction::Step; </span><span style="color:#888888;">// NEW!
+</span><span>        turn_end.send(EndTurn); </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyD) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        turn_manager.action_this_turn = PlayerAction::Step; </span><span style="color:#888888;">// NEW!
+</span><span>        turn_end.send(EndTurn); </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyA) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        turn_manager.action_this_turn = PlayerAction::Step; </span><span style="color:#888888;">// NEW!
+</span><span>        turn_end.send(EndTurn); </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>    </span><span style="color:#8fbfdc;">if</span><span> input.just_pressed(KeyCode::KeyS) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        turn_manager.action_this_turn = PlayerAction::Step; </span><span style="color:#888888;">// NEW!
+</span><span>        turn_end.send(EndTurn); </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Note how this is offshoring <code>EndTurn</code> to <code>keyboard_input</code> - this is because we want spells to cost a turn as well. We'll remove the original <code>EndTurn</code> send in <code>creature_step</code>... and we'll offshore the momentum shift to a whole new event, <code>AlterMomentum</code>.</p>
+<p>The reason for this is simple - now that <code>Invalid</code> moves are a thing, we don't want the player to be able to change the momentum of their laser beams by uselessly pushing against walls. One valid step or melee attack = one momentum shift!</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">creature_step</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;CreatureStep&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">teleporter</span><span>: EventWriter&lt;TeleportEntity&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">momentum</span><span>: EventWriter&lt;AlterMomentum&gt;, </span><span style="color:#888888;">// CHANGED EndTurn for AlterMomentum.
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creature</span><span>: Query&lt;&amp;Position&gt;, </span><span style="color:#888888;">// CHANGED removed all components except Position.
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#888888;">// CHANGED only the Position is accessed.
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> creature_pos = creature.get_mut(event.entity).unwrap();
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(off_x, off_y) = event.direction.as_offset();
+</span><span>        teleporter.send(TeleportEntity::new(
+</span><span>            event.entity,
+</span><span>            creature_pos.x + off_x,
+</span><span>            creature_pos.y + off_y,
+</span><span>        ));
+</span><span>        </span><span style="color:#888888;">// CHANGED momentum update is now an event, and there is no more EndTurn.
+</span><span>        </span><span style="color:#888888;">// Update the direction towards which this creature is facing.
+</span><span>        momentum.send(AlterMomentum {
+</span><span>            entity: event.entity,
+</span><span>            direction: event.direction,
+</span><span>        });
+</span><span>        </span><span style="color:#888888;">// End CHANGED
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><code>AlterMomentum</code> ensures your move is not invalid to properly change the creature's momentum. To signify this graphically, it will also rotate the sprite around to indicate in which direction it is currently &quot;facing&quot;, as well as ensuring the health bar always stays on the bottom of the sprite despite this rotation.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">AlterMomentum </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">entity</span><span>: Entity,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">direction</span><span>: OrdDir,
+</span><span>}
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">alter_momentum</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;AlterMomentum&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creature</span><span>: Query&lt;(&amp;</span><span style="color:#8fbfdc;">mut</span><span> OrdDir, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform, &amp;Children)&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">hp_bar</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform, Without&lt;OrdDir&gt;&gt;,
+</span><span>    </span><span style="color:#ffb964;">turn_manager</span><span>: Res&lt;TurnManager&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#888888;">// Don&#39;t allow changing your momentum by stepping into walls.
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>matches!(turn_manager.action_this_turn, PlayerAction::Invalid) {
+</span><span>            </span><span style="color:#8fbfdc;">return</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(</span><span style="color:#8fbfdc;">mut</span><span> creature_momentum, </span><span style="color:#8fbfdc;">mut</span><span> creature_transform, children) =
+</span><span>            creature.get_mut(event.entity).unwrap();
+</span><span>        *creature_momentum = event.direction;
+</span><span>        </span><span style="color:#8fbfdc;">match</span><span> event.direction {
+</span><span>            OrdDir::Down =&gt; creature_transform.rotation = Quat::from_rotation_z(</span><span style="color:#cf6a4c;">0.</span><span>),
+</span><span>            OrdDir::Right =&gt; creature_transform.rotation = Quat::from_rotation_z(</span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>),
+</span><span>            OrdDir::Up =&gt; creature_transform.rotation = Quat::from_rotation_z(</span><span style="color:#7697d6;">PI</span><span>),
+</span><span>            OrdDir::Left =&gt; creature_transform.rotation = Quat::from_rotation_z(</span><span style="color:#cf6a4c;">3. </span><span>* </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>),
+</span><span>        }
+</span><span>        </span><span style="color:#888888;">// Keep the HP bar on the bottom.
+</span><span>        </span><span style="color:#8fbfdc;">for</span><span> child in children.iter() {
+</span><span>            </span><span style="color:#8fbfdc;">let mut</span><span> hp_transform = hp_bar.get_mut(*child).unwrap();
+</span><span>            </span><span style="color:#8fbfdc;">match</span><span> event.direction {
+</span><span>                OrdDir::Down =&gt; hp_transform.rotation = Quat::from_rotation_z(</span><span style="color:#cf6a4c;">0.</span><span>),
+</span><span>                OrdDir::Right =&gt; hp_transform.rotation = Quat::from_rotation_z(</span><span style="color:#cf6a4c;">3. </span><span>* </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>),
+</span><span>                OrdDir::Up =&gt; hp_transform.rotation = Quat::from_rotation_z(</span><span style="color:#7697d6;">PI</span><span>),
+</span><span>                OrdDir::Left =&gt; hp_transform.rotation = Quat::from_rotation_z(</span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>),
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h1 id="sliding-dystopian-airlocks">Sliding Dystopian Airlocks</h1>
+<p>Now, for <code>OpenDoor</code> and <code>Door</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// creature.rs
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Door</span><span>;
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">OpenDoor </span><span>{
+</span><span>    </span><span style="color:#ffb964;">entity</span><span>: Entity,
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// creature.rs
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Debug, Component, Clone, Copy)]
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">Species </span><span>{
+</span><span>    Player,
+</span><span>    Wall,
+</span><span>    Hunter,
+</span><span>    Spawner,
+</span><span>    Airlock, </span><span style="color:#888888;">// NEW!
+</span><span>}
+</span><span>
+</span><span style="color:#888888;">/// Get the appropriate texture from the spritesheet depending on the species type.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">get_species_sprite</span><span>(</span><span style="color:#ffb964;">species</span><span>: &amp;Species) -&gt; </span><span style="color:#8fbfdc;">usize </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">match</span><span> species {
+</span><span>        Species::Player =&gt; </span><span style="color:#cf6a4c;">0</span><span>,
+</span><span>        Species::Wall =&gt; </span><span style="color:#cf6a4c;">3</span><span>,
+</span><span>        Species::Hunter =&gt; </span><span style="color:#cf6a4c;">4</span><span>,
+</span><span>        Species::Spawner =&gt; </span><span style="color:#cf6a4c;">5</span><span>,
+</span><span>        Species::Airlock =&gt; </span><span style="color:#cf6a4c;">17</span><span>, </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// map.rs
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">spawn_cage</span><span>(</span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">summon</span><span>: EventWriter&lt;SummonCreature&gt;) {
+</span><span style="color:#888888;">// CHANGED - added &lt;&gt;V^
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> cage = </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">\
+</span><span style="color:#99ad6a;">##################\
+</span><span style="color:#99ad6a;">#H.H..H.##...HH..#\
+</span><span style="color:#99ad6a;">#.#####.##..###..#\
+</span><span style="color:#99ad6a;">#...#...##.......#\
+</span><span style="color:#99ad6a;">#..H#...&gt;&lt;.#####.#\
+</span><span style="color:#99ad6a;">#...#...##...H...#\
+</span><span style="color:#99ad6a;">#.#####.##..###..#\
+</span><span style="color:#99ad6a;">#..H...H##.......#\
+</span><span style="color:#99ad6a;">####^########^####\
+</span><span style="color:#99ad6a;">####V########V####\
+</span><span style="color:#99ad6a;">#.......##H......#\
+</span><span style="color:#99ad6a;">#.#####.##.......#\
+</span><span style="color:#99ad6a;">#.#H....##..#.#..#\
+</span><span style="color:#99ad6a;">#.#.##..&gt;&lt;...@...#\
+</span><span style="color:#99ad6a;">#.#H....##..#.#..#\
+</span><span style="color:#99ad6a;">#.#####.##.......#\
+</span><span style="color:#99ad6a;">#.......##......H#\
+</span><span style="color:#99ad6a;">##################\
+</span><span style="color:#99ad6a;">    </span><span style="color:#556633;">&quot;</span><span>;
+</span><span style="color:#888888;">// End CHANGED
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(idx, tile_char) in cage.char_indices() {
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> position = Position::new(idx as </span><span style="color:#8fbfdc;">i32 </span><span>% </span><span style="color:#cf6a4c;">18</span><span>, idx as </span><span style="color:#8fbfdc;">i32 </span><span>/ </span><span style="color:#cf6a4c;">18</span><span>);
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> species = </span><span style="color:#8fbfdc;">match</span><span> tile_char {
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">#</span><span style="color:#556633;">&#39; </span><span>=&gt; Species::Wall,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">H</span><span style="color:#556633;">&#39; </span><span>=&gt; Species::Hunter,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">S</span><span style="color:#556633;">&#39; </span><span>=&gt; Species::Spawner,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">@</span><span style="color:#556633;">&#39; </span><span>=&gt; Species::Player,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">^</span><span style="color:#556633;">&#39; </span><span>| </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">&gt;</span><span style="color:#556633;">&#39; </span><span>| </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">&lt;</span><span style="color:#556633;">&#39; </span><span>| </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">V</span><span style="color:#556633;">&#39; </span><span>=&gt; Species::Airlock, </span><span style="color:#888888;">// NEW!
+</span><span>            _ =&gt; </span><span style="color:#8fbfdc;">continue</span><span>,
+</span><span>        };
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> momentum = </span><span style="color:#8fbfdc;">match</span><span> tile_char {
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">^</span><span style="color:#556633;">&#39; </span><span>=&gt; OrdDir::Up,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">&gt;</span><span style="color:#556633;">&#39; </span><span>=&gt; OrdDir::Right,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">&lt;</span><span style="color:#556633;">&#39; </span><span>=&gt; OrdDir::Left,
+</span><span>            </span><span style="color:#556633;">&#39;</span><span style="color:#99ad6a;">V</span><span style="color:#556633;">&#39; </span><span>| _ =&gt; OrdDir::Down,
+</span><span>        };
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>        summon.send(SummonCreature {
+</span><span>            species,
+</span><span>            position,
+</span><span>            momentum, </span><span style="color:#888888;">// NEW!
+</span><span>            summon_tile: Position::new(</span><span style="color:#cf6a4c;">0</span><span>, </span><span style="color:#cf6a4c;">0</span><span>),
+</span><span>        });
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">summon_creature</span><span>(</span><span style="color:#888888;">/* SNIP */</span><span>) {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>            Species::Airlock =&gt; {
+</span><span>                new_creature.insert((Attackproof, Spellproof, Door));
+</span><span>            }
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span></code></pre>
+<p>Airlocks face a direction, represented by a graphical arrow on their tile - this will allow us to know in which direction to slide their panes, so it looks like they are retreating inside the walls. To this end, we must add an additional field to <code>SummonCreature</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">SummonCreature </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">position</span><span>: Position,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">species</span><span>: Species,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">momentum</span><span>: OrdDir, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">summon_tile</span><span>: Position,
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span>
+</span><span style="color:#888888;">/// The targeted passable tiles summon a new instance of species.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_function_summon_creature</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">summon</span><span>: EventWriter&lt;SummonCreature&gt;,
+</span><span>    </span><span style="color:#ffb964;">spell_stack</span><span>: Res&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">position</span><span>: Query&lt;&amp;Position&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>            summon.send(SummonCreature {
+</span><span>                species,
+</span><span>                position: *position,
+</span><span>                momentum: OrdDir::Down, </span><span style="color:#888888;">// NEW!
+</span><span>                summon_tile: *caster_position,
+</span><span>            });
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>}
+</span></code></pre>
+<p>We'll need to ensure all newly spawned creatures start with their proper momentum, both graphically and in game logic.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span style="color:#888888;">/// Place a new Creature on the map of Species and at Position.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">summon_creature</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;SummonCreature&gt;,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: Res&lt;Map&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>            </span><span style="color:#888888;">// SNIP
+</span><span>            Creature {
+</span><span>                </span><span style="color:#888888;">// SNIP
+</span><span>                momentum: event.momentum, </span><span style="color:#888888;">// CHANGED - no longer defaults to Down
+</span><span>                health: </span><span style="color:#888888;">// SNIP
+</span><span>            },
+</span><span>            </span><span style="color:#888888;">// CHANGED - defines fields instead of from_xyz
+</span><span>            Transform {
+</span><span>                translation: Vec3 {
+</span><span>                    x: event.summon_tile.x as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>,
+</span><span>                    y: event.summon_tile.y as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>,
+</span><span>                    z: </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>                },
+</span><span>                rotation: Quat::from_rotation_z(</span><span style="color:#8fbfdc;">match</span><span> event.momentum {
+</span><span>                    OrdDir::Down =&gt; </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>                    OrdDir::Right =&gt; </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>,
+</span><span>                    OrdDir::Up =&gt; </span><span style="color:#7697d6;">PI</span><span>,
+</span><span>                    OrdDir::Left =&gt; </span><span style="color:#cf6a4c;">3. </span><span>* </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>,
+</span><span>                }),
+</span><span>                scale: Vec3::new(</span><span style="color:#cf6a4c;">1.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>),
+</span><span>            },
+</span><span>            </span><span style="color:#888888;">// End NEW.
+</span><span>            SlideAnimation,
+</span><span>        ));
+</span><span>    </span><span style="color:#888888;">// SNIP
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> hp_bar = commands
+</span><span>        .spawn(HealthIndicator {
+</span><span>            </span><span style="color:#888888;">// SNIP
+</span><span>            </span><span style="color:#888888;">// CHANGED - defines fields instead of from_xyz
+</span><span>            transform: Transform {
+</span><span>                translation: Vec3 {
+</span><span>                    x: event.summon_tile.x as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>,
+</span><span>                    y: event.summon_tile.y as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>,
+</span><span>                    z: </span><span style="color:#cf6a4c;">1.</span><span>,
+</span><span>                },
+</span><span>                rotation: Quat::from_rotation_z(</span><span style="color:#8fbfdc;">match</span><span> event.momentum {
+</span><span>                    OrdDir::Down =&gt; </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>                    OrdDir::Right =&gt; </span><span style="color:#cf6a4c;">3. </span><span>* </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>,
+</span><span>                    OrdDir::Up =&gt; </span><span style="color:#7697d6;">PI</span><span>,
+</span><span>                    OrdDir::Left =&gt; </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>,
+</span><span>                }),
+</span><span>                scale: Vec3::new(</span><span style="color:#cf6a4c;">1.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>),
+</span><span>            },
+</span><span>            </span><span style="color:#888888;">// End CHANGED
+</span><span>        })
+</span><span>        .id();
+</span></code></pre>
+<p>Before proceeding, we'll register absolutely everything we've added before we forget!</p>
+<p>I also elected to add <code>.run_if(spell_stack_is_empty)</code> to <code>end_turn</code>. If a spell has a very large amount of <code>Axiom</code>s and takes a while to work its magic, this will prevent other creatures from taking their turns before it completes.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// sets.rs
+</span><span>        app.add_systems(
+</span><span>            Update,
+</span><span>            ((
+</span><span>                summon_creature,
+</span><span>                register_creatures,
+</span><span>                teleport_entity,
+</span><span>                creature_collision, </span><span style="color:#888888;">// NEW!
+</span><span>                alter_momentum, </span><span style="color:#888888;">// NEW!
+</span><span>                harm_creature, </span><span style="color:#888888;">// NEW!
+</span><span>                remove_creature, </span><span style="color:#888888;">// NEW!
+</span><span>                end_turn.run_if(spell_stack_is_empty), </span><span style="color:#888888;">// CHANGED - This will prevent problems
+</span><span>            )
+</span><span>                .chain())
+</span><span>            .in_set(ResolutionPhase),
+</span><span>        );
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">EventPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_event::&lt;SummonCreature&gt;();
+</span><span>        app.init_resource::&lt;Events&lt;EndTurn&gt;&gt;();
+</span><span>        app.add_event::&lt;TeleportEntity&gt;();
+</span><span>        app.add_event::&lt;CreatureCollision&gt;(); </span><span style="color:#888888;">// NEW!
+</span><span>        app.add_event::&lt;AlterMomentum&gt;(); </span><span style="color:#888888;">// NEW!
+</span><span>        app.add_event::&lt;HarmCreature&gt;(); </span><span style="color:#888888;">// NEW!
+</span><span>        app.add_event::&lt;OpenDoor&gt;(); </span><span style="color:#888888;">// NEW!
+</span><span>        app.add_event::&lt;RemoveCreature&gt;(); </span><span style="color:#888888;">// NEW!
+</span><span>        app.init_resource::&lt;Events&lt;CreatureStep&gt;&gt;();
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        app.insert_resource(TurnManager {
+</span><span>            turn_count: </span><span style="color:#cf6a4c;">0</span><span>,
+</span><span>            action_this_turn: PlayerAction::Invalid,
+</span><span>        });
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Try <code>cargo run</code>.</p>
+<p>You'll find everything in working order: the sprite rotations when walking around, the inescapable cage, and melee attacking the pesky denizens intruding on your personal space... but you'll have to bash your way through the doors to move from quadrant to quadrant!</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/7-peace-was-never-an-option/bash.gif" alt="The player melee attacks doors to force them open, and gets slapped from all sides by the various Hunters around." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>We'll fix that. When a door is opened, it will become <code>Intangible</code>, which means it will be removed from the <code>Map</code>. It will still exist, but will no longer be included in any collisions or spell targeting.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// creature.rs
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">Intangible</span><span>;
+</span></code></pre>
+<p>To enforce this, we'll add a new <code>Added</code> filter to <code>register_creatures</code> to handle any newly <code>Intangible</code> creature by removing it from the <code>Map</code>.</p>
+<p>However, we'll also need to track creatures which are <em>no longer tangible</em>  for their re-insertion into the <code>Map</code>. This will be done with <code>RemovedComponents</code>, an unique parameter that is basically the opposite of <code>Added</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// map.rs
+</span><span>
+</span><span style="color:#888888;">/// Newly spawned creatures earn their place in the HashMap.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">register_creatures</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">map</span><span>: ResMut&lt;Map&gt;,
+</span><span>    </span><span style="color:#888888;">// Any entity that has a Position that just got added to it -
+</span><span>    </span><span style="color:#888888;">// currently only possible as a result of having just been spawned in.
+</span><span>    </span><span style="color:#ffb964;">displaced_creatures</span><span>: Query&lt;(&amp;Position, Entity), (Added&lt;Position&gt;, With&lt;Species&gt;)&gt;,
+</span><span>    </span><span style="color:#ffb964;">intangible_creatures</span><span>: Query&lt;&amp;Position, (Added&lt;Intangible&gt;, With&lt;Species&gt;)&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#ffb964;">tangible_creatures</span><span>: Query&lt;&amp;Position, With&lt;Species&gt;&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">tangible_entities</span><span>: RemovedComponents&lt;Intangible&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(position, entity) in displaced_creatures.iter() {
+</span><span>        </span><span style="color:#888888;">// Insert the new creature in the Map. Position implements Copy,
+</span><span>        </span><span style="color:#888888;">// so it can be dereferenced (*), but `.clone()` would have been
+</span><span>        </span><span style="color:#888888;">// fine too.
+</span><span>        map.creatures.insert(*position, entity);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#888888;">// Newly intangible creatures are removed from the map.
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> intangible_position in intangible_creatures.iter() {
+</span><span>        map.creatures.remove(intangible_position);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#888888;">// A creature recovering its tangibility is added to the map.
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> entity in tangible_entities.read() {
+</span><span>        </span><span style="color:#8fbfdc;">let</span><span> tangible_position = tangible_creatures.get(entity).unwrap();
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> map.creatures.get(tangible_position).is_some() {
+</span><span>            panic!(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">A creature recovered its tangibility while on top of another creature!</span><span style="color:#556633;">&quot;</span><span>);
+</span><span>        }
+</span><span>        map.creatures.insert(*tangible_position, entity);
+</span><span>    }
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>}
+</span></code></pre>
+<p>Finally, the door-interacting system can be written:</p>
+<ul>
+<li>It hides the door creature's sprite, and spawns two <code>MagicEffect</code>s on top with the exact same appearance as the door.</li>
+<li>These two effects receive <code>SlideAnimation</code> and slide away in a direction dictated by the door's original orientation.</li>
+</ul>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span>
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">open_door</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;OpenDoor&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">door</span><span>: Query&lt;(&amp;</span><span style="color:#8fbfdc;">mut</span><span> Visibility, &amp;Position, &amp;OrdDir)&gt;,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#888888;">// Gather component values of the door.
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(</span><span style="color:#8fbfdc;">mut</span><span> visibility, position, orientation) = door.get_mut(event.entity).unwrap();
+</span><span>        </span><span style="color:#888888;">// The door becomes intangible, and can be walked through.
+</span><span>        commands.entity(event.entity).insert(Intangible);
+</span><span>        </span><span style="color:#888888;">// The door is no longer visible, as it is open.
+</span><span>        *visibility = Visibility::Hidden;
+</span><span>        </span><span style="color:#888888;">// Find the direction in which the door was facing to play its animation correctly.
+</span><span>        </span><span style="color:#8fbfdc;">let </span><span>(offset_1, offset_2) = </span><span style="color:#8fbfdc;">match</span><span> orientation {
+</span><span>            OrdDir::Up | OrdDir::Down =&gt; (OrdDir::Left.as_offset(), OrdDir::Right.as_offset()),
+</span><span>            OrdDir::Right | OrdDir::Left =&gt; (OrdDir::Down.as_offset(), OrdDir::Up.as_offset()),
+</span><span>        };
+</span><span>        </span><span style="color:#888888;">// Loop twice: for each pane of the door.
+</span><span>        </span><span style="color:#8fbfdc;">for</span><span> offset in [offset_1, offset_2] {
+</span><span>            commands.spawn((
+</span><span>                </span><span style="color:#888888;">// The sliding panes are represented as a MagicEffect with a very slow decay.
+</span><span>                MagicEffect {
+</span><span>                    </span><span style="color:#888888;">// The panes slide into the adjacent walls to the door, hence the offset.
+</span><span>                    position: Position::new(position.x + offset.</span><span style="color:#cf6a4c;">0</span><span>, position.y + offset.</span><span style="color:#cf6a4c;">1</span><span>),
+</span><span>                    sprite: Sprite {
+</span><span>                        image: asset_server.load(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">spritesheet.png</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                        custom_size: Some(Vec2::new(</span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">64.</span><span>)),
+</span><span>                        texture_atlas: Some(TextureAtlas {
+</span><span>                            layout: atlas_layout.handle.clone(),
+</span><span>                            index: get_effect_sprite(&amp;EffectType::Airlock),
+</span><span>                        }),
+</span><span>                        ..default()
+</span><span>                    },
+</span><span>                    visibility: Visibility::Inherited,
+</span><span>                    vfx: MagicVfx {
+</span><span>                        appear: Timer::from_seconds(</span><span style="color:#cf6a4c;">0.</span><span>, TimerMode::Once),
+</span><span>                        </span><span style="color:#888888;">// Very slow decay - the alpha shouldn&#39;t be reduced too much
+</span><span>                        </span><span style="color:#888888;">// while the panes are still visible.
+</span><span>                        decay: Timer::from_seconds(</span><span style="color:#cf6a4c;">3.</span><span>, TimerMode::Once),
+</span><span>                    },
+</span><span>                },
+</span><span>                </span><span style="color:#888888;">// Ensure the panes are sliding.
+</span><span>                SlideAnimation,
+</span><span>                Transform {
+</span><span>                    translation: Vec3 {
+</span><span>                        x: position.x as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>,
+</span><span>                        y: position.y as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>,
+</span><span>                        </span><span style="color:#888888;">// The pane needs to hide under actual tiles, such as walls.
+</span><span>                        z: -</span><span style="color:#cf6a4c;">1.</span><span>,
+</span><span>                    },
+</span><span>                    </span><span style="color:#888888;">// Adjust the pane&#39;s rotation with its door.
+</span><span>                    rotation: Quat::from_rotation_z(</span><span style="color:#8fbfdc;">match</span><span> orientation {
+</span><span>                        OrdDir::Down =&gt; </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>                        OrdDir::Right =&gt; </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>,
+</span><span>                        OrdDir::Up =&gt; </span><span style="color:#7697d6;">PI</span><span>,
+</span><span>                        OrdDir::Left =&gt; </span><span style="color:#cf6a4c;">3. </span><span>* </span><span style="color:#7697d6;">PI </span><span>/ </span><span style="color:#cf6a4c;">2.</span><span>,
+</span><span>                    }),
+</span><span>                    scale: Vec3::new(</span><span style="color:#cf6a4c;">1.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>, </span><span style="color:#cf6a4c;">1.</span><span>),
+</span><span>                },
+</span><span>            ));
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span>
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Clone, Copy)]
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">EffectType </span><span>{
+</span><span>    HorizontalBeam,
+</span><span>    VerticalBeam,
+</span><span>    RedBlast,
+</span><span>    GreenBlast,
+</span><span>    XCross,
+</span><span>    Airlock, </span><span style="color:#888888;">// NEW!
+</span><span>}
+</span><span>
+</span><span style="color:#888888;">// SNIP
+</span><span>
+</span><span style="color:#888888;">/// Get the appropriate texture from the spritesheet depending on the effect type.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">get_effect_sprite</span><span>(</span><span style="color:#ffb964;">effect</span><span>: &amp;EffectType) -&gt; </span><span style="color:#8fbfdc;">usize </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">match</span><span> effect {
+</span><span>        EffectType::HorizontalBeam =&gt; </span><span style="color:#cf6a4c;">15</span><span>,
+</span><span>        EffectType::VerticalBeam =&gt; </span><span style="color:#cf6a4c;">16</span><span>,
+</span><span>        EffectType::RedBlast =&gt; </span><span style="color:#cf6a4c;">14</span><span>,
+</span><span>        EffectType::GreenBlast =&gt; </span><span style="color:#cf6a4c;">13</span><span>,
+</span><span>        EffectType::XCross =&gt; </span><span style="color:#cf6a4c;">1</span><span>,
+</span><span>        EffectType::Airlock =&gt; </span><span style="color:#cf6a4c;">17</span><span>, </span><span style="color:#888888;">// NEW!
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>With a final registration, we'll be able to open the doors like proper, civilized members of the elite.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// sets.rs
+</span><span>
+</span><span>        app.add_systems(
+</span><span>            Update,
+</span><span>            ((
+</span><span>                summon_creature,
+</span><span>                register_creatures,
+</span><span>                teleport_entity,
+</span><span>                creature_collision,
+</span><span>                alter_momentum,
+</span><span>                harm_creature,
+</span><span>                open_door, </span><span style="color:#888888;">// NEW!
+</span><span>                remove_creature,
+</span><span>                end_turn.run_if(spell_stack_is_empty),
+</span><span>            )
+</span><span>                .chain())
+</span><span>            .in_set(ResolutionPhase),
+</span><span>        );
+</span></code></pre>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/7-peace-was-never-an-option/door.gif" alt="This time, the doors slide cleanly when the player bumps into them, allowing transition between each quadrant of the 18x18 play area." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/2/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

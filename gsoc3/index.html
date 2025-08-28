@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/gsoc3/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/gsoc3/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc3/">Rusty Cogs, One Big Machine</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-18
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+        <div class="post-content">
+            <h1 id="it-s-me-the-google-sucker-of-code">It's Me, The Google Sucker Of Code</h1>
+<p>While browsing through the Web, I found the <a href="https://discord.gg/rust-lang-community">Rust Discord Server Where The Cool Kids Hang Out</a> and found some pearls in the chat history:</p>
+<blockquote>
+<p>lol which fortunate T-compiler person is willing to mentor the run-make test RiiR GSoC project - Jieyou Xu</p>
+</blockquote>
+<p>You, apparently!</p>
+<blockquote>
+<p>the poor GSoC candidate does not know what evil lies ahead of them - Jieyou Xu</p>
+</blockquote>
+<p>I am only beginning to realize.</p>
+<blockquote>
+<p>Hello, it's me, the sucker who was roped into this - Oneirical (me)</p>
+</blockquote>
+<blockquote>
+<p>Welcome <del>sucker</del> esteemed person! - Jubilee</p>
+</blockquote>
+<blockquote>
+<p>i like how we keep discovering new cursedness and WTF moments in test suites - Jieyou Xu</p>
+</blockquote>
+<p>Hm, the production of WTFs per minute has just started becoming noticeable. In fact, to find this exact quote, I searched &quot;WTF by:(Jieyou's username)&quot; and found exactly 72 matches, with almost every single one tied to some horribly cursed Bash command hack. The point where I truly scored my foothold in the WTF manufactory economy was likely in this specific moment:</p>
+<pre data-lang="sh" style="background-color:#151515;color:#e8e8d3;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb964;">ifneq</span><span> (,$(</span><span style="color:#ffb964;">findstring</span><span> x86,$(</span><span style="color:#ffb964;">TARGET</span><span>)))
+</span></code></pre>
+<blockquote>
+<p>findstring returns $(TARGET) (non-empty) if it contains the substring x86 or an empty string otherwise, so checking that findstring does not return an empty string checks that target contains the substring... - Jieyou Xu</p>
+</blockquote>
+<p>I beg your pardon? This is actually a great explanation... once you read it 5 times or so.</p>
+<p>This is really making me want to compile some of the biggest WTF moments throughout this project and build a little &quot;run-make House of Horror&quot; to spook and scare Rust enjoyers. I already have an excellent introductory addition, with no doubt more to come. I'm pretty sure I noticed a <code>sleep 1</code> getting changed into a <code>sleep 2</code> somewhere for the sole purpose of securing compatibility with the FreeBSD operating system...</p>
+<p>Anyhow, this week was marked with the first line of code committed to the Rust repository during the summer, with more to accompany it:</p>
+<h3 id="merged">Merged</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125024">3 Very Similar Alloc Tests</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125026">c-link-to-rust-va-list-fn</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125047">reachable-extern-fn-available-lto</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125031">same-lib-two-locations-no-panic</a>, where I learned all the fun of OS-specific file extensions.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125027">c-link-to-rust-staticlib</a>, where I clicked on a button on GitHub and was just one command away from pinging the entire Rust maintainer team again. Disaster averted. I have learned.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125104">no-cdylib-as-rdylib</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125146">panic-impl-transitive</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125213">static-unwinding</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125215">share-generics-export-again</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125221">box-struct-no-segfault</a></li>
+</ul>
+<h3 id="open">Open</h3>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a>, a much scarier test, which contained the cursed <code>ifneq</code> shown above and which will require some further review until it looks mergeable.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125218">no-intermediate-extras</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125227">reset-codegen-1</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125222">no-mark-noalias</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125224">external-crate-panic-handle-no-lint</a></li>
+</ul>
+<p>That's a bucketload of pull requests... <a href="https://github.com/rust-lang/rust/pull/125224#issuecomment-2118340932">which did not go unnoticed</a>. Dialing it down and bundling some tests together should be warranted from now on.</p>
+<p>Most of these were quite easy and required adding few helper functions... so I wouldn't get too excited just yet. This project is likely getting extended to some amount of weeks that is bigger than 16.</p>
+<h1 id="reading-much-harder-than-writing">Reading, Much Harder Than Writing?</h1>
+<p>I used to get a little intimidated when I finished a 10 lines of code pull request, and see that in the meantime, another GSoC contributor (if you're reading this, hello FractalFir :3) was building their own personal virtual cathedral, stained glass masterpieces included.</p>
+<p>I am obviously not as experienced as them, but there's something else at play... the <a href="https://github.com/FractalFir/rustc_codegen_clr">Rust-.NET code generator</a> is practically a solo project, without a code review process, while directly making pull requests to a gigantic established codebase requires not only understanding what has been written by people-who-are-not-you, but also integrating your own work within... ensuring that the aforementioned people-who-are-not-you will be able to make heads and tails of it.</p>
+<p>It's the first time I am part of something so massive in the technology field. I've always done solo projects like this where I would dump huge bucketloads of code in my personal repository daily. Going from this to the snail's pace of open source is a true change of paradigm... but one I find so very educational. I already knew &quot;lines of code are not a good metric&quot;, but experiencing directly such a striking example really hardens this truth.</p>
+<p>It is amusing to think that the Rust-.NET code generator may eventually become one such open source project, with a code review process and integration in software like Unity... Maybe it's going to be a GSoC organization one day.</p>
+<p>Hehe, that's a far-fetched thought. Keep building your cathedral, Fractal, you have something very awesome on your hands.</p>
+<p>The <code>run-make</code> test rewrites may not be as glamorous as a Whole New Thing, but we all have our part to play in the ecosystem. Each brick we put down is one step closer to higher quality engineering. I am glad to be part of this community :3</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/gsoc2/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Testing My Patience With Tests</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/nsec/">
+                            <span class="button__text">Ketamine In The DNA, Average Day</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

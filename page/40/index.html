@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-06-17-battlesnail-get-in-there/">Battlesnail, Get In There!</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-06-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><strong>The Games Foxes Play</strong></p>
+<p>Greeting once again to the community! Lots of things have happened this week.</p>
+<p>First, I showed my game extensively to an esteemed online friend of mine, and quickly got him obsessed with the lore and mechanics. He now wishes to join me on my quest to make this project happen, in the form of making the game's music. It may not be in the league of big bucks orchestral AAA epic themes, but it certainly works with the atmosphere I'm trying to convey.</p>
+<p>The theme I'd like to showcase here plays in the very first room of the game. Named <a href="https://www.youtube.com/watch?v=wHub2nob2jI">&quot;The Cage&quot;</a>, it radiates with ominous drones, glitching computers and wailing sirens, immediately letting the player know that A) this is a high-technology setting, and that B) the game's universe is in a state of crisis. I simultaneously crafted the spawn room it goes with this week -- the World Seed, the prison the game's protagonist has been locked away with for their entire life. It's a tangled mess of neon green wires and machines, claustrophobically encased with impenetrable black steel, and watched over by a holographic messenger announcing the world's doom over and over.</p>
+<p>Yeah, I know. It's a little bit hard to convey with my glyph-based art style, but I hope the writing in the examine descriptions and the OST will create that feeling of uncertainty and dread I seek to convey. Perhaps I will decorate the room some more with some extra decorative tiles!</p>
+<hr />
+<p>Next up, I made a batch of new Souls (they are the spells of the game, basically) and enemies. I'd like to show off one of the latter in this post: the fabled, coveted and turbocharged BATTLESNAIL (actual name: Shelled Electromedic). This enemy cannot move on its own, and is fully dependent on the reactor placed on its shell, which randomly shoots BEAMS OF LIFE AND DEATH every turn. It is propelled in the direction of its lasers, and also heals all enemies/damages players and friendly units in the beam path. So far, it's extremely amusing to watch them dash around the battlefield and <a href="https://www.youtube.com/watch?v=CA4ZZZ8Izyg">absolutely obliterate me</a>. They're also invaluable when charmed, because they can then be used for self-healing.</p>
+<hr />
+<p>Finally, I properly implemented the game's &quot;gamble&quot; system through which the player will obtain their items and powers that aren't just &quot;tickle the enemy with your one-damage dash&quot;. It's a bit unusual, so I'll try my best to explain it as straightforwardly as possible.</p>
+<ul>
+<li>
+<p>By killing enemies, you harvest their Souls. Souls come in 6 different basic types. Each type is worth a number from 1 to 6. For example, killing an animal will award you with a Feral soul, worth 2.</p>
+</li>
+<li>
+<p>In the Harmonic Relay room at which the &quot;gamble&quot; minigame is played, you are invited to sacrifice 6 &quot;basic&quot; Souls in exchange for 4 powerful, uniquely designed ones.</p>
+</li>
+<li>
+<p>Here's how you can sacrifice souls. First, start with the equation <strong>ABC - DEF = Result</strong>. </p>
+</li>
+<li>
+<p>You must draw two basic Souls, and attribute them to two letter slots. For example, I draw a 5 and a 2. I place them in C and E. Now, we have <strong>AB5 - D2F = Result</strong>.</p>
+</li>
+<li>
+<p>I draw two more. 4 and 4. I send them to A and F. <strong>4B5 - D24 = Result</strong>. Finally, the last two. 1 and 4. I plug them in the last slots B and D. <strong>415 - 424 = -9</strong></p>
+</li>
+</ul>
+<p>In the game, this is an <em>extremely</em> good result. Why? <strong>Because you want to get as close to 0 as possible.</strong> You may notice here that the dominating strategy here is pulling out Souls that have the same number, or at the very least are close to each other. The only way to get to 0 is, in fact, with a perfect set of 3 pairs of identical Souls.</p>
+<p>This is very intentional. The creatures overseeing this mini-game, the Harmonizers, believe that <em>only in uniformity do we flourish</em>. They will reward best those who adhere to the Harmonic Truth. In my example, I managed to pull out three Artistic souls, worth 4, and also an Ordered soul, worth 5, which are quite similar, and pleased the Collective greatly. Here's another example of the mini-game in action, this time <a href="https://www.youtube.com/watch?v=uRchzwUR6i8">in video</a>. The Harmonizer at the centre has a lot of dialogue, and will comment on illegal actions, your final result, and inform you about the rules if you bump into her.</p>
+<p>So, the entire game becomes this bounty hunt of sorts - of selective killing of the type you wish to devote yourself to. Now, some... parasites will naturally slither into your inventory because of the many AOE attacks available to players, which is what the game's &quot;failure lets you remove mistakes&quot; mechanic is for. I talked about it more in my <a href="https://www.reddit.com/r/roguelikedev/comments/uzb3iu/sharing_saturday_416/iaa1w3u/">introductory post</a>.</p>
+<p>Of course, there will eventually be an option to defeat the Harmony with their own tools...  or to join them. Indeed, if you are unhappy with the outcome of the trade, you can ask for a reroll. However, it comes at a seemingly minor cost - the addition of a single Serene soul to your inventory.</p>
+<p>Serene souls are quite powerful, letting you convert enemies to friendly Harmonizer summons that fight for you. The twist is that each use will transform a random soul in your inventory into another Serene soul. The more you rely on the Harmony's graces, the more the corruption within you grows (or purification, as the Collectivists would say)... <em>until you become one of them</em>.</p>
+<p>The Harmony is central to the game's lore and themes, and I hope that even players who don't really care about the story will still be unnerved by these think-alike members of a hivemind forcing them to play in accordance with their assimilationist ideology to survive.</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-06-10-identity-as-a-weapon/">Identity As A Weapon</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-06-10
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p>First, I'd like to point out just how much Javascript lets you get away with. Forgot a semicolon? Wrong indentation? Calling a function that doesn't exist? No problem, chum, I'll still run! Just... perhaps not in the way you'd expect it. This has created many very amusing bugs, such as the one time where using <em>any</em> ability caused time to stop, every enemy to freeze, and the player being able to go stab them one by one. Maybe I'll turn that into an actual ability sometime.</p>
+<p>There's also the... uhh... <a href="https://cdn.discordapp.com/attachments/504088568084561930/984945501742977044/Capture_decran_le_2022-06-10_a_18.21.28.png">&quot;Wall of Global Variables&quot;</a>. Every day, it just keeps getting bigger and bigger, and soon, it may very well swallow the universe and end reality as we know it.</p>
+<hr />
+<p><strong>The Games Foxes Play</strong> (<a href="https://www.reddit.com/r/roguelikedev/comments/uzb3iu/sharing_saturday_416/iaa1w3u/">original post</a>)</p>
+<p>These last 2 weeks have been laser-focused on creating a grand variety of player abilities/spells. In the game, they're called &quot;souls&quot;. Here's a showcase of some of them!</p>
+<p>First, I'd like to showcase <a href="https://cdn.discordapp.com/attachments/843035924468203540/984912607637037066/Capture_decran_le_2022-06-10_a_16.09.29.png">Aube</a>. It's complete and utter trash, making the entire room harder for the very minor consolation prize of healing you slightly. However, after 5 uses, it becomes the completely overpowered <a href="https://cdn.discordapp.com/attachments/504088568084561930/984946662931828736/Capture_decran_le_2022-06-10_a_18.26.05.png">Zenith</a>. Just look at that <a href="https://webmshare.com/play/Qb78R">power</a>.</p>
+<p>Now, nothing good can last. After Zenith has been used 5 times, it becomes the worn-out and sorrowful <a href="https://cdn.discordapp.com/attachments/504088568084561930/984947608713822218/Capture_decran_le_2022-06-10_a_18.29.53.png">Crepusculum</a>, with a minor utility effect. Once Crepusculum has been used 5 times, it vanishes forever from your deck, and restores 3 Ipseity as a reward for quieting this restless soul. For those who are just tuning in, &quot;Ipseity&quot; is the player's &quot;true HP&quot;, and the game ends if they run out of it.</p>
+<p>I really like how you can learn the sad story of Aube's life through these game mechanics. My plan is to make the game's &quot;magic&quot; feel emotional, in a way. The protagonist isn't using mere magic runes, but the actual spirits of beings which <em>depend</em> on your success in your quest to be saved.</p>
+<p>Yeah, the &quot;in your paw&quot; part is pretty iffy. I just didn't want to say &quot;in your hand&quot; for a feline protagonist. I'll figure this out later.</p>
+<p>Next up, we have the narcissistic <a href="https://cdn.discordapp.com/attachments/504088568084561930/984488410444075078/Capture_decran_le_2022-06-09_a_12.05.11.png">Rose</a> who lets you mark one enemy with bright pink ribbons, which will thus become targeted by all. Of course, the marked enemy will not be very happy with you and will remain hostile, but it's only a matter of time before they are torn apart by their former allies.</p>
+<p><a href="https://webmshare.com/play/x8vdn">Here's a video of it in action.</a></p>
+<p>It's not an especially offensive ability, as the marked enemy tends to die quite quickly, however, it does have the advantage of grouping enemies in a big dogpile over their former friend. This makes the room very vulnerable to an AOE-type ability, such as the one that will be demonstrated next.</p>
+<p><a href="https://cdn.discordapp.com/attachments/504088568084561930/984490577901027358/Capture_decran_le_2022-06-09_a_12.13.47.png">Joltzazon</a> is a potentially devastating blast that may require some set-up. It will wreck havoc on any enemy that's adjacent to other enemies, but will remain ineffectual on a dispersed crowd.</p>
+<p><a href="https://webmshare.com/play/JbzPW">Here's a video of it in action.</a></p>
+<p>Of course, not all abilities are meant to inflict damage. Kilami, for example, has a powerful loot-duplicating effect that lasts this turn and the next. Now, in this game, having multiple copies of the same soul type is very desirable, as the merchants of the world give much better trades if you can demonstrate your commitment to &quot;harmonizing&quot; your deck towards a single type, or at the very least similar types.</p>
+<p>There's a really sweet synergy with landmine/charm/summon type powers, since the duplicating effect is also active for the turn where you are busy using Kilami. If you can get a kill despite not taking any offensive action, through the help of something you placed on the board beforehand, you can really harvest an impressive amount of souls! Once again, <a href="https://webmshare.com/play/eweMa">demonstration</a>. Here, I set down a landmine with my Artistic soul. Then, just before that yellow Shrike steps on it, I activate Kilami. I immediately collect 2 extra Feral souls from the Shrikes, and then, while Kilami is still active for one last turn, I explode that group of 3 with Joltzazon for even more bonus loot!</p>
+<hr />
+<p>Beyond the abilities I've not shown, I've also made sure that each ability is also usable by enemies. For some, it's not really relevant, like this Kilami one, but the more flashy, explosions-and-lasers powers are really fun to slap on enemies and watch them utterly decimate me, the player. I dream of a single boss in the entire game, that will only be found at the very end of the journey, that just pulls out a chaotic assortment of attacks while the player uses their own in an ultimate two-way DEATH RAVE.</p>
+<p>HP sponges and tanks are boring. A lot of this game was inspired from Felid gameplay in DCSS, so I imagine the more elite enemies will be very squishy, but have a bunch of extra lives and/or be more of a coordinated swarm than a single &quot;big bad&quot;.</p>
+<p>Next up will be diversifying enemy variety, as the 5 types present right now are getting a little bit old. Or, I might just spend the week making more spells. They are really fun to design!</p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/39/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/41/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

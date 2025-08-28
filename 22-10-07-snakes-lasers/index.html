@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/22-10-07-snakes-lasers/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/22-10-07-snakes-lasers/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-10-07-snakes-lasers/">Snakes &amp; Lasers</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-10-07
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Current target incarnation neutralized. Awaiting reincarnation for further dispensing of gratuitous violence.&quot;</em></p>
+<p>-Epsilon, upon slaying the player</p>
+<p><strong>The Games Foxes Play</strong> (<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://www.reddit.com/r/roguelikedev/comments/uzb3iu/sharing_saturday_416/iaa1w3u/">original post</a> | <a href="https://oneirical.itch.io/tgfp">play online in browser on itch.io!</a>)</p>
+<p>I return! Long story short - the DCSS tournament juicing my feeble dopamine-vulnerable brain with promises of virtual trophies, and a big new (positive) event in Real Life™ drew my attention away from developing this project. After that, I lingered more or less in a vegetative state of I-still-want-to-do-this-but-it-will-take-too-much-effort-to-remember-how-everything-works. This would have probably ended up into scoring another victim for my ever-undisciplined personal project work ethic, but there was somebody involved in all this I had forgotten to ask: my esteemed composer friend. I promised I would rush back into the fray if he beat all 16 levels of the current version of the game - which I believed to be impossible to beat.</p>
+<p>Well, a week later, he posted a screenshot of the buggy endgame screen, and, to put it bluntly, &quot;hauled my ass back&quot;. Turns out he was obsessed with the game and made MORE music tracks while I was gone. Very well then.</p>
+<p>Turns out, the &quot;remember-how-everything-works&quot; part was actually really easy, and game development is just as fun as I remembered it to be from a few months ago.</p>
+<p><strong>Snakes and Lasers - Epsilon, a new boss fight!</strong></p>
+<ul>
+<li>
+<p>Inspired by <a href="https://www.reddit.com/r/roguelikedev/comments/viicvz/share_some_enemyability_gimmicks/idg5aw4/">this old thread</a> where u/mysda suggested to me a multi-segment enemy, I am proud to introduce Epsilon, the big-ass snake robot who also looks really badass. <a href="https://youtu.be/Bkn9izFKuiQ">Look at him go!</a></p>
+</li>
+<li>
+<p>The core principle: Epsilon starts out completely invincible, but is slow and can only dispense basic melee attacks. There are &quot;Cores&quot; scattered around the boss room, and each one will give Epsilon a new ability as well as a new vulnerability. For example, you can push the Red core (affectuously named &quot;Turbo-Kinetic SurgeRockets-Branded Rack&quot;) into his maw, and then he will begin dashing all over the place. If you can bait that dash to land into one of the alcoves in the boss room, he will be rendered vulnerable for a couple of turns! If you install every core, then you will have a death machine on your hands, but also one that is permanently vulnerable.</p>
+</li>
+<li>
+<p>So far, I've coded in Epsilon's AI, pushable boxes, and a bunch of abilities for various Cores. That means Epsilon is currently unkillable and will swiftly execute all players who get to him. At least, Epsilon absolutely has <a href="https://youtu.be/2CkZK2HwLKM">a great sense of spectacle</a> for you to enjoy before meeting your doom! Yes, I have godmode on.</p>
+</li>
+<li>
+<p>Thank you to everyone who replied in <a href="https://www.reddit.com/r/roguelikedev/comments/xwc3t1/counterintuitive_mechanics_and_information/">this thread</a> about potentially counterintuitive gameplay for the Pink Core (affectuously named &quot;Roseic Bio-Pacification Dual-Diffusers 3B&quot;). In response to feedback, I've made one of the enemies you fight just a few rooms before, the <strong>Roseic Bio-Embalmer</strong>, have its nasty on-death effect negated if you purposefully intoxicate yourself (which is likely to happen, since Bio-Embalmers inject Glamour on hit)! This is mentioned in the enemy's description, of course, and actually fits quite well with their lore, even making the whole concept of Glamour even creepier than it already was. I hope this will tutorialize that accumulating Glamour is not necessarily negative as long as it stays under the threshold. Moderation is key.</p>
+</li>
+</ul>
+<p><strong>Balance &amp; Tweaks</strong></p>
+<ul>
+<li>
+<p>I was really unsatisfied with how the on-death &quot;you can now sacrifice some souls to make you feel better&quot; mechanic was more of a placebo than the actual core mechanic of the game that it is supposed to be. Therefore, I've radically upped the ante and made it so sacrificing souls in this way will <em>permanently</em> increase your Resolve counter for the rest of the run! (The closest classic roguelike equivalent to Resolve would be mana). In exchange, Resolve no longer scales based on the difficulty of the level you are on. After playtesting, this seems like a much healthier mechanic, and will actually help out players who die a lot in the early game. (Yes, I say &quot;die&quot;, but my game is still a roguelike, you have extremely low HP and limited extra lives, it's the game's whole schtick).</p>
+</li>
+<li>
+<p>You no longer start with a Harmonic Modulator. It was simply too complex for new players trying to learn the ropes gradually. Instead, rerolling in Harmonic Relay rooms, which was once a noob trap, is now a great way of obtaining Modulators for all your rocket-thrusters and mind-control needs!</p>
+</li>
+</ul>
+<p><strong>UI</strong></p>
+<ul>
+<li>
+<p>The Glamour counter has been repositioned, and now only appears when the player accumulates at least 1 point of Glamour.</p>
+</li>
+<li>
+<p>There is now mouseclick support for soul sacrifice and Harmonic Relay usage. I wish to eventually evolve into being able to play the whole game with mouse only! Some have told me my game looks like it would work great on mobile - I agree, but that's an objective for far down the road!</p>
+</li>
+</ul>
+<p><strong>Music</strong></p>
+<ul>
+<li>Too many to list. The composer made an OST video <a href="https://youtu.be/4wnqnJ918bk">here</a>, and it still only has like half of them. Wew.</li>
+</ul>
+<p>More to come soon, with more Epsilon-related features on the conveyor belt waiting for assembly!</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/22-08-12-brutes-ribbons/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Brutes &amp; Ribbons</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/22-10-14-many-flavoured-deathbot/">
+                            <span class="button__text">Many-Flavoured Deathbot</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

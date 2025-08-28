@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/23-05-19-selves-malleable-as-clay/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/23-05-19-selves-malleable-as-clay/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-05-19-selves-malleable-as-clay/">Selves Malleable As Clay</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-05-19
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;Most known for his revolutionary political theory, this squid scribe eventually traded away sanity in his endless quest for a truly equal society. In his utopia, each body would only be temporary refuge, and each soul would come to know the pride of commanding an Ordered garrison, the delight in using Vile business tactics, the brutality of Feral infighting and the illumination that comes with Sainthood - all in a single day.&quot;</em></p>
+<ul>
+<li>Zenorium, Who Dreams of Broken Hierarchies - Artistic Function</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>It's tough to still channel the discipline to hammer out lines of code after each 9-to-5 toiling in the data mines. Anyone who has released a game while simultaneously working full-time, I bow to you. I've set up a tight personal schedule and have done well in following it thus far.</p>
+<h1 id="selves-malleable-as-clay">Selves Malleable As Clay</h1>
+<p>I am getting <em>waaaay</em> too ahead of myself already working on this feature when the UI is still half-broken from last week's 16:9 aspect ratio modifications. Plus, I haven't even finished equipping every entity with cutting-edge Axioms yet to make this mechanic truly universal.</p>
+<p>But I was just too hyped to not at least start.</p>
+<p>Enter: Soulswapping. Currently accessible as a Function spell component (named &quot;Zenorium&quot;), it will shuffle around the souls of every affected creature, being quite unimpressive when used on two enemies together. However, when the <em>player</em> joins in on the fun... true chaos is abound. This allows one to play as any creature in the game and use their innate ability to your advantage, while the... previous owner of your new flesh vessel is now thrashing around in your body, spamming your own spells and potentially trying to swap themselves back. New meta: craft deliberately horrible suicide spells and soul swap with a boss and watch them self-detonate? We get there when we get there.</p>
+<p><a href="https://vid.puffyan.us/watch?v=pqTH9YUSHVQ">Quick video demonstration here.</a> I, the player character on the top (@), have only 1 HP remaining. I swap my soul with this pink fellow, who is quite slow and can only move every other turn - but successfully slay my old body despite this drawback, and leave the room, my existence now cursed with constant slowness. Thankfully, one will eventually revert to their old body after a few turns.</p>
+<p>All enemy-native Axiom spells are now also accessible to the player, allowing their abilities to be crafted and used for general purpose occasions. This has invited me to write a considerable amount of flavour text - I quite like <a href="https://cdn.discordapp.com/attachments/504088568084561930/1109289979525468260/image.png">this one</a>. </p>
+<h1 id="knowledge-forks-among-many-paths">Knowledge Forks Among Many Paths</h1>
+<p>Nope. No libraries. I am done. I spent 6 hours trying to redesign my code around PixiJS. It's not <em>impossible</em> and I made progress, but having to run a webserver to test any little thing is tedious beyond words, and I noticed no real performance improvements. I am not ready to make these sacrifices.</p>
+<p>I'll do it <em>my</em> way. It has served me well so far. I've already cooked up a very basic tool to help me build my UI that lets me move my mouse around to place things instead of writing trial and error X and Y coordinates in my drawSprite() functions.</p>
+<p>It's tedious work, but the UI has received a couple more repairs and overhaul following the aspect ratio transition. Unfortunately, there are some artifacts of my lack of front-end design experience that are now pretty baked into the code and which would take at least an entire week's worth of dev-time to fully root out. Notably, the game can only be devoid of visual artifacts when rendered in multiples of 16 pixels. </p>
+<p>1792x1008, fun stuff.</p>
+<p>Hey, it's legally a native resolution. I have tried adding an option to resize the resolution, but it completely butchers up the UI as not every element is perfectly scaled according to the window width and height. I give up for now. The default setting looks great on every normal computer I have tried, from laptops to desktops. Supporting a few edge cases (Roguelikes in the movie theatre, anyone??) will be a later thing. When I, you know, actually have a good game.</p>
+<p>The research tree screen has received a significant overhaul, as I just had to capitalize on all this sweet extra space. <a href="https://cdn.discordapp.com/attachments/504088568084561930/1109287403342020679/image.png">Behold.</a> It was starting to be an actual puzzle trying to place everything in the tiny space of the previous iteration - a fun puzzle I must say, but I am not here to play a game, I am here to make one. So, enter seven tabs of separated content, one for general knowledge and six others for all of the castes and their Axiom components. They are:</p>
+<ul>
+<li><strong>Saintly</strong> - grace, healing and non-violence</li>
+<li><strong>Ordered</strong> - authority, resilience and structure</li>
+<li><strong>Artistic</strong> - craftiness, creativity and passion</li>
+<li><strong>Unhinged</strong> - rage, destruction and zeal</li>
+<li><strong>Feral</strong> - freedom, motion and randomness</li>
+<li><strong>Vile</strong> - illusion, suffering and control</li>
+</ul>
+<p>All these placements will be <em>very</em> relevant when I actually add the loss condition I have been designing and daydreaming about for way too long now. I have so, so much to do, but it is not like I am pressed for time. This game isn't a product to be sold, it is a vessel of self-expression.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/23-05-12-axioms-shape-reality/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Axioms Shape Reality</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-05-26-tail-between-my-legs/">
+                            <span class="button__text">Tail Between My Legs</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

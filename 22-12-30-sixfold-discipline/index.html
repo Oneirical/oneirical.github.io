@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/22-12-30-sixfold-discipline/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/22-12-30-sixfold-discipline/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-12-30-sixfold-discipline/">Sixfold Discipline</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-12-30
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><em>&quot;At one point in the history of Old World warfare, use of camouflage and invisibility technology became omnipresent. The solution was, of course, to build a very energy-hungry robot that considered air itself as its mortal enemy. Overkill? The stealth-bots - or, at the very least, what remains of them - would disagree.&quot;</em></p>
+<ul>
+<li>Description of <strong>Aspha Beta, Nemesis of the Unseen</strong>, a Legendary Ordered Soul</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play online in browser on itch.io!</a> - note: not updated to this week's version yet, because I still need to rework all the loot drop tables to fit this new system, should have my development build pushed to live in a couple of days)</em></p>
+<p>I've noticed that when it comes to adaptability versus planning, roguelikes stretch out among a spectrum with two extremes. Take Brogue, for example, where you are at the mercy of what random items the dungeon throws at you and must make do with what you find. Compare that with, say, Rift Wizard, where you can go for the almost exact same build every single game and theorycraft for literal hours until all your IRL responsabilities are forgotten.</p>
+<p>My game was absolutely at the Brogue end of that spectrum until this week. You were given a bunch of random powers, you'd... occasionally get to use them, and that was that. It was kind of lame - you got to perform a HYPERPUNCH for a single turn and then had to wait until your HYPERPUNCH would cycle back around for usage, which could take ages. In fact, you were much more likely to win or lose the game before you could ever use any given non-Common spell more than 3 times.</p>
+<p>With this new update, the correct daily quantity of punching recommended by leading doctors worldwide can finally be attained.</p>
+<h2 id="on-demand-laser-beams">On-Demand Laser Beams</h2>
+<p>Let me start off with an example. Vile souls, one of the six Common castes, have as a basic effect a simple damage bonus that adds itself to your next melee attack and dissipates afterwards. Senet, a Legendary Vile soul, used to be another spell cycling through your hotbar that would empower your next melee attack with a Charming touch that recruits the struck enemy to fight for you. That is no longer the case.</p>
+<p>Enter <a href="https://cdn.discordapp.com/attachments/504088568084561930/1058529928708112475/Capture_decran_le_2022-12-30_a_18.39.36.png">my new inventory screen</a>. Let its beauty leave its mark upon your feeble eyes. There are 6 slots, one for each Common soul &quot;caste&quot;, represented by their respective symbols. The bottom right one is for Vile souls. In each of those slots, the player may insert a Legendary Soul they have discovered in the dungeon to &quot;lead&quot; the caste with their ideology, belief and power. This means that you can place Senet in that bottom right slot, and anoint her as the leader of all Vile souls in your possession.</p>
+<p>And then, <em>every single time</em> you use a Vile soul, instead of gaining the damage bonus, you gain a Charming touch, as Vile souls now answer to Senet's command.</p>
+<p>The central rectangle can store up to 4 unused Legendary Souls. Meanwhile, the player's actual Soul-casting hotbar and drawing-&quot;deck&quot; is now composed exclusively of Common souls. Indeed, Legendaries are now basically equippable items instead of spells. One is invited to mix and match effects for each of the six castes, and find Legendaries that have synergy with each other. For maximum fun, the player also starts every run with a specific Legendary Soul to increase strategic options in the very early game.</p>
+<p>To adjust my game's UI to these changes, I've also <a href="https://cdn.discordapp.com/attachments/504088568084561930/1058529928393523260/Capture_decran_le_2022-12-30_a_18.38.26.png">completely reworked the sidebar</a> to fit the game's aesthetic style, using the new cool symbols I came up with, and also added some extra buttons to increase mouse/clicking support even more. (<a href="https://cdn.discordapp.com/attachments/504088568084561930/1058530271160438794/Capture_decran_le_2022-12-30_a_18.41.10.png">Old sidebar for comparison</a>) No worries, symmetry cultists, there will be something in the bottom left as well - probably a status effect tracker. Not sure about keeping all these numbers, though - I'm thinking of an immersive numbering system in the same glyph-like style that would be both easy to read and fitting with my game's visuals.</p>
+<h2 id="necromancy-sculpture-and-punches-in-the-face">Necromancy, Sculpture and Punches In The Face</h2>
+<p>Enough words. Time for an actual <a href="https://www.youtube.com/watch?v=qBa0GWu0JZ4">demonstration</a>. In this video, after running around a bit with all six basic castes, I equip an assortment of the Legendary Souls <strong>Rasel</strong> (Vile), <strong>Abazon</strong> (Ordered) &amp; <strong>Gyvji</strong> (Artistic) to turn the dead into allies, turn walls into allies and also punch enemies to death, respectively. I also occasionally use the basic, unupgraded effects of the Feral, Unhinged and Saintly castes for support, all that while listening to one of my esteemed composer-friend's favourite tunes in the OST, &quot;Malform&quot;.</p>
+<p>This is practically a complete rework of my magic system and utterly topples the game's balance (in the player's favour - which is a good thing, my game was way too hard). However, I'm really excited about the possibilities and strategic depth - not having the player deck bloated with all kinds of Legendary and Common souls is such a relief. I remember Spellsweaver on this subreddit suggested I'd add a way to view the contents of your own deck, and while that would have been an essential addition to my old design, I could only imagine the Theoretically Optimal Player scanning that screen on every single turn and taking a minute before every keypress to optimize for upcoming Legendary soul usage. </p>
+<p>Now, you can just choose your loadout before entering combat, and go blasting with your selection of 6 unique flavours of psychic magic! It's also a much more replayable system, as I am now dropping only one Legendary soul instead of four in loot rooms, which doesn't exhaust every unique Legendary soul as quickly and makes every run different.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/22-12-23-a-spark-then-oblivion/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">A Spark, then Oblivion</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/23-01-05-living-incense/">
+                            <span class="button__text">Living Incense</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

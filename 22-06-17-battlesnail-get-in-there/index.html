@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/22-06-17-battlesnail-get-in-there/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/22-06-17-battlesnail-get-in-there/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/22-06-17-battlesnail-get-in-there/">Battlesnail, Get In There!</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2022-06-17
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+        <div class="post-content">
+            <p><strong>The Games Foxes Play</strong></p>
+<p>Greeting once again to the community! Lots of things have happened this week.</p>
+<p>First, I showed my game extensively to an esteemed online friend of mine, and quickly got him obsessed with the lore and mechanics. He now wishes to join me on my quest to make this project happen, in the form of making the game's music. It may not be in the league of big bucks orchestral AAA epic themes, but it certainly works with the atmosphere I'm trying to convey.</p>
+<p>The theme I'd like to showcase here plays in the very first room of the game. Named <a href="https://www.youtube.com/watch?v=wHub2nob2jI">&quot;The Cage&quot;</a>, it radiates with ominous drones, glitching computers and wailing sirens, immediately letting the player know that A) this is a high-technology setting, and that B) the game's universe is in a state of crisis. I simultaneously crafted the spawn room it goes with this week -- the World Seed, the prison the game's protagonist has been locked away with for their entire life. It's a tangled mess of neon green wires and machines, claustrophobically encased with impenetrable black steel, and watched over by a holographic messenger announcing the world's doom over and over.</p>
+<p>Yeah, I know. It's a little bit hard to convey with my glyph-based art style, but I hope the writing in the examine descriptions and the OST will create that feeling of uncertainty and dread I seek to convey. Perhaps I will decorate the room some more with some extra decorative tiles!</p>
+<hr />
+<p>Next up, I made a batch of new Souls (they are the spells of the game, basically) and enemies. I'd like to show off one of the latter in this post: the fabled, coveted and turbocharged BATTLESNAIL (actual name: Shelled Electromedic). This enemy cannot move on its own, and is fully dependent on the reactor placed on its shell, which randomly shoots BEAMS OF LIFE AND DEATH every turn. It is propelled in the direction of its lasers, and also heals all enemies/damages players and friendly units in the beam path. So far, it's extremely amusing to watch them dash around the battlefield and <a href="https://www.youtube.com/watch?v=CA4ZZZ8Izyg">absolutely obliterate me</a>. They're also invaluable when charmed, because they can then be used for self-healing.</p>
+<hr />
+<p>Finally, I properly implemented the game's &quot;gamble&quot; system through which the player will obtain their items and powers that aren't just &quot;tickle the enemy with your one-damage dash&quot;. It's a bit unusual, so I'll try my best to explain it as straightforwardly as possible.</p>
+<ul>
+<li>
+<p>By killing enemies, you harvest their Souls. Souls come in 6 different basic types. Each type is worth a number from 1 to 6. For example, killing an animal will award you with a Feral soul, worth 2.</p>
+</li>
+<li>
+<p>In the Harmonic Relay room at which the &quot;gamble&quot; minigame is played, you are invited to sacrifice 6 &quot;basic&quot; Souls in exchange for 4 powerful, uniquely designed ones.</p>
+</li>
+<li>
+<p>Here's how you can sacrifice souls. First, start with the equation <strong>ABC - DEF = Result</strong>. </p>
+</li>
+<li>
+<p>You must draw two basic Souls, and attribute them to two letter slots. For example, I draw a 5 and a 2. I place them in C and E. Now, we have <strong>AB5 - D2F = Result</strong>.</p>
+</li>
+<li>
+<p>I draw two more. 4 and 4. I send them to A and F. <strong>4B5 - D24 = Result</strong>. Finally, the last two. 1 and 4. I plug them in the last slots B and D. <strong>415 - 424 = -9</strong></p>
+</li>
+</ul>
+<p>In the game, this is an <em>extremely</em> good result. Why? <strong>Because you want to get as close to 0 as possible.</strong> You may notice here that the dominating strategy here is pulling out Souls that have the same number, or at the very least are close to each other. The only way to get to 0 is, in fact, with a perfect set of 3 pairs of identical Souls.</p>
+<p>This is very intentional. The creatures overseeing this mini-game, the Harmonizers, believe that <em>only in uniformity do we flourish</em>. They will reward best those who adhere to the Harmonic Truth. In my example, I managed to pull out three Artistic souls, worth 4, and also an Ordered soul, worth 5, which are quite similar, and pleased the Collective greatly. Here's another example of the mini-game in action, this time <a href="https://www.youtube.com/watch?v=uRchzwUR6i8">in video</a>. The Harmonizer at the centre has a lot of dialogue, and will comment on illegal actions, your final result, and inform you about the rules if you bump into her.</p>
+<p>So, the entire game becomes this bounty hunt of sorts - of selective killing of the type you wish to devote yourself to. Now, some... parasites will naturally slither into your inventory because of the many AOE attacks available to players, which is what the game's &quot;failure lets you remove mistakes&quot; mechanic is for. I talked about it more in my <a href="https://www.reddit.com/r/roguelikedev/comments/uzb3iu/sharing_saturday_416/iaa1w3u/">introductory post</a>.</p>
+<p>Of course, there will eventually be an option to defeat the Harmony with their own tools...  or to join them. Indeed, if you are unhappy with the outcome of the trade, you can ask for a reroll. However, it comes at a seemingly minor cost - the addition of a single Serene soul to your inventory.</p>
+<p>Serene souls are quite powerful, letting you convert enemies to friendly Harmonizer summons that fight for you. The twist is that each use will transform a random soul in your inventory into another Serene soul. The more you rely on the Harmony's graces, the more the corruption within you grows (or purification, as the Collectivists would say)... <em>until you become one of them</em>.</p>
+<p>The Harmony is central to the game's lore and themes, and I hope that even players who don't really care about the story will still be unnerved by these think-alike members of a hivemind forcing them to play in accordance with their assimilationist ideology to survive.</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/22-06-10-identity-as-a-weapon/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Identity As A Weapon</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/22-06-24-aaaaaannnnd-slam/">
+                            <span class="button__text">AAAAAANNNND SLAM!</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

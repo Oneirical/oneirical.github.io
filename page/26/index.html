@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oneirical.github.io/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+        <div class="posts">
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-05-05-strokes-on-canvas/">Strokes on Canvas</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-05-05
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;To walk and let the mind wander is a dangerous thing. A thought pulls harder than the rest, one's gait softens into the grace of a Saint, tears turn to bright smiles, and before one knows it, one is no more.&quot;</em></p>
+<ul>
+<li>Flavour text of Steps Shift The Mind, contingency component</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4.3 online in browser on itch.io!</a>)</em></p>
+<p>After completing a few quests for the Plane Where Grass Is Touched last week, I was able to free up a lot of time this week to return to my cyber-grimoire. Here are the incantations I have concocted this time:</p>
+<h1 id="strokes-on-the-canvas-of-dreams">Strokes on the Canvas of Dreams</h1>
+<p>A major flaw in the spell crafting system was just how <em>tedious</em> it was to extract exactly the Soul type you wanted for a given recipe. If you needed just one more Unhinged Soul for your spell but it was hidden underneath a pile of 50 Ordered Souls, it meant you had to mash your Q key 51 times. Not exactly engaging gameplay.</p>
+<p>I have introduced a new thematic &quot;brush&quot; system - it causes your Soul wheel on the sidebar to become a palette with every Caste represented on it. This is only available in Soul Cage rooms, but it lets the player pick out a &quot;color&quot;, and, well, draw. The mouse control is easier (just drag and drop, like Minecraft's crafting), but keyboard is also an option, requiring the player to walk over the cage to place their payload drive-by style.</p>
+<p>This UI update comes with many quality-of-life additions related to the spell crafting system - including a complete catalogue at the bottom with every unlocked pattern (and its recipe), and a display predicting the outcome of the crafting recipe (with dynamic highlighting of where each component is found inside your Soul Cage).</p>
+<p>Here is a complete <a href="https://youtu.be/8fUOl_JD-y4">clip</a> of me assembling &quot;BEAM-JOLTZAZON-RASEL-GYVJI&quot;, an interesting spell combination which fires a laser beam towards one target, spreads to all creatures adjacent to the target, then causes all the affected to: </p>
+<ol>
+<li>Get a status effect that will revive them on death as a friendly undead.</li>
+<li>Get brutally punched backwards, probably killing them.</li>
+</ol>
+<p>Using this combination, clearing <a href="https://youtu.be/IcC39rGpwqc">this room</a> proves easy!</p>
+<h1 id="thought-pattern-interference">Thought-Pattern Interference</h1>
+<p>Another flaw in the spell-crafting algorithm was the possibility of smaller patterns inserting themselves unexpectedly in bigger patterns. This meant that the structure:</p>
+<ul>
+<li>O O O</li>
+</ul>
+<p>Contained simultaneously the patterns:</p>
+<ul>
+<li>O</li>
+<li>O O</li>
+<li>O O O</li>
+</ul>
+<p>with each one of these three being an unique spell component. Most of the time, this flaw caused random status effects to appear unprompted in the player's crafted spells, resulting in &quot;interesting&quot; gameplay such as laser beams that make your enemies invincible or placing traps on top of yourself that instantly explode you to bits. In the worst cases, massive patterns could contain 12+ copies of many components, resulting in ridiculous oneshots, nukes and even an infinite loop softlock somewhere in there.</p>
+<p>Chaos is fun, but there are limits. I have <em>completely overhauled</em> the pattern locator algorithm - now, if you want a specific pattern, it must be built without any adjacent Souls of the same type interfering. O O O creates <em>only</em> O O O, and nothing else. O O F creates both O O and F. An inattentive player can still craft hilarious suicide spells, but at the very least, it should now never happen to someone who carefully constructs their build.</p>
+<p>This does make it more difficult to cram a lot of components in your limited 3x3 Soul Cage, but I have nerfed a couple of patterns to require less Souls to compensate. It will also be a bonus reason to upgrade yourself and get a bigger Cage later when I get around to making that!</p>
+<h1 id="sentries-and-husks-surge-back">Sentries and Husks Surge Back</h1>
+<p>Finally, some old spells from version 0.2 have found their way back in, adapted and revised to fit the new spell-component system. &quot;Joltzazon&quot;, for example, is now a very powerful Mutator that lets spells &quot;spread&quot; across adjacent targets, resulting in <a href="https://youtube.com/shorts/Fp63Jid-aNo?feature=share">amusing effects</a>. Abazon and Rasel have also returned.</p>
+<p>I predict that next week will haul me back screaming into the abyss of responsibilities and will devour a significant chunk of my free time. I will still see if I can cook up something for next Saturday, my motivation levels are through the roof! I have some fine ideas cooked up...</p>
+
+        </div>
+
+                </div>
+            
+                <div class="post on-list">
+                    
+    <h1 class="post-title"><a href="https://oneirical.github.io/23-04-21-the-shapeless-path/">The Shapeless Path</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-04-21
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gamedev/">#gamedev</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tgfp/">#tgfp</a></span>
+    
+
+
+                    <div class="post-content">
+            <p><em>&quot;Where the Ordered forces do not have soldiers, they have traps. A careless step, and would-be looters become the looted, their every memory sold to the highest bidder on the hivemind's network.&quot;</em></p>
+<ul>
+<li>Flavour text of A Click, Then a Flash, mutator component</li>
+</ul>
+<h2 id="the-games-foxes-play">The Games Foxes Play</h2>
+<p><em>(<a href="https://github.com/Oneirical/The-Games-Foxes-Play">complete source code on github</a> | <a href="https://github.com/Oneirical/The-Games-Foxes-Play/tree/main/design/Development%20Logs">view all previous posts</a> | <a href="https://oneirical.itch.io/tgfp">play 0.4 online in browser on itch.io!</a>)</em></p>
+<p><em>So</em> many changes. It is utterly insane how I either can't think about anything else but my game or can't bring myself to write a single line of code on any given day, no in between. I'm glad I can keep up the pace now, because The Plane Where Grass Is Touched has some exciting but time-consuming advancements in store for me in the coming weeks.</p>
+<p>My itch.io page has been updated with a new demo that includes <em>all</em> of the changes in the last 3 months! Still a bit rough here and there, and potentially confusing, but I certainly had fun playing it from beginning to end.</p>
+<h1 id="steps-shift-the-mind">Steps Shift The Mind</h1>
+<p>There are two new types of spell-crafting blocks: Mutators and Contingencies. This means that the structure of a spell is now as follows:</p>
+<ul>
+<li><strong>Contingency</strong>: When [SOMETHING] happens...</li>
+<li><strong>Form</strong>: ...target all [THESE] tiles...</li>
+<li><strong>Mutator</strong>: ...make some [CHANGES] to the spell...</li>
+<li><strong>Function</strong>: ...and unleash all kinds of [EFFECTS].</li>
+</ul>
+<p>As an example, the following spell:</p>
+<ul>
+<li><strong>Contingency</strong>: On taking a step...</li>
+<li><strong>Form</strong>: ...target tiles in front of you in a beam...</li>
+<li><strong>Mutator</strong>: ...set down a trap on the targets with the following effect...</li>
+<li><strong>Function</strong>: ...launch the target forwards and damage it when it hits a wall.</li>
+</ul>
+<p>does <a href="https://youtu.be/bCe16H-43K4">exactly what it says on the tin.</a></p>
+<p>Mutators and Contingencies are optional. Contingencies in particular tend to induce sacrifices and costs, as you are basically turning an active ability into a passive one - a very powerful thing.</p>
+<p>Additionally, all spells now have a Potency rating dependent on which components constitute it. Power up GYVJI (a Function) with 4 Potency, and unleash shockwaves on impact! Increase the duration of applied status effects from SENET or KASHIA! There is also a potential Cost, currently only found on Contingency blocks. Each time the Contingency triggers, you will lose an X amount of Shattered Souls until you can no longer power the Contingency. How to get these Shattered Souls? By failing challenges and losing encounters, of course. In my game, failure is simply a different kind of step forward.</p>
+<p>Maybe this is a bit complicated, but only a fool would settle out into a traditional roguelike journey with the goal of mass market appeal.</p>
+<h1 id="laws-of-soul-and-spirit">Laws of Soul and Spirit</h1>
+<p>As the old burns to feed the new, many UI elements have been added and removed:</p>
+<ul>
+<li>
+<p>There is a new <a href="https://www.youtube.com/watch?v=aBX7jaU3jt0">minimap</a> viewable in the lower right corner, which dynamically updates every turn. The way it is rendered in the backend is... a bit gory (it is actually rendering outside of its frame, so I draw black rectangles to cover the overextending bits), but it <em>works</em> and I have noticed no performance issues.</p>
+</li>
+<li>
+<p>In the Legendary Soul menu, the minimap is replaced by a new display which contains all relevant information about your crafted spells: its Potency (blue number), its Cost (purple number), its Caste (colored symbol), its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096079183659018/Capture_decran_le_2023-04-21_a_18.14.37.png">Contingencies</a> (yellow row), its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096078885867561/Capture_decran_le_2023-04-21_a_18.14.51.png">Forms</a> (green row), its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096078592262215/Capture_decran_le_2023-04-21_a_18.15.02.png">Mutators</a> (pink row) and its <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096139782955008/Capture_decran_le_2023-04-21_a_18.15.12.png">Functions</a> (orange row).</p>
+</li>
+<li>
+<p>There is now support for paragraphs and colored text in all text functions. This sounds so simple, but it was easily the most nightmarish thing on this list. Yet the result is <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099096619154157718/Capture_decran_le_2023-04-21_a_18.17.21.png">so glorious</a>! Yes, Ulfsire, I have stolen the way you describe your powers in your game (Path of Achra) because I find the systematic layout to be very apt for a synergy-based game.</p>
+</li>
+<li>
+<p>The &quot;Resolve&quot;, &quot;Ipseity&quot; and &quot;Harmonic Relays&quot; mechanics (and associated UI elements) have been all shown the door. A tragic thing, considering how I was really imagining the final product to include all of these as major mechanics, but as Souls shift and change, so does my game.</p>
+</li>
+</ul>
+<h1 id="unlocking-memories-of-the-old-world">Unlocking Memories of the Old World</h1>
+<p>There is now a &quot;drawback&quot; to crafting spells - each pattern used will now <em>permanently</em> <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099097330571034674/Capture_decran_le_2023-04-21_a_18.20.11.png">add a new feature</a> used in the map generation of future Visions (dungeons). Most of the time, this is a creature. Can that charming spell component deal with the swathes of Felidols it just added to the monster pool? I say &quot;drawback&quot; in quotation marks, because it is basically the whole point of the game - you are adding more diversified creatures in your ultimate quest to recreate the Old World as it once was, with all its weird denizens.</p>
+<p>The Faith's End facility (where the player begins the game) has also received a slight <a href="https://cdn.discordapp.com/attachments/504088568084561930/1099097518039642162/Capture_decran_le_2023-04-21_a_18.20.49.png">touch-up</a> for thematic purposes. Your existence is confined to only 5 vertical rooms, with the Saints' Voice hologram as your sole company. Reinforced windows scattered across the corridor allowed the (now-long vanished) wardens to document your every motion. At the end of your containment chamber, an access gate with a few drawbridges allow access in and out of your cell - a privilege which is naturally not yours to choose.</p>
+<p>Spoiler alert: those drawbridges won't stay locked for long. The cataclysm still rages outside the facility, and its perpetrators know you're trapped in there - your mind teeming with memories and an identity ripe for claiming. That will be something for a future week.</p>
+<h1 id="bonus-tighten-your-seat-belts">Bonus: Tighten Your Seat-Belts</h1>
+<p>Oh, as I was tinkering around with some potentially fun spell combinations, here is a particularly hilarious one I stumbled upon:</p>
+<ul>
+<li>The EGO Form targets yourself (+4 Potency).</li>
+<li>The GYVJI Function causes all targets to be brutally punched backwards, until they collide with an object, at which point they take massive damage and emit a damaging shockwave (at 4 Potency or more).</li>
+<li>The PARACEON Function causes all targets to gain temporary invincibility for Potency x 1 turns.</li>
+</ul>
+<p>This means:</p>
+<ul>
+<li>EGO-PARACEON: You become temporarily invincible. Neat but boring.</li>
+<li>EGO-GYVJI: You launch yourself into a wall and perish pathetically.</li>
+<li>EGO-PARACEON-GYVJI: You BLAST OUT like a ROCKET LAUNCHER and EXTERMINATE every bystander with the shockwave, and leave COMPLETELY UNHARMED.</li>
+</ul>
+<p>For bonus fun, add a good Contingency, like the &quot;on Step&quot; one I mentioned above.</p>
+<p><a href="https://youtu.be/OnkBRvsLQ90">Demonstration.</a></p>
+
+        </div>
+
+                </div>
+            <div class="pagination">
+                <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/page/25/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Newer posts</span>
+                        </a>
+                    </span>
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/page/27/">
+                            <span class="button__text">Older posts</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

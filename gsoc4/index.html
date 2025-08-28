@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/gsoc4/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/gsoc4/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/gsoc4/">Mecha Crabs Going Rogue</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-05-26
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/gsoc/">#gsoc</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a></span>
+    
+
+        <div class="post-content">
+            <blockquote>
+<p>// A very specific set of circumstances (mainly, implementing Deref, and having a procedural macro and a Debug derivation in external crates) caused an internal compiler error (ICE) when trying to use rustdoc. This test reproduces the exact circumstances which caused the bug and checks that it does not happen again.</p>
+</blockquote>
+<p><a href="https://github.com/rust-lang/rust/pull/125165">Source</a></p>
+<p>One gets dizzy imagining the contributors back then, like masterful chemists, isolating and purifying the united causes of this obscure error, until at last illumination strikes, resulting in the deletion of a single line of code, and the creation of a <code>run-make</code> test easily 10 times larger than the fix itself.</p>
+<p>This week, running through review comments and implementing requested suggestions and patches proved steady and rhythmic. Another fresh batch was on its way to getting shipped to the Rust compiler - packaged, wrapped up, with a nice <code>r+</code> sticker on it. We just needed a quick test on the Microsoft Visual C++ compiler for compatibility...</p>
+<p>Which caused the Bors bot to go rogue and... seemingly try to merge without running the compatibility test. I mean, really now? The bot's profile picture on Github is literally <a href="https://github.com/bors">HAL 9000's eye</a>. What could possibly go wrong giving the bot managing a programming language designed for robustness (excellent for tasks critical to humanity, such as space exploration, the creation of drones to save orphans from blazing buildings, and the blockchain generation for non-fungible tokens) the physical appearance of a fictional robot not known for its valuing of human life?</p>
+<p>The runaway machine was subdued, and the pull request is safe... for now.</p>
+<h2 id="merged-this-week">Merged this week</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125218">no-intermediate-extras</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125227">reset-codegen-1</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125224">external-crate-panic-handle-no-lint</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125222">noalias-freeze</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/125421">core-no-oom-handling, non-pie-thread-local, deref-impl-rustdoc-ice</a> (I am bundling these up in the same pull request now, as the frontpage spam was getting a <em>little</em> intense, which was noticed.)</li>
+</ul>
+<h2 id="open">Open</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/125165">pgo-branch-weights</a>, where a peculiar error happened on <code>aarch64</code> about failure to create a <code>profdata</code> file. I'll go over this in my weekly check-in meeting tomorrow.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125383">emit, mixing-formats, bare-outfile</a>, where the bot went rogue. A strange error still remains - as I am typing this, the test is being restarted.</li>
+<li><a href="https://github.com/rust-lang/rust/pull/125500">link-arg, link-dedup, no-panic-blank-output</a>, which should probably be UI tests instead?</li>
+</ul>
+<h1 id="oxidizing-my-toolkit">Oxidizing My Toolkit</h1>
+<p>So, I've been a <a href="https://vscodium.com/">VSCodium</a> (the no-telemetry version of VSCode) plebeian for a long time, but my techiest friend insisted on how COOL and PRODUCTIVE it is to have a modal editor. But not ANY modal editor. It had to be <a href="https://helix-editor.com/">Helix</a>. Which is like Neovim, but written in Rust (this is the only argument I needed to be convinced).</p>
+<p>I also found for myself a terminal multiplexer, <a href="https://zellij.dev/">Zellij</a>, which is like Tmux but written in Rust (this is also the only argument I needed to be convinced).</p>
+<p>Before someone posts me on <a href="https://old.reddit.com/r/programmingcirclejerk/">r/programmingcirclejerk</a>, I am jesting and I found myself enjoying Helix not because of &quot;blazing speed&quot; or any other crab-related meme, but really just because:</p>
+<ul>
+<li>It shows me a lot of keybinds when I press space or g, and what they do</li>
+<li>It doesn't require me to install any extensions</li>
+</ul>
+<p>I quickly learned the basics - i to insert, e and b to move through words, I and A to move to the start and end of a line, and most amusingly, pressing C to duplicate my cursor. I always feel like a masterful illusionist when doing it.</p>
+<p>I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.
+I am actually typing this on Helix right now. And yes, I just suddenly felt the need to uselessly summon a bunch of clones of myself because it's just so cool.</p>
+<p>After just one week, I really do feel more productive in it than I was in VSCodium. I think the most useful part is easily the file picker, as it gives previews of each file while browsing, unlike VSCodium's Ctrl-P. It's great for run-make tests, as I simply write &quot;Makefile&quot; and start browsing tests quickly and isolating which ones are doable with the current state of the support library with little effort.</p>
+<p>Another neat touch to make programming even more fun :3</p>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/nsec/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Ketamine In The DNA, Average Day</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/gsoc5/">
+                            <span class="button__text">Hauling The Kraken Out Of The Sea</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>

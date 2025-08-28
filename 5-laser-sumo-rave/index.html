@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/image0.jpg" type="image/x-icon">
+    <title>Oneiblog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://oneirical.github.io/style.css">
+    <link rel="stylesheet" href="https://oneirical.github.io/color/green.css">
+
+        <link rel="stylesheet" href="https://oneirical.github.io/color/background_pink.css">
+    
+    <link rel="stylesheet" href="https://oneirical.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Oneiblog">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oneirical.github.io/5-laser-sumo-rave/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Oneiblog">
+    <meta property="twitter:domain" content="oneirical.github.io">
+    <meta property="twitter:url" content="https://oneirical.github.io/5-laser-sumo-rave/">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://oneirical.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            Oneirical
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://oneirical.github.io">blog</a></li>
+            
+                <li><a href="https://oneirical.github.io/tags">tags</a></li>
+            
+                <li><a href="https://oneirical.github.io/archive">archive</a></li>
+            
+                <li><a href="https://oneirical.github.io/about">about me</a></li>
+            
+                <li><a href="https://github.com/oneirical" target="_blank" rel="noopener noreferrer">github</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://oneirical.github.io/5-laser-sumo-rave/">Bevy Traditional Roguelike Quick-Start - 5. Laser Sumo Rave</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2024-11-19
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/bevy/">#bevy</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/rust/">#rust</a>&nbsp;
+                <a class="post-tag" href="https://oneirical.github.io/tags/tutorial/">#tutorial</a></span>
+    
+
+        <div class="post-content">
+            <p>Magic is nothing without the <em>sparkles</em>! The <em>artifice</em>! We need laser beams and confetti.</p>
+<h1 id="visual-effects">Visual Effects</h1>
+<p>Let us start with the preliminary <code>Bundle</code>, <code>Event</code> and other supporting structs and enums. Whenever this event will be triggered, effects of a certain colour and sprite will be placed on all selected tiles, and will gradually decay with time.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Bundle)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">MagicEffect </span><span>{
+</span><span>    </span><span style="color:#888888;">/// The tile position of this visual effect.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">position</span><span>: Position,
+</span><span>    </span><span style="color:#888888;">/// The sprite representing this visual effect.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">sprite</span><span>: Sprite,
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">visibility</span><span>: Visibility,
+</span><span>    </span><span style="color:#888888;">/// The timers tracking when the effect appears, and how
+</span><span>    </span><span style="color:#888888;">/// long it takes to decay.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">vfx</span><span>: MagicVfx,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Event)]
+</span><span style="color:#888888;">/// An event to place visual effects on the game board.
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">PlaceMagicVfx </span><span>{
+</span><span>    </span><span style="color:#888888;">/// All tile positions on which a visual effect will appear.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">targets</span><span>: Vec&lt;Position&gt;,
+</span><span>    </span><span style="color:#888888;">/// Whether the effect appear one by one, or all at the same time.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">sequence</span><span>: EffectSequence,
+</span><span>    </span><span style="color:#888888;">/// The effect sprite.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">effect</span><span>: EffectType,
+</span><span>    </span><span style="color:#888888;">/// How long these effects take to decay.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">decay</span><span>: </span><span style="color:#8fbfdc;">f32</span><span>,
+</span><span>    </span><span style="color:#888888;">/// How long these effects take to appear.
+</span><span>    </span><span style="color:#8fbfdc;">pub </span><span style="color:#ffb964;">appear</span><span>: </span><span style="color:#8fbfdc;">f32</span><span>,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Clone, Copy)]
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">EffectSequence </span><span>{
+</span><span>    </span><span style="color:#888888;">/// All effects appear at the same time.
+</span><span>    Simultaneous,
+</span><span>    </span><span style="color:#888888;">/// Effects appear one at a time, in a queue.
+</span><span>    </span><span style="color:#888888;">/// `duration` is how long it takes to move from one effect to the next.
+</span><span>    Sequential { duration: </span><span style="color:#8fbfdc;">f32 </span><span>},
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Clone, Copy)]
+</span><span style="color:#8fbfdc;">pub enum </span><span style="color:#ffb964;">EffectType </span><span>{
+</span><span>    HorizontalBeam,
+</span><span>    VerticalBeam,
+</span><span>    RedBlast,
+</span><span>    GreenBlast,
+</span><span>    XCross,
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">MagicVfx </span><span>{
+</span><span>    </span><span style="color:#888888;">/// How long this effect takes to decay.
+</span><span>    </span><span style="color:#ffb964;">appear</span><span>: Timer,
+</span><span>    </span><span style="color:#888888;">/// How long this effect takes to appear.
+</span><span>    </span><span style="color:#ffb964;">decay</span><span>: Timer,
+</span><span>}
+</span><span>
+</span><span style="color:#888888;">/// Get the appropriate texture from the spritesheet depending on the effect type.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">get_effect_sprite</span><span>(</span><span style="color:#ffb964;">effect</span><span>: &amp;EffectType) -&gt; </span><span style="color:#8fbfdc;">usize </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">match</span><span> effect {
+</span><span>        EffectType::HorizontalBeam =&gt; </span><span style="color:#cf6a4c;">15</span><span>,
+</span><span>        EffectType::VerticalBeam =&gt; </span><span style="color:#cf6a4c;">16</span><span>,
+</span><span>        EffectType::RedBlast =&gt; </span><span style="color:#cf6a4c;">14</span><span>,
+</span><span>        EffectType::GreenBlast =&gt; </span><span style="color:#cf6a4c;">13</span><span>,
+</span><span>        EffectType::XCross =&gt; </span><span style="color:#cf6a4c;">1</span><span>,
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>There are only two systems to make, now - one to place the effects, and one to ensure they decay appropriately.
+Each effect initially has its <code>Visibility</code> set to <code>Hidden</code> - if the effect is the tip of a laser beam, we want it to be displayed <em>after</em> the start of the laser beam, as to create a &quot;trailing&quot; effect.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">place_magic_effects</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;PlaceMagicVfx&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#ffb964;">asset_server</span><span>: Res&lt;AssetServer&gt;,
+</span><span>    </span><span style="color:#ffb964;">atlas_layout</span><span>: Res&lt;SpriteSheetAtlas&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#8fbfdc;">for </span><span>(i, target) in event.targets.iter().enumerate() {
+</span><span>            </span><span style="color:#888888;">// Place effects on all positions from the event.
+</span><span>            commands.spawn(MagicEffect {
+</span><span>                position: *target,
+</span><span>                sprite: Sprite {
+</span><span>                    image: asset_server.load(</span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">spritesheet.png</span><span style="color:#556633;">&quot;</span><span>),
+</span><span>                    custom_size: Some(Vec2::new(</span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">64.</span><span>)),
+</span><span>                    texture_atlas: Some(TextureAtlas {
+</span><span>                        layout: atlas_layout.handle.clone(),
+</span><span>                        index: get_effect_sprite(&amp;event.effect),
+</span><span>                    }),
+</span><span>                    ..default()
+</span><span>                },
+</span><span>                visibility: Visibility::Hidden,
+</span><span>                vfx: MagicVfx {
+</span><span>                    appear: </span><span style="color:#8fbfdc;">match</span><span> event.sequence {
+</span><span>                        </span><span style="color:#888888;">// If simultaneous, everything appears at the same time.
+</span><span>                        EffectSequence::Simultaneous =&gt; {
+</span><span>                            Timer::from_seconds(event.appear, TimerMode::Once)
+</span><span>                        }
+</span><span>                        </span><span style="color:#888888;">// Otherwise, effects gradually get increased appear timers depending on
+</span><span>                        </span><span style="color:#888888;">// how far back they are in their queue.
+</span><span>                        EffectSequence::Sequential { duration } =&gt; Timer::from_seconds(
+</span><span>                            i as </span><span style="color:#8fbfdc;">f32 </span><span>* duration + event.appear,
+</span><span>                            TimerMode::Once,
+</span><span>                        ),
+</span><span>                    },
+</span><span>                    decay: Timer::from_seconds(event.decay, TimerMode::Once),
+</span><span>                },
+</span><span>            });
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Then, effects appear one by one (if sequential) or all at once (if simultaneous), and decay into 100% transparency after a delay preset by their <code>decay</code> timers.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">decay_magic_effects</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">magic_vfx</span><span>: Query&lt;(Entity, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Visibility, &amp;</span><span style="color:#8fbfdc;">mut</span><span> MagicVfx, &amp;</span><span style="color:#8fbfdc;">mut</span><span> Sprite)&gt;,
+</span><span>    </span><span style="color:#ffb964;">time</span><span>: Res&lt;Time&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(vfx_entity, </span><span style="color:#8fbfdc;">mut</span><span> vfx_vis, </span><span style="color:#8fbfdc;">mut</span><span> vfx_timers, </span><span style="color:#8fbfdc;">mut</span><span> vfx_sprite) in magic_vfx.iter_mut() {
+</span><span>        </span><span style="color:#888888;">// Effects that have completed their appear timer and are now visible, decay.
+</span><span>        </span><span style="color:#8fbfdc;">if </span><span>matches!(*vfx_vis, Visibility::Inherited) {
+</span><span>            vfx_timers.decay.tick(time.delta());
+</span><span>            </span><span style="color:#888888;">// Their alpha (transparency) slowly loses opacity as they decay.
+</span><span>            vfx_sprite
+</span><span>                .color
+</span><span>                .set_alpha(vfx_timers.decay.fraction_remaining());
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> vfx_timers.decay.finished() {
+</span><span>                commands.entity(vfx_entity).despawn();
+</span><span>            }
+</span><span>        </span><span style="color:#888888;">// Effects that have not appeared yet progress towards appearing for the first time.
+</span><span>        } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>            vfx_timers.appear.tick(time.delta());
+</span><span>            </span><span style="color:#8fbfdc;">if</span><span> vfx_timers.appear.finished() {
+</span><span>                *vfx_vis = Visibility::Inherited;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>All we need now is to properly place these effects as a result of casting spells.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// Target the caster&#39;s tile.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_form_ego</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">magic_vfx</span><span>: EventWriter&lt;PlaceMagicVfx&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">position</span><span>: Query&lt;&amp;Position&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// Get the currently executed spell.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> synapse_data = spell_stack.spells.last_mut().unwrap();
+</span><span>    </span><span style="color:#888888;">// Get the caster&#39;s position.
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> caster_position = *position.get(synapse_data.caster).unwrap();
+</span><span>
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#888888;">// Place the visual effect.
+</span><span>    magic_vfx.send(PlaceMagicVfx {
+</span><span>        targets: vec![caster_position],
+</span><span>        sequence: EffectSequence::Sequential { duration: </span><span style="color:#cf6a4c;">0.04 </span><span>},
+</span><span>        effect: EffectType::RedBlast,
+</span><span>        decay: </span><span style="color:#cf6a4c;">0.5</span><span>,
+</span><span>        appear: </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>    });
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>
+</span><span>    </span><span style="color:#888888;">// Add that caster&#39;s position to the targets.
+</span><span>    synapse_data.targets.push(caster_position);
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#888888;">/// Fire a beam from the caster, towards the caster&#39;s last move. Target all travelled tiles,
+</span><span style="color:#888888;">/// including the first solid tile encountered, which stops the beam.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">axiom_form_momentum_beam</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">magic_vfx</span><span>: EventWriter&lt;PlaceMagicVfx&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#ffb964;">map</span><span>: Res&lt;Map&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">spell_stack</span><span>: ResMut&lt;SpellStack&gt;,
+</span><span>    </span><span style="color:#ffb964;">position_and_momentum</span><span>: Query&lt;(&amp;Position, &amp;OrdDir)&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">let</span><span> synapse_data = spell_stack.spells.last_mut().unwrap();
+</span><span>    </span><span style="color:#8fbfdc;">let </span><span>(caster_position, caster_momentum) =
+</span><span>        position_and_momentum.get(synapse_data.caster).unwrap();
+</span><span>    </span><span style="color:#888888;">// Start the beam where the caster is standing.
+</span><span>    </span><span style="color:#888888;">// The beam travels in the direction of the caster&#39;s last move.
+</span><span>    </span><span style="color:#8fbfdc;">let </span><span>(off_x, off_y) = caster_momentum.as_offset();
+</span><span>    </span><span style="color:#8fbfdc;">let mut</span><span> output = linear_beam(*caster_position, </span><span style="color:#cf6a4c;">10</span><span>, off_x, off_y, &amp;map);
+</span><span>
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#888888;">// Add some visual beam effects.
+</span><span>    magic_vfx.send(PlaceMagicVfx {
+</span><span>        targets: output.clone(),
+</span><span>        sequence: EffectSequence::Sequential { duration: </span><span style="color:#cf6a4c;">0.04 </span><span>},
+</span><span>        effect: </span><span style="color:#8fbfdc;">match</span><span> caster_momentum {
+</span><span>            OrdDir::Up | OrdDir::Down =&gt; EffectType::VerticalBeam,
+</span><span>            OrdDir::Right | OrdDir::Left =&gt; EffectType::HorizontalBeam,
+</span><span>        },
+</span><span>        decay: </span><span style="color:#cf6a4c;">0.5</span><span>,
+</span><span>        appear: </span><span style="color:#cf6a4c;">0.</span><span>,
+</span><span>    });
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>    
+</span><span>    </span><span style="color:#888888;">// Add these tiles to `targets`.
+</span><span>    synapse_data.targets.append(&amp;</span><span style="color:#8fbfdc;">mut</span><span> output);
+</span><span>}
+</span></code></pre>
+<p>If you <code>cargo run</code> now, you'll run into an amusing bug - the laser beams create invisible walls. This is because <code>register_creatures</code> cannot make the difference between a creature and a magic effect - they both have the <code>Position</code> component! It thinks lasers are creatures, and adds them to the <code>Map</code>. Let us filter them out.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// map.rs
+</span><span style="color:#888888;">/// Newly spawned creatures earn their place in the HashMap.
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">register_creatures</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">map</span><span>: ResMut&lt;Map&gt;,
+</span><span>    </span><span style="color:#888888;">// Any entity that has a Position that just got added to it -
+</span><span>    </span><span style="color:#888888;">// currently only possible as a result of having just been spawned in.
+</span><span>
+</span><span>    </span><span style="color:#888888;">// CHANGED - Added Without&lt;MagicVfx&gt;
+</span><span>    </span><span style="color:#ffb964;">displaced_creatures</span><span>: Query&lt;(&amp;Position, Entity), (Added&lt;Position&gt;, Without&lt;MagicVfx&gt;)&gt;,
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(position, entity) in displaced_creatures.iter() {
+</span><span>        </span><span style="color:#888888;">// Insert the new creature in the Map. Position implements Copy,
+</span><span>        </span><span style="color:#888888;">// so it can be dereferenced (*), but `.clone()` would have been
+</span><span>        </span><span style="color:#888888;">// fine too.
+</span><span>        map.creatures.insert(*position, entity);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Don't forget to register.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">GraphicsPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.init_resource::&lt;SpriteSheetAtlas&gt;();
+</span><span>        app.add_systems(Startup, setup_camera);
+</span><span>        app.add_systems(Update, adjust_transforms);
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        app.add_systems(Update, place_magic_effects);
+</span><span>        app.add_systems(Update, decay_magic_effects);
+</span><span>        app.add_event::&lt;PlaceMagicVfx&gt;();
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre>
+<p>All done! <code>cargo run</code>, and enjoy the fireworks.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/5-laser-sumo-rave/beams.gif" alt="The player lasering the wall, and cyan blue beam effects leaving a trail as they do so." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<h1 id="motion-animations">Motion Animations</h1>
+<p>All fun and good, but the instant-teleports don't fit in with all this aesthetic superiority we have just implemented. Let us fix that.</p>
+<p>Whenever a creature teleports, it will instead interpolate its <code>Transform</code> <code>translation</code> from its origin to its destination. To do so, we'll need to rewrite <code>adjust_transforms</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(Component)]
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">SlideAnimation</span><span>;
+</span><span>
+</span><span style="color:#888888;">/// Each frame, adjust every entity&#39;s display location to match
+</span><span style="color:#888888;">/// their position on the grid, and make the camera follow the player.
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">adjust_transforms</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creatures</span><span>: Query&lt;(
+</span><span>        Entity, // NEW!
+</span><span>        &amp;Position,
+</span><span>        &amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform,
+</span><span>        Has&lt;SlideAnimation&gt;, // NEW!
+</span><span>        Has&lt;Player&gt;,
+</span><span>    )&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">camera</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Transform, (With&lt;Camera&gt;, Without&lt;Position&gt;)&gt;,
+</span><span>    </span><span style="color:#ffb964;">time</span><span>: Res&lt;Time&gt;, </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands, </span><span style="color:#888888;">// NEW!
+</span><span>) {
+</span><span>    </span><span style="color:#888888;">// NEW!
+</span><span>    </span><span style="color:#8fbfdc;">for </span><span>(entity, pos, </span><span style="color:#8fbfdc;">mut</span><span> trans, is_animated, is_player) in creatures.iter_mut() {
+</span><span>        </span><span style="color:#888888;">// If this creature is affected by an animation...
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> is_animated {
+</span><span>            </span><span style="color:#888888;">// The sprite approaches its destination.
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> current_translation = trans.translation;
+</span><span>            </span><span style="color:#8fbfdc;">let</span><span> target_translation = Vec3::new(pos.x as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>, pos.y as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>, </span><span style="color:#cf6a4c;">0.</span><span>);
+</span><span>            </span><span style="color:#888888;">// The creature is more than 0.5 pixels away from its destination - smooth animation.
+</span><span>            </span><span style="color:#8fbfdc;">if </span><span>((target_translation.x - current_translation.x).abs()
+</span><span>                + (target_translation.y - current_translation.y).abs())
+</span><span>                &gt; </span><span style="color:#cf6a4c;">0.5
+</span><span>            {
+</span><span>                trans.translation = trans
+</span><span>                    .translation
+</span><span>                    .lerp(target_translation, </span><span style="color:#cf6a4c;">10. </span><span>* time.delta_secs());
+</span><span>            </span><span style="color:#888888;">// Otherwise, the animation is over - clip the creature onto the grid.
+</span><span>            } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>                commands.entity(entity).remove::&lt;SlideAnimation&gt;();
+</span><span>            }
+</span><span>        } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>    </span><span style="color:#888888;">// End NEW.
+</span><span>
+</span><span>            </span><span style="color:#888888;">// For creatures with no animation.
+</span><span>            </span><span style="color:#888888;">// Multiplied by the graphical size of a tile, which is 64x64.
+</span><span>            trans.translation.x = pos.x as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>;
+</span><span>            trans.translation.y = pos.y as </span><span style="color:#8fbfdc;">f32 </span><span>* </span><span style="color:#cf6a4c;">64.</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> is_player {
+</span><span>            </span><span style="color:#888888;">// The camera follows the player.
+</span><span>            </span><span style="color:#8fbfdc;">let mut</span><span> camera_trans = camera.get_single_mut().unwrap();
+</span><span>            (camera_trans.translation.x, camera_trans.translation.y) =
+</span><span>                (trans.translation.x, trans.translation.y);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Creatures have their <code>translation</code> interpolate (<code>lerp</code>) towards their target translation, until the animation completes and the component responsible for orchestrating this (<code>SlideAnimation</code>) is removed.</p>
+<p>Great, now, any creature with the new <code>SlideAnimation</code> component will gracefully make its way to its destination. Let us add that component each time a creature teleports.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">teleport_entity</span><span>(
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">events</span><span>: EventReader&lt;TeleportEntity&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">creature</span><span>: Query&lt;&amp;</span><span style="color:#8fbfdc;">mut</span><span> Position&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">map</span><span>: ResMut&lt;Map&gt;,
+</span><span>    </span><span style="color:#8fbfdc;">mut </span><span style="color:#ffb964;">commands</span><span>: Commands, </span><span style="color:#888888;">// NEW!
+</span><span>) {
+</span><span>    </span><span style="color:#8fbfdc;">for</span><span> event in events.read() {
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        </span><span style="color:#888888;">// If motion is possible...
+</span><span>        </span><span style="color:#8fbfdc;">if</span><span> map.is_passable(event.destination.x, event.destination.y) {
+</span><span>            </span><span style="color:#888888;">// SNIP
+</span><span>            creature_position.update(event.destination.x, event.destination.y);
+</span><span>            </span><span style="color:#888888;">// Also, animate this creature, making its teleport action visible on the screen.
+</span><span>            commands.entity(event.entity).insert(SlideAnimation); </span><span style="color:#888888;">// NEW!
+</span><span>        } </span><span style="color:#8fbfdc;">else </span><span>{
+</span><span>            </span><span style="color:#888888;">// Nothing here just yet, but this is where collisions between creatures
+</span><span>            </span><span style="color:#888888;">// will be handled.
+</span><span>            </span><span style="color:#8fbfdc;">continue</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><code>cargo run</code>, and your two caged creatures <em>may</em> have developed a little bit of sliding grace, as shown below.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/5-laser-sumo-rave/slide.gif" alt="The player lasering the wall, and the wall sliding smoothly instead of sharply teleporting." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+<p>Wait... why &quot;may&quot;? Indeed, should you restart the game multiple times, you might notice that it <em>sometimes</em> works, and <em>sometimes</em> doesn't.</p>
+<p>Oh heavens, the worse type of bug - the non-deterministic error! How will we ever solve this? Is it time to give up?</p>
+<p>No. We simply have not <strong>scheduled our systems</strong>.</p>
+<h1 id="system-scheduling">System Scheduling</h1>
+<p>Marking systems as <code>Update</code> only means they trigger every tick. In which <em>order</em> they trigger, however, that's fully up to chance! This causes a dizzying amount of non-deterministic bugs.</p>
+<p>To prevent this, we must tell Bevy in which order all our events and animations are handled. As a starting point, let us diagnose just how bad it has gotten.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// main.rs
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        </span><span style="color:#888888;">// SNIP
+</span><span>        </span><span style="color:#888888;">// NEW!
+</span><span>        .edit_schedule(Update, |</span><span style="color:#ffb964;">schedule</span><span>| {
+</span><span>            schedule.set_build_settings(ScheduleBuildSettings {
+</span><span>                ambiguity_detection: LogLevel::Warn,
+</span><span>                ..default()
+</span><span>            });
+</span><span>        })
+</span><span>        </span><span style="color:#888888;">// End NEW.
+</span><span>        .run();
+</span><span>}
+</span></code></pre>
+<p>You should obtain this ominous message:</p>
+<pre style="background-color:#151515;color:#e8e8d3;"><code><span>7 pairs of systems with conflicting data access have indeterminate execution order. Consider adding `before`, `after`, or `ambiguous_with` relationships between these:
+</span><span> -- adjust_transforms and teleport_entity
+</span><span>    conflict on: [&quot;redesign_tgfp::map::Position&quot;]
+</span><span> -- teleport_entity and player_step
+</span><span>    conflict on: [&quot;bevy_ecs::event::Events&lt;redesign_tgfp::events::TeleportEntity&gt;&quot;, &quot;redesign_tgfp::map::Map&quot;, &quot;redesign_tgfp::map::Position&quot;]
+</span><span> -- teleport_entity and register_creatures
+</span><span>    conflict on: [&quot;redesign_tgfp::map::Map&quot;, &quot;redesign_tgfp::map::Position&quot;]
+</span><span> -- keyboard_input and player_step
+</span><span>    conflict on: [&quot;bevy_ecs::event::Events&lt;redesign_tgfp::events::PlayerStep&gt;&quot;]
+</span><span> -- keyboard_input and cast_new_spell
+</span><span>    conflict on: [&quot;bevy_ecs::event::Events&lt;redesign_tgfp::spells::CastSpell&gt;&quot;]
+</span><span> -- player_step and register_creatures
+</span><span>    conflict on: [&quot;redesign_tgfp::map::Map&quot;]
+</span><span> -- process_axiom and cast_new_spell
+</span><span>    conflict on: [&quot;redesign_tgfp::spells::SpellStack&quot;]
+</span></code></pre>
+<p>All of these are systems where at least one of the two modifies a certain component, leading the other system to behave completely differently depending on whether it runs before or after.</p>
+<p>Let's bring on board a grand overseer to resolve all of these inconsistencies. Create the file <code>sets.rs</code>, in which a new plugin will take shape.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// sets.rs
+</span><span>use bevy::prelude::*;
+</span><span>
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">SetsPlugin</span><span>;
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">SetsPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_systems(
+</span><span>            Update,
+</span><span>            ((
+</span><span>                keyboard_input.run_if(spell_stack_is_empty),
+</span><span>                creature_step,
+</span><span>                cast_new_spell,
+</span><span>                process_axiom,
+</span><span>            )
+</span><span>                .in_set(ActionPhase),
+</span><span>        );
+</span><span>        app.add_systems(
+</span><span>            Update,
+</span><span>            ((register_creatures, teleport_entity).chain()).in_set(ResolutionPhase),
+</span><span>        );
+</span><span>        app.add_systems(
+</span><span>            Update,
+</span><span>            ((place_magic_effects, adjust_transforms, decay_magic_effects).chain())
+</span><span>                .in_set(AnimationPhase),
+</span><span>        );
+</span><span>        app.configure_sets(
+</span><span>            Update,
+</span><span>            (ActionPhase, AnimationPhase, ResolutionPhase).chain(),
+</span><span>        );
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+</span><span style="color:#8fbfdc;">struct </span><span style="color:#ffb964;">ActionPhase</span><span>;
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+</span><span style="color:#8fbfdc;">struct </span><span style="color:#ffb964;">ResolutionPhase</span><span>;
+</span><span>
+</span><span>#[</span><span style="color:#ffb964;">derive</span><span>(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+</span><span style="color:#8fbfdc;">struct </span><span style="color:#ffb964;">AnimationPhase</span><span>;
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#8fbfdc;">pub fn </span><span style="color:#fad07a;">spell_stack_is_empty</span><span>(</span><span style="color:#ffb964;">spell_stack</span><span>: Res&lt;SpellStack&gt;) -&gt; </span><span style="color:#8fbfdc;">bool </span><span>{
+</span><span>    spell_stack.spells.is_empty()
+</span><span>}
+</span></code></pre>
+<p><code>chain</code> effectively means the systems run one after the other. First, I place everything related to making choices and casting spells into <code>ActionPhase</code>, then everything related to gameplay actions in <code>ResolutionPhase</code>, and finally put all the visuals and animations in <code>AnimationPhase</code>. The ordering was not chosen at random:</p>
+<ul>
+<li><code>decay_magic_effects</code> goes after <code>adjust_transforms</code>, so the magical effects can snap to their tile position before starting to decay.</li>
+<li><code>register_creatures</code> goes before <code>teleport_entity</code>, so that moving into the tile of a newly-summoned creature won't succeed due to the creature not having been registered into the <code>Map</code> yet.</li>
+<li><code>keyboard_input</code> is disallowed until all spells have finished executing, so the player cannot twitch-reflex their way out of an incoming beam.</li>
+</ul>
+<p>Add this new <code>Plugin</code> to <code>main.rs</code>.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// main.rs
+</span><span style="color:#8fbfdc;">mod </span><span style="color:#ffb964;">sets</span><span>; </span><span style="color:#888888;">// NEW!
+</span><span>
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        .add_plugins((
+</span><span>            SetsPlugin, </span><span style="color:#888888;">// NEW!
+</span><span>            SpellPlugin,
+</span><span>            EventPlugin,
+</span><span>            GraphicsPlugin,
+</span><span>            MapPlugin,
+</span><span>            InputPlugin,
+</span><span>        ))
+</span></code></pre>
+<p>Also, remove all instance of the <code>Update</code> systems in other files to avoid duplicate systems.</p>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// graphics.rs
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">GraphicsPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.init_resource::&lt;SpriteSheetAtlas&gt;();
+</span><span>        app.add_event::&lt;PlaceMagicVfx&gt;();
+</span><span>        app.add_systems(Startup, setup_camera);
+</span><span>        </span><span style="color:#888888;">// REMOVED Update systems.
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// map.rs
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">MapPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.insert_resource(Map {
+</span><span>            creatures: HashMap::new(),
+</span><span>        });
+</span><span>        app.add_systems(Startup, spawn_player);
+</span><span>        app.add_systems(Startup, spawn_cage);
+</span><span>        </span><span style="color:#888888;">// REMOVED Update systems.
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// events.rs
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">EventPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_event::&lt;PlayerStep&gt;();
+</span><span>        app.add_event::&lt;TeleportEntity&gt;();
+</span><span>        </span><span style="color:#888888;">// REMOVED Update systems.
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// spells.rs
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">SpellPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_event::&lt;CastSpell&gt;();
+</span><span>        app.init_resource::&lt;SpellStack&gt;();
+</span><span>        app.init_resource::&lt;AxiomLibrary&gt;();
+</span><span>        </span><span style="color:#888888;">// REMOVED Update systems.
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// input.rs
+</span><span style="color:#888888;">// REMOVE all of the following.
+</span><span style="color:#8fbfdc;">pub struct </span><span style="color:#ffb964;">InputPlugin</span><span>;
+</span><span>
+</span><span style="color:#8fbfdc;">impl </span><span>Plugin for </span><span style="color:#ffb964;">InputPlugin </span><span>{
+</span><span>    </span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">build</span><span>(&amp;</span><span style="color:#ffb964;">self</span><span>, </span><span style="color:#ffb964;">app</span><span>: &amp;</span><span style="color:#8fbfdc;">mut</span><span> App) {
+</span><span>        app.add_systems(Update, keyboard_input);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<pre data-lang="rust" style="background-color:#151515;color:#e8e8d3;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#888888;">// main.rs
+</span><span>use events::EventPlugin;
+</span><span>use graphics::GraphicsPlugin;
+</span><span style="color:#888888;">// REMOVED InputPlugin.
+</span><span>use map::MapPlugin;
+</span><span>use sets::SetsPlugin;
+</span><span>use spells::SpellPlugin;
+</span><span>
+</span><span style="color:#8fbfdc;">fn </span><span style="color:#fad07a;">main</span><span>() {
+</span><span>    App::new()
+</span><span>        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
+</span><span>        .add_plugins((
+</span><span>            SetsPlugin,
+</span><span>            SpellPlugin,
+</span><span>            EventPlugin,
+</span><span>            GraphicsPlugin,
+</span><span>            MapPlugin,
+</span><span>            </span><span style="color:#888888;">// REMOVED InputPlugin.
+</span><span>        ))
+</span></code></pre>
+<p>With all that done, <code>cargo run</code>! Note that this time around, the beam hits the wall, and <em>then</em> the wall is knocked back, all thanks to our system ordering.</p>
+
+  
+  
+  <img src="https://raw.githubusercontent.com/Oneirical/oneirical.github.io/main/5-laser-sumo-rave/ordering.gif" alt="The player lasering the wall, and the wall only being knocked back after it has been hit by the beam." class="center" style="border-radius: 8px;" decoding="async" loading="lazy"/>
+
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h"></span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://oneirical.github.io/4-a-la-carte-sorcery/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 4. À la Carte Sorcery</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://oneirical.github.io/6-let-chaos-reign/">
+                            <span class="button__text">Bevy Traditional Roguelike Quick-Start - 6. Let Chaos Reign</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Julien Robert</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
